@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +21,25 @@ const Register = () => {
     );
   };
 
+  useEffect(() => {
+    // Load Google API script dynamically
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      window.google.accounts.id.initialize({
+        client_id: "YOUR_GOOGLE_CLIENT_ID", // Use your Google Client ID here
+        callback: handleGoogleSignIn,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("google-login"),
+        { theme: "outline", size: "large" }
+      );
+    };
+  }, []);
+
   const handleRegister = () => {
     if (!email || !password || !confirmPassword) {
       toast.error("Please fill all fields");
@@ -35,6 +54,11 @@ const Register = () => {
       return;
     }
     toast.success("Registration Successful!");
+  };
+
+  const handleGoogleSignIn = (response) => {
+    console.log("Google Sign-in Response:", response);
+    toast.success("Registered with Google!");
   };
 
   return (
@@ -96,11 +120,7 @@ const Register = () => {
       <p className="or-text">Or</p>
 
       {/* Social Login */}
-      <div className="social-buttons">
-        <button className="google-button">
-          <img src="/google-logo.png" alt="Google" width="20" /> Continue with Google
-        </button>
-      </div>
+      <div id="google-login"></div>
 
       {/* Login Link */}
       <p className="switch-auth">
