@@ -6,24 +6,32 @@ import "../styles/styles.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Password validation function
+  const isPasswordValid = (password) => {
+    return (
+      password.length >= 8 &&
+      /[A-Z]/.test(password) &&
+      /\d/.test(password) &&
+      /[!@#$%^&*]/.test(password)
+    );
+  };
 
   const handleRegister = () => {
-    if (!email || !phone || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       toast.error("Please fill all fields");
       return;
     }
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match!");
+      toast.error("Passwords do not match");
       return;
     }
-    if (!termsAccepted || !privacyAccepted) {
-      toast.error("You must accept the terms & conditions and privacy policy!");
+    if (!isPasswordValid(password)) {
+      toast.error("Password must meet all requirements");
       return;
     }
     toast.success("Registration Successful!");
@@ -31,87 +39,73 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-form">
-        {/* Header Section */}
-        <h2 className="logo">Aktiv60</h2>
-        <h2>Welcome!</h2>
-        <p className="app-description">Join our community to get started.</p>
+      {/* Logo and Header */}
+      <h2 className="logo">Aktiv60</h2>
+      <p className="subtitle">System v2.1.0 (Production)</p>
 
-        {/* Registration Form */}
-        <div className="input-group">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+      {/* Illustration */}
+      <img src="/signup-image.png" alt="Signup Illustration" className="illustration" />
 
-        <div className="input-group">
-          <input
-            type="text"
-            placeholder="Phone Number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
+      <h3>Create an account</h3>
 
-        <div className="input-group password-box">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>👁</span>
-        </div>
-
-        <div className="input-group password-box">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>👁</span>
-        </div>
-
-        <label className="terms">
-          <input
-            type="checkbox"
-            checked={termsAccepted}
-            onChange={() => setTermsAccepted(!termsAccepted)}
-          />
-          Accept Terms & Conditions
-        </label>
-
-        <label className="terms">
-          <input
-            type="checkbox"
-            checked={privacyAccepted}
-            onChange={() => setPrivacyAccepted(!privacyAccepted)}
-          />
-          Accept Privacy Policy
-        </label>
-
-        <button className="auth-button" onClick={handleRegister}>Register</button>
-
-        {/* Social Media Registration Options */}
-        <p className="or-text">Or sign up with</p>
-        <div className="social-buttons">
-          <button className="google-button">Google</button>
-          <button className="facebook-button">Facebook</button>
-          <button className="apple-button">Apple</button>
-        </div>
-
-        {/* Navigation Elements */}
-        <p className="switch-auth">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-        <p className="help-links">
-          <Link to="#">Help</Link> | <Link to="#">Contact Support</Link>
-        </p>
+      {/* Email Field */}
+      <div className="input-group">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <i className="fas fa-envelope"></i>
       </div>
+
+      {/* Password Field */}
+      <div className="input-group">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter New Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <i className="fas fa-eye" onClick={() => setShowPassword(!showPassword)}></i>
+      </div>
+
+      {/* Password Requirements */}
+      <ul className="password-requirements">
+        <li className={password.length >= 8 ? "valid" : "invalid"}>✓ 8+ characters</li>
+        <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>✓ One uppercase letter</li>
+        <li className={/\d/.test(password) ? "valid" : "invalid"}>✓ One number</li>
+        <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>✓ One special character</li>
+      </ul>
+
+      {/* Confirm Password Field */}
+      <div className="input-group">
+        <input
+          type={showConfirmPassword ? "text" : "password"}
+          placeholder="Confirm New Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <i className="fas fa-eye" onClick={() => setShowConfirmPassword(!showConfirmPassword)}></i>
+      </div>
+
+      {/* Register Button */}
+      <button className="auth-button" onClick={handleRegister}>Register</button>
+
+      {/* OR Divider */}
+      <p className="or-text">Or</p>
+
+      {/* Social Login */}
+      <div className="social-buttons">
+        <button className="google-button">
+          <img src="/google-logo.png" alt="Google" width="20" /> Continue with Google
+        </button>
+      </div>
+
+      {/* Login Link */}
+      <p className="switch-auth">
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 };

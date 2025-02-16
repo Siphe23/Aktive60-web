@@ -20,63 +20,67 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-form">
-        {/* Header Section */}
-        <h2 className="logo">Aktiv60</h2>
-        <h2>Welcome Back!</h2>
+      {/* Logo and Header */}
+      <h2 className="logo">Aktiv60</h2>
+      <p className="subtitle">System v2.1.0 (Production)</p>
 
-        {/* Login Form */}
-        <div className="input-group">
-          <input
-            type="email"
-            placeholder="Email or Phone Number"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+      {/* Illustration */}
+      <img src="/login-image.png" alt="Login Illustration" className="illustration" />
 
-        <div className="input-group password-group">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? "🙈" : "👁"}
-          </span>
-        </div>
+      <h3>Sign into your account</h3>
 
-        <div className="auth-options">
-          <label>
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-            />
-            Remember Me
-          </label>
-          <Link to="#">Forgot Password?</Link>
-        </div>
-
-        <button className="auth-button" onClick={handleLogin}>Login</button>
-
-        {/* Social Media Login Options */}
-        <p className="or-text">Or log in with</p>
-        <div className="social-buttons">
-          <button className="google-button">Google</button>
-          <button className="facebook-button">Facebook</button>
-          <button className="apple-button">Apple</button>
-        </div>
-
-        {/* Support Elements */}
-        <p className="switch-auth">
-          Don't have an account? <Link to="/signup">Signup</Link>
-        </p>
-        <p className="help-links">
-          <Link to="#">Help Center</Link> | <Link to="#">Contact Support</Link>
-        </p>
+      {/* Email Field */}
+      <div className="input-group">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <i className="fas fa-envelope"></i>
       </div>
+
+      {/* Password Field */}
+      <div className="input-group">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <i className="fas fa-eye" onClick={() => setShowPassword(!showPassword)}></i>
+      </div>
+
+      {/* Remember Me & Forgot Password */}
+      <div className="auth-options">
+        <label>
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}
+          />
+          Remember Me
+        </label>
+        <Link to="#">Forgot Password?</Link>
+      </div>
+
+      {/* Login Button */}
+      <button className="auth-button" onClick={handleLogin}>Login</button>
+
+      {/* OR Divider */}
+      <p className="or-text">Or</p>
+
+      {/* Social Login */}
+      <div className="social-buttons">
+        <button className="google-button">
+          <img src="/google-logo.png" alt="Google" width="20" /> Continue with Google
+        </button>
+      </div>
+
+      {/* Signup Link */}
+      <p className="switch-auth">
+        Don't have an account? <Link to="/signup">Sign Up</Link>
+      </p>
     </div>
   );
 };

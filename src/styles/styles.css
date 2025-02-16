@@ -1,112 +1,114 @@
-/* styles.css */
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .auth-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .password-group {
-    position: relative;
-  }
-  
-  .password-group span {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-  }
-  
-  .auth-options {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .auth-button {
-    width: 100%;
-    padding: 10px;
-    background-color: navy;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .social-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-  }
-  
-  .google-button, .facebook-button, .apple-button {
-    width: 30%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .google-button {
-    background-color: #db4437;
-    color: white;
-  }
-  
-  .facebook-button {
-    background-color: #3b5998;
-    color: white;
-  }
-  
-  .apple-button {
-    background-color: #000;
-    color: white;
-  }
-  
-  .or-text {
-    text-align: center;
-    margin: 15px 0;
-  }
-  
-  .switch-auth {
-    text-align: center;
-    margin-top: 15px;
-  }
-  
-  .help-links {
-    text-align: center;
-    margin-top: 15px;
-  }
+  background: linear-gradient(to bottom, white, #d0d7e0);
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Authentication Container */
+.auth-container {
+  width: 350px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Logo and Header */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Illustration */
+.illustration {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Input Fields */
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.input-group i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  cursor: pointer;
+}
+
+/* Buttons */
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #001f4d, #003d99);
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background: linear-gradient(to right, #003d99, #0055cc);
+}
+
+/* Social Buttons */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.google-button {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+/* Password Requirements */
+.password-requirements {
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 15px;
+  padding-left: 10px;
+}
+
+.password-requirements li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.password-requirements .valid {
+  color: green;
+  font-weight: bold;
+}
+
+.password-requirements .invalid {
+  color: red;
+}
