@@ -1,191 +1,114 @@
-/* styles.css */
-.auth-container {
-  font-family: 'Arial', sans-serif;
+/* General styles */
+body {
+  background: linear-gradient(to bottom, white, #d0d7e0);
+  font-family: "Arial", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  background: #f0f2f5;
-  padding: 20px;
+  height: 100vh;
 }
 
-.auth-form {
+/* Authentication Container */
+.auth-container {
+  width: 350px;
   background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
+/* Logo and Header */
 .logo {
-  color: #1a1a1a;
   font-size: 24px;
-  margin-bottom: 8px;
-  text-align: center;
+  font-weight: bold;
 }
 
-.auth-form h2 {
-  color: #606770;
-  font-size: 15px;
-  margin-bottom: 24px;
-  text-align: center;
-  font-weight: normal;
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
 }
 
+/* Illustration */
+.illustration {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Input Fields */
 .input-group {
-  margin-bottom: 16px;
+  position: relative;
+  margin-bottom: 15px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #dddfe2;
-  border-radius: 6px;
-  font-size: 15px;
-  margin-top: 8px;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.input-group input::placeholder {
-  color: #90949c;
-}
-
-.password-group {
-  position: relative;
-}
-
-.password-group span {
+.input-group i {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  color: #888;
   cursor: pointer;
-  user-select: none;
 }
 
-.auth-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 16px 0;
-  font-size: 14px;
-}
-
-.auth-options label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #606770;
-}
-
-.auth-options a {
-  color: #1877f2;
-  text-decoration: none;
-}
-
-.auth-options a:hover {
-  text-decoration: underline;
-}
-
+/* Buttons */
 .auth-button {
   width: 100%;
   padding: 12px;
-  background: #1877f2;
+  background: linear-gradient(to right, #001f4d, #003d99);
   color: white;
-  border: none;
-  border-radius: 6px;
   font-size: 16px;
-  font-weight: bold;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 12px;
 }
 
 .auth-button:hover {
-  background: #166fe5;
+  background: linear-gradient(to right, #003d99, #0055cc);
 }
 
-.or-text {
-  position: relative;
-  text-align: center;
-  margin: 20px 0;
-  color: #606770;
-}
-
-.or-text::before,
-.or-text::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 45%;
-  height: 1px;
-  background: #dddfe2;
-}
-
-.or-text::before {
-  left: 0;
-}
-
-.or-text::after {
-  right: 0;
-}
-
+/* Social Buttons */
 .social-buttons {
   display: flex;
-  gap: 12px;
   justify-content: center;
-  margin-top: 20px;
+  gap: 10px;
 }
 
-.google-button,
-.facebook-button,
-.apple-button {
-  padding: 10px 20px;
-  border: 1px solid #dddfe2;
-  border-radius: 6px;
+.google-button {
   background: white;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  cursor: pointer;
+}
+/* Password Requirements */
+.password-requirements {
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 15px;
+  padding-left: 10px;
 }
 
-.google-button:hover,
-.facebook-button:hover,
-.apple-button:hover {
-  background: #f5f6f7;
+.password-requirements li {
+  list-style: none;
+  margin-bottom: 5px;
 }
 
-.switch-auth {
-  text-align: center;
-  margin-top: 24px;
-  color: #606770;
+.password-requirements .valid {
+  color: green;
+  font-weight: bold;
 }
 
-.switch-auth a {
-  color: #1877f2;
-  text-decoration: none;
-}
-
-.switch-auth a:hover {
-  text-decoration: underline;
-}
-
-.help-links {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #606770;
-}
-
-.help-links a {
-  color: #1877f2;
-  text-decoration: none;
-  margin: 0 8px;
-}
-
-.help-links a:hover {
-  text-decoration: underline;
+.password-requirements .invalid {
+  color: red;
 }
