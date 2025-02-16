@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/styles.css";
 
-const Register = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -130,4 +130,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup
