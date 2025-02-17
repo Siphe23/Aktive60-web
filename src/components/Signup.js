@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// Signup.js
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { auth } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
 
@@ -12,6 +18,8 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const isPasswordValid = (password) => {
     return (
@@ -22,31 +30,7 @@ const Signup = () => {
     );
   };
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (window.google) {
-        window.google.accounts.id.initialize({
-          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-          callback: handleGoogleSignIn,
-        });
-        window.google.accounts.id.renderButton(
-          document.getElementById("google-login"),
-          { theme: "outline", size: "large" }
-        );
-      }
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!email || !password || !confirmPassword) {
       toast.error("Please fill all fields");
       return;
@@ -59,12 +43,62 @@ const Signup = () => {
       toast.error("Password must meet all requirements");
       return;
     }
-    toast.success("Registration Successful!");
+
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // You can add additional user data to your database here
+      // await addUserToDatabase(user.uid, { email: user.email });
+
+      toast.success("Registration Successful!");
+      navigate("/dashboard");
+    } catch (error) {
+      let errorMessage = "Registration failed";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "Email is already registered";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Invalid email address";
+          break;
+        case "auth/operation-not-allowed":
+          errorMessage = "Email/password accounts are not enabled";
+          break;
+        case "auth/weak-password":
+          errorMessage = "Password is too weak";
+          break;
+        default:
+          errorMessage = error.message;
+      }
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignIn = (response) => {
-    console.log("Google Sign-in Response:", response);
-    toast.success("Registered with Google!");
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // You can add additional user data to your database here
+      // await addUserToDatabase(user.uid, { email: user.email });
+
+      toast.success("Registered with Google!");
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error("Google sign-up failed: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,6 +114,7 @@ const Signup = () => {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
           <i className="fas fa-envelope"></i>
         </div>
@@ -94,6 +129,7 @@ const Signup = () => {
               setIsPasswordFocused(true);
             }}
             onFocus={() => setIsPasswordFocused(true)}
+            disabled={loading}
           />
           <i
             className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
@@ -103,10 +139,18 @@ const Signup = () => {
 
         {isPasswordFocused && (
           <ul className="password-requirements">
-            <li className={password.length >= 8 ? "valid" : "invalid"}>✓ 8+ characters</li>
-            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>✓ One uppercase letter</li>
-            <li className={/\d/.test(password) ? "valid" : "invalid"}>✓ One number</li>
-            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>✓ One special character</li>
+            <li className={password.length >= 8 ? "valid" : "invalid"}>
+              ✓ 8+ characters
+            </li>
+            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>
+              ✓ One uppercase letter
+            </li>
+            <li className={/\d/.test(password) ? "valid" : "invalid"}>
+              ✓ One number
+            </li>
+            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>
+              ✓ One special character
+            </li>
           </ul>
         )}
 
@@ -116,6 +160,7 @@ const Signup = () => {
             placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={loading}
           />
           <i
             className={`fas ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`}
@@ -123,8 +168,12 @@ const Signup = () => {
           ></i>
         </div>
 
-        <button className="auth-button" onClick={handleRegister}>
-          Register
+        <button
+          className="auth-button"
+          onClick={handleRegister}
+          disabled={loading}
+        >
+          {loading ? "Registering..." : "Register"}
         </button>
 
         <p className="or-text">
@@ -132,9 +181,14 @@ const Signup = () => {
           Or
           <hr className="line" />
         </p>
-        <div id="google-login"></div>
 
-        <div id="google-login"></div>
+        <button
+          className="google-auth-button"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+        >
+          <i className="fab fa-google"></i> Continue with Google
+        </button>
 
         <p className="switch-auth">
           Already have an account? <Link to="/login">Login</Link>

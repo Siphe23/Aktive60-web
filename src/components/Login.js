@@ -1,7 +1,13 @@
+// Login.js
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { auth } from "../firebase";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
 import "../styles/styles.css";
 
@@ -10,41 +16,69 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (window.google && document.getElementById("google-login")) {
-        window.google.accounts.id.initialize({
-          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-          callback: handleGoogleSignIn,
-        });
-        window.google.accounts.id.renderButton(
-          document.getElementById("google-login"),
-          { theme: "outline", size: "large" }
-        );
-      }
-    };
-
-    return () => document.body.removeChild(script);
-  }, []);
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       toast.error("Please fill all fields");
       return;
     }
-    toast.success("Login Successful!");
+
+    setLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // If remember me is checked, persist the auth state
+      if (rememberMe) {
+        await auth.setPersistence("local");
+      }
+
+      toast.success("Login Successful!");
+      navigate("/dashboard"); // Navigate to dashboard after successful login
+    } catch (error) {
+      let errorMessage = "Login failed";
+      switch (error.code) {
+        case "auth/user-not-found":
+          errorMessage = "No user found with this email";
+          break;
+        case "auth/wrong-password":
+          errorMessage = "Invalid password";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Invalid email address";
+          break;
+        case "auth/too-many-requests":
+          errorMessage = "Too many failed attempts. Please try again later";
+          break;
+        default:
+          errorMessage = error.message;
+      }
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignIn = (response) => {
-    console.log("Google Sign-in Response:", response);
-    toast.success("Logged in with Google!");
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      toast.success("Logged in with Google!");
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error("Google sign-in failed: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,6 +100,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
@@ -80,35 +115,35 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
             <i
-              className="fas fa-eye"
+              className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
               onClick={() => setShowPassword(!showPassword)}
               aria-label="Toggle password visibility"
               role="button"
             ></i>
           </div>
 
-          {/* Remember me button */}
           <div className="auth-options">
             <label>
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
+                disabled={loading}
               />
               Remember Me
             </label>
           </div>
 
-          {/* Login button */}
-          <button className="auth-button" type="submit">
-            Login
+          <button className="auth-button" type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <div>
-          <Link to="#">Forgot Password?</Link>
+          <Link to="/forgot-password">Forgot Password?</Link>
         </div>
 
         <p className="or-text">
@@ -116,14 +151,20 @@ const Login = () => {
           Or
           <hr className="line" />
         </p>
-        <div id="google-login"></div>
+
+        <button
+          className="google-auth-button"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+        >
+          <i className="fab fa-google"></i> Continue with Google
+        </button>
 
         <p className="switch-auth">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
 
-      {/* Right Side: Image */}
       <div className="image-container">
         <img src={TwoFAImage} alt="Two Factor Authentication" />
       </div>
