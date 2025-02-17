@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/resetPassword.css"; 
+import TwoFAImage from "../assets/bro.jpg";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");  // For displaying error messages
   const [isPasswordFocused, setIsPasswordFocused] = useState(false); // Track if password input is focused
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // For navigating to different routes
 
   const isPasswordValid = (password) => {
     return (
@@ -32,7 +33,7 @@ const ResetPassword = () => {
     }
 
     setError("");  // Reset the error if everything is valid
-    navigate("/password-reset-success");
+    navigate("/password-reset-success");  // Navigate to the success route
   };
 
   return (
@@ -53,18 +54,10 @@ const ResetPassword = () => {
             />
             {isPasswordFocused && (
               <ul className="password-requirements">
-                <li className={newPassword.length >= 8 ? "valid" : "invalid"}>
-                  8+ characters
-                </li>
-                <li className={/[A-Z]/.test(newPassword) ? "valid" : "invalid"}>
-                  One uppercase letter
-                </li>
-                <li className={/\d/.test(newPassword) ? "valid" : "invalid"}>
-                  One number
-                </li>
-                <li className={/[!@#$%^&*]/.test(newPassword) ? "valid" : "invalid"}>
-                  One special character
-                </li>
+                <li className={newPassword.length >= 8 ? "valid" : "invalid"}>8+ characters</li>
+                <li className={/[A-Z]/.test(newPassword) ? "valid" : "invalid"}>One uppercase letter</li>
+                <li className={/\d/.test(newPassword) ? "valid" : "invalid"}>One number</li>
+                <li className={/[!@#$%^&*]/.test(newPassword) ? "valid" : "invalid"}>One special character</li>
               </ul>
             )}
           </div>
@@ -78,6 +71,9 @@ const ResetPassword = () => {
               required
             />
           </div>
+
+          {/* Display error message */}
+          {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="reset-button">Reset Password</button>
         </form>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TwoFAImage from "../assets/amico-removebg-preview.png";
 import "../styles/styles.css";
 
 const Login = () => {
@@ -48,60 +49,84 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <h2 className="logo">Aktiv60</h2>
-      <p className="subtitle">System v2.1.0 (Production)</p>
-      <img src="/login-image.png" alt="Login Illustration" className="illustration" />
-      <h3>Sign into your account</h3>
+      <div className="login-section">
+        <h2 className="logo">Aktiv60</h2>
+        <p className="subtitle">System v2.1.0 (Production)</p>
+        <h3>Sign into your account</h3>
 
-      <form onSubmit={handleLogin}>
-        <div className="input-group">
-          <input 
-            type="email" 
-            placeholder="Enter your email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required
-          />
-          <i className="fas fa-envelope"></i>
-        </div>
-
-        <div className="input-group">
-          <input 
-            type={showPassword ? "text" : "password"} 
-            placeholder="Enter your password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required
-          />
-          <i 
-            className="fas fa-eye" 
-            onClick={() => setShowPassword(!showPassword)} 
-            aria-label="Toggle password visibility"
-            role="button"
-          ></i>
-        </div>
-
-        <div className="auth-options">
-          <label>
-            <input 
-              type="checkbox" 
-              checked={rememberMe} 
-              onChange={() => setRememberMe(!rememberMe)} 
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <label htmlFor="email">
+              <i className="fas fa-envelope"></i> Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-            Remember Me
-          </label>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="password">
+              <i className="fas fa-lock"></i> Password
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <i
+              className="fas fa-eye"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label="Toggle password visibility"
+              role="button"
+            ></i>
+          </div>
+
+          {/* Remember me button */}
+          <div className="auth-options">
+            <label>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              Remember Me
+            </label>
+          </div>
+
+          {/* Login button */}
+          <button className="auth-button" type="submit">
+            Login
+          </button>
+        </form>
+
+        <div>
           <Link to="#">Forgot Password?</Link>
         </div>
 
-        <button className="auth-button" type="submit">Login</button>
-      </form>
+        <p className="or-text">
+          <hr className="line" />
+          Or
+          <hr className="line" />
+        </p>
+        <div id="google-login"></div>
 
-      <p className="or-text">Or</p>
-      <div id="google-login"></div>
+        <p className="switch-auth">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
+      </div>
 
-      <p className="switch-auth">
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
+      {/* Right Side: Image */}
+      <div className="image-container">
+        <img src={TwoFAImage} alt="Two Factor Authentication" />
+      </div>
     </div>
   );
 };
