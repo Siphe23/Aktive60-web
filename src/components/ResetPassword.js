@@ -1,84 +1,96 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/resetPassword.css"; 
-import TwoFAImage from "../assets/bro.jpg";
+import ResetImage from "../assets/pana-removebg-preview.png"; 
 
 const ResetPassword = () => {
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");  // For displaying error messages
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false); // Track if password input is focused
-  const navigate = useNavigate(); // For navigating to different routes
+  const [email, setEmail] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
+  const [error, setError] = useState("");  
+  const navigate = useNavigate();
 
-  const isPasswordValid = (password) => {
-    return (
-      password.length >= 8 &&
-      /[A-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[!@#$%^&*]/.test(password)
-    );
-  };
+  // Predefined security questions
+  const securityQuestions = [
+    "What is your mother's maiden name?",
+    "What was the name of your first pet?",
+    "What was your first car?",
+    "What city were you born in?",
+    "What is your favorite book?",
+  ];
 
   const handleResetPassword = (e) => {
     e.preventDefault();
 
-    if (!isPasswordValid(newPassword)) {
-      setError("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.");
+    if (!email || !securityQuestion || !securityAnswer) {
+      setError("Please fill in all fields.");
       return;
     }
 
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
-    setError("");  // Reset the error if everything is valid
-    navigate("/password-reset-success");  // Navigate to the success route
+    setError("");  
+    navigate("/password-reset-success");  
   };
 
   return (
     <div className="reset-container">
-      <div className="reset-box">
+      <div className="reset-form">
         <h2 className="reset-logo">Aktiv60</h2>
-        <p className="reset-subtitle">Enter your new password</p>
+        <p className="reset-subtitle">Reset your password</p>
 
         <form onSubmit={handleResetPassword}>
+          {/* Email Input */}
           <div className="reset-input-group">
+            <label>Email</label>
             <input 
-              type="password" 
-              placeholder="New Password" 
-              value={newPassword} 
-              onChange={(e) => setNewPassword(e.target.value)} 
-              onFocus={() => setIsPasswordFocused(true)} 
-              required
-            />
-            {isPasswordFocused && (
-              <ul className="password-requirements">
-                <li className={newPassword.length >= 8 ? "valid" : "invalid"}>8+ characters</li>
-                <li className={/[A-Z]/.test(newPassword) ? "valid" : "invalid"}>One uppercase letter</li>
-                <li className={/\d/.test(newPassword) ? "valid" : "invalid"}>One number</li>
-                <li className={/[!@#$%^&*]/.test(newPassword) ? "valid" : "invalid"}>One special character</li>
-              </ul>
-            )}
-          </div>
-
-          <div className="reset-input-group">
-            <input 
-              type="password" 
-              placeholder="Confirm New Password" 
-              value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)} 
+              type="email" 
+              placeholder="Enter your email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
               required
             />
           </div>
 
-          {/* Display error message */}
+          {/* Security Question Selection */}
+          <div className="reset-input-group">
+            <label>Security Question</label>
+            <select 
+              value={securityQuestion} 
+              onChange={(e) => setSecurityQuestion(e.target.value)}
+              required
+            >
+              <option value="">Select a security question</option>
+              {securityQuestions.map((question, index) => (
+                <option key={index} value={question}>
+                  {question}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Security Answer Input */}
+          <div className="reset-input-group">
+            <label>Answer</label>
+            <input 
+              type="text" 
+              placeholder="Enter your answer" 
+              value={securityAnswer} 
+              onChange={(e) => setSecurityAnswer(e.target.value)} 
+              required
+            />
+          </div>
+
+          {/* Error Message */}
           {error && <p className="error-message">{error}</p>}
 
-          <button type="submit" className="reset-button">Reset Password</button>
+          {/* Submit Button */}
+          <button type="submit" className="reset-button">Submit</button>
         </form>
       </div>
-      <img src="/reset-password-image.png" alt="Reset Password" className="reset-illustration" />
+
+      {/* Right Side Image */}
+      <div className="reset-image">
+        <img src={ResetImage} alt="Reset Password" />
+      </div>
     </div>
   );
 };
