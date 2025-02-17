@@ -8,16 +8,6 @@ body {
   height: 100vh;
 }
 
-/* Authentication Container */
-.auth-container {
-  width: 350px;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
 /* Logo and Header */
 .logo {
   font-size: 24px;
@@ -91,6 +81,7 @@ body {
   align-items: center;
   cursor: pointer;
 }
+
 /* Password Requirements */
 .password-requirements {
   text-align: left;
