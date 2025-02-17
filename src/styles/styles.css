@@ -1,29 +1,59 @@
-/* General styles */
+/* General Styles */
 body {
-  background: linear-gradient(to bottom, white, #d0d7e0);
+  background: linear-gradient(to right, #f8f9fa, #d0d7e0);
   font-family: "Arial", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
-/* Logo and Header */
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 900px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Left Section - Illustration */
+.illustration-section {
+  flex: 1;
+  background: linear-gradient(to right, #e3eaf2, #f9fafb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.illustration img {
+  width: 80%;
+  max-width: 300px;
+}
+
+/* Right Section - Login Form */
+.login-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .logo {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   font-size: 14px;
   color: #666;
+  text-align: center;
   margin-bottom: 20px;
-}
-
-/* Illustration */
-.illustration {
-  width: 100%;
-  margin-bottom: 15px;
 }
 
 /* Input Fields */
@@ -49,7 +79,15 @@ body {
   cursor: pointer;
 }
 
-/* Buttons */
+/* Remember Me and Forgot Password */
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+/* Login Button */
 .auth-button {
   width: 100%;
   padding: 12px;
@@ -59,17 +97,19 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
 }
 
 .auth-button:hover {
   background: linear-gradient(to right, #003d99, #0055cc);
 }
 
-/* Social Buttons */
+/* Social Login */
 .social-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 15px;
 }
 
 .google-button {
@@ -80,26 +120,4 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
-}
-
-/* Password Requirements */
-.password-requirements {
-  text-align: left;
-  font-size: 12px;
-  margin-bottom: 15px;
-  padding-left: 10px;
-}
-
-.password-requirements li {
-  list-style: none;
-  margin-bottom: 5px;
-}
-
-.password-requirements .valid {
-  color: green;
-  font-weight: bold;
-}
-
-.password-requirements .invalid {
-  color: red;
 }
