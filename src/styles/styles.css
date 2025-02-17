@@ -121,3 +121,27 @@ body {
   align-items: center;
   cursor: pointer;
 }
+/* Password Requirements Styling */
+.password-requirements {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.password-requirements li {
+  margin-bottom: 5px;
+}
+
+.password-requirements .valid {
+  color: green;  /* Valid requirements in green */
+}
+
+.password-requirements .invalid {
+  color: red;  /* Invalid requirements in red */
+}
+
+.password-requirements li.invalid {
+  color: red;
+}

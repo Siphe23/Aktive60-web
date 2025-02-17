@@ -5,14 +5,33 @@ import "../styles/resetPassword.css";
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");  // For displaying error messages
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false); // Track if password input is focused
   const navigate = useNavigate();
+
+  const isPasswordValid = (password) => {
+    return (
+      password.length >= 8 &&
+      /[A-Z]/.test(password) &&
+      /\d/.test(password) &&
+      /[!@#$%^&*]/.test(password)
+    );
+  };
 
   const handleResetPassword = (e) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      alert("Passwords do not match!");
+
+    if (!isPasswordValid(newPassword)) {
+      setError("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.");
       return;
     }
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    setError("");  // Reset the error if everything is valid
     navigate("/password-reset-success");
   };
 
@@ -29,8 +48,25 @@ const ResetPassword = () => {
               placeholder="New Password" 
               value={newPassword} 
               onChange={(e) => setNewPassword(e.target.value)} 
+              onFocus={() => setIsPasswordFocused(true)} 
               required
             />
+            {isPasswordFocused && (
+              <ul className="password-requirements">
+                <li className={newPassword.length >= 8 ? "valid" : "invalid"}>
+                  8+ characters
+                </li>
+                <li className={/[A-Z]/.test(newPassword) ? "valid" : "invalid"}>
+                  One uppercase letter
+                </li>
+                <li className={/\d/.test(newPassword) ? "valid" : "invalid"}>
+                  One number
+                </li>
+                <li className={/[!@#$%^&*]/.test(newPassword) ? "valid" : "invalid"}>
+                  One special character
+                </li>
+              </ul>
+            )}
           </div>
 
           <div className="reset-input-group">
@@ -52,4 +88,3 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
-

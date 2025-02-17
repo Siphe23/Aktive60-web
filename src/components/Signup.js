@@ -10,6 +10,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   // Password validation function
   const isPasswordValid = (password) => {
@@ -22,7 +23,6 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    // Load Google API script dynamically
     const script = document.createElement("script");
     script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
@@ -30,7 +30,7 @@ const Signup = () => {
 
     script.onload = () => {
       window.google.accounts.id.initialize({
-        client_id: "YOUR_GOOGLE_CLIENT_ID", // Use your Google Client ID here
+        client_id: "YOUR_GOOGLE_CLIENT_ID",
         callback: handleGoogleSignIn,
       });
       window.google.accounts.id.renderButton(
@@ -89,18 +89,32 @@ const Signup = () => {
           type={showPassword ? "text" : "password"}
           placeholder="Enter New Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setIsPasswordFocused(true); // Set the focus state when typing
+          }}
+          onFocus={() => setIsPasswordFocused(true)} // Ensure the requirements show when focused
         />
         <i className="fas fa-eye" onClick={() => setShowPassword(!showPassword)}></i>
       </div>
 
-      {/* Password Requirements */}
-      <ul className="password-requirements">
-        <li className={password.length >= 8 ? "valid" : "invalid"}>✓ 8+ characters</li>
-        <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>✓ One uppercase letter</li>
-        <li className={/\d/.test(password) ? "valid" : "invalid"}>✓ One number</li>
-        <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>✓ One special character</li>
-      </ul>
+      {/* Password Requirements - Conditional rendering */}
+      {isPasswordFocused && (
+        <ul className="password-requirements">
+          <li className={password.length >= 8 ? "valid" : "invalid"}>
+            ✓ 8+ characters
+          </li>
+          <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>
+            ✓ One uppercase letter
+          </li>
+          <li className={/\d/.test(password) ? "valid" : "invalid"}>
+            ✓ One number
+          </li>
+          <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>
+            ✓ One special character
+          </li>
+        </ul>
+      )}
 
       {/* Confirm Password Field */}
       <div className="input-group">
