@@ -1,4 +1,3 @@
-// Signup.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,8 +7,12 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
+
+// Initialize Firestore
+const db = getFirestore();
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -28,6 +31,18 @@ const Signup = () => {
       /\d/.test(password) &&
       /[!@#$%^&*]/.test(password)
     );
+  };
+
+  // Save user data to Firestore (UID and role)
+  const saveUserToFirestore = async (uid) => {
+    try {
+      const userRef = doc(db, "superadmin", uid); 
+      await setDoc(userRef, {
+        role: "super_Admin", // Save the role as super_Admin
+      });
+    } catch (error) {
+      toast.error("Error saving user data to Firestore: " + error.message);
+    }
   };
 
   const handleRegister = async () => {
@@ -53,8 +68,8 @@ const Signup = () => {
       );
       const user = userCredential.user;
 
-      // You can add additional user data to your database here
-      // await addUserToDatabase(user.uid, { email: user.email });
+      // Save the user's UID and role in Firestore
+      await saveUserToFirestore(user.uid);
 
       toast.success("Registration Successful!");
       navigate("/dashboard");
@@ -89,8 +104,8 @@ const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // You can add additional user data to your database here
-      // await addUserToDatabase(user.uid, { email: user.email });
+      // Save the user's UID and role in Firestore
+      await saveUserToFirestore(user.uid);
 
       toast.success("Registered with Google!");
       navigate("/dashboard");
