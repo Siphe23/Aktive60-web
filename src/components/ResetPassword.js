@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getFirestore, doc, setDoc } from "firebase/firestore"; // Firebase Firestore imports
 import "../styles/resetPassword.css"; 
 import ResetImage from "../assets/pana-removebg-preview.png"; 
 
@@ -10,6 +11,9 @@ const ResetPassword = () => {
   const [error, setError] = useState("");  
   const navigate = useNavigate();
 
+  // Firestore setup
+  const db = getFirestore();  // Initialize Firestore
+
   // Predefined security questions
   const securityQuestions = [
     "What is your mother's maiden name?",
@@ -19,7 +23,7 @@ const ResetPassword = () => {
     "What is your favorite book?",
   ];
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     if (!email || !securityQuestion || !securityAnswer) {
@@ -28,7 +32,24 @@ const ResetPassword = () => {
     }
 
     setError("");  
-    navigate("/password-reset-success");  
+    
+    // Save the input data to the Firestore superadmin collection
+    try {
+      // Create a unique document for the user under "superadmin" collection
+      const docRef = doc(db, "superadmin", email);  // Use email as a unique doc id
+      await setDoc(docRef, {
+        email,
+        securityQuestion,
+        securityAnswer,
+        timestamp: new Date(), // Timestamp of the record
+      });
+
+      // Redirect the user to success page
+      navigate("/password-reset-success");
+    } catch (error) {
+      console.error("Error saving recovery data:", error);
+      setError("There was an error while resetting your password. Please try again.");
+    }
   };
 
   return (

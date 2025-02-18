@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "eslint-config-google": "^0.14.0",
     "postcss": "^8.5.2",
     "tailwindcss": "^4.0.6"
   }
