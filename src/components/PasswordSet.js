@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/Passwordset.css"; 
+import "../styles/passwordset.css"; 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import TwoFAImage from "./assets/two-fa-image.jpg"; // Adjust the path to your image
+import TwoFAImage from "../assets/pana-removebg-preview.png"; // Adjust the path to your image
 
 const PasswordSet = () => {
   const navigate = useNavigate();
