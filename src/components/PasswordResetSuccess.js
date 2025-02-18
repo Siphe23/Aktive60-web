@@ -1,15 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import SuccessImage from "../assets/pana-removebg-preview.png"; 
-
-import "../styles/styles.css";
+import React from 'react';
+import '../styles/PasswordResetSuccess.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const PasswordResetSuccess = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    toast.success('Redirecting to login...');
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+  };
+
   return (
-    <div className="auth-container">
-      <h2 className="logo">Aktiv60</h2>
-      <p className="subtitle">Password Reset Successful!</p>
-      <Link to="/login" className="auth-button">Go to Login</Link>
+    <div className="password-reset-success-container">
+      <div className="content">
+        <h2 className="logo">Aktiv60</h2> {/* Replaced the logo image with an h2 tag */}
+        <h1>Password Reset Successfully!</h1>
+        <button onClick={handleLoginClick} className="login-button">Go to login</button>
+      </div>
+      <div className="image-container">
+        <img src={require('../assets/pana-removebg-preview.png')} alt="Password Reset Success" />
+      </div>
+      <ToastContainer />
     </div>
   );
 };
