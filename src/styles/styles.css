@@ -21,11 +21,15 @@
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-  text-align: center;
+  position: absolute;
+  width: 139px;
+  height: 47px;
+  left: 500px;
+  top: 700px;
+  background: url('../assets/Screenshot\ 2023-08-19\ at\ 15.11.22.png') no-repeat center center;
+  background-size: contain;
+  text-indent: -9999px; 
+  overflow: hidden;
 }
 
 .subtitle {

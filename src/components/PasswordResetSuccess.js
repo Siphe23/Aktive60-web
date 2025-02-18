@@ -17,7 +17,10 @@ const PasswordResetSuccess = () => {
   return (
     <div className="password-reset-success-container">
       <div className="content">
-        <h2 className="logo">Aktiv60</h2> {/* Replaced the logo image with an h2 tag */}
+      <h2 className="logo">
+  <img src={require('../assets/Screenshot 2023-08-19 at 15.11.22.png')} alt="Aktiv60" />
+</h2>
+
         <h1>Password Reset Successfully!</h1>
         <button onClick={handleLoginClick} className="login-button">Go to login</button>
       </div>

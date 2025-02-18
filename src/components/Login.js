@@ -84,8 +84,12 @@ const Login = () => {
 
   return (
     <div className="auth-container">
+          {/* <h2 className="logo">
+  <img src={require('../assets/Screenshot 2023-08-19 at 15.11.22.png')} alt="Aktiv60" />
+</h2> */}
       <div className="login-section">
-        <h2 className="logo">Aktiv60</h2>
+  
+
         <p className="subtitle">System v2.1.0 (Production)</p>
         <h3>Sign into your account</h3>
 
