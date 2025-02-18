@@ -1,10 +1,10 @@
-/* Base styles (Mobile First) */
+
 .two-factor-auth-container {
     display: flex;
-    flex-direction: column; /* Stack form and image vertically on small screens */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
     background: radial-gradient(
       70.71% 99.44% at 110% 40%,
       #a3b2c8 0%,
@@ -20,37 +20,36 @@
   }
   
   .form-container {
-    width: 100%; /* Full width on small screens */
-    max-width: 500px; /* Limit width on larger screens */
+    width: 100%; 
+    max-width: 500px; 
     padding: 20px;
-    background: white; /* Add background for better readability */
+    background: white; 
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .form-container h1 {
-    font-size: 2rem; /* Smaller font size for mobile */
+    font-size: 2rem; 
     margin-bottom: 10px;
-    color: #2d3f58; /* Logo color */
+    color: #2d3f58; 
   }
   
   .form-container h2 {
-    font-size: 1.5rem; /* Smaller font size for mobile */
+    font-size: 1.5rem; 
     margin-bottom: 20px;
-    color: #333; /* Success message color */
-  }
+    color: #333; }
   
   .auth-options {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between options */
+    gap: 10px; 
     margin-bottom: 20px;
   }
   
   .auth-options label {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between radio button and text */
+    gap: 10px; 
     font-size: 1rem;
   }
   
@@ -62,8 +61,8 @@
     font-size: 1rem;
     cursor: pointer;
     padding: 10px 20px;
-    width: 100%; /* Full width on mobile */
-    max-width: 200px; /* Limit button width */
+    width: 100%; 
+    max-width: 200px; 
   }
   
   .submit-button:hover {
@@ -71,27 +70,27 @@
   }
   
   .image-container {
-    display: none; /* Hide image on small screens */
+    display: none; 
   }
   
-  /* Media Queries for Responsiveness */
   
-  /* Tablet and larger screens */
+  
+ 
   @media (min-width: 768px) {
     .two-factor-auth-container {
-      flex-direction: row; /* Side-by-side layout for larger screens */
+      flex-direction: row; 
       justify-content: space-between;
       padding: 40px;
     }
   
     .form-container {
-      width: 50%; /* Half width for form */
-      max-width: 400px; /* Limit form width */
+      width: 50%; 
+      max-width: 400px; 
     }
   
     .image-container {
-      display: block; /* Show image on larger screens */
-      width: 50%; /* Half width for image */
+      display: block; 
+      width: 50%; 
       text-align: right;
     }
   
@@ -101,14 +100,14 @@
     }
   }
   
-  /* Desktop and larger screens */
+
   @media (min-width: 1024px) {
-    .two-factor-auth-container {
-      max-width: 1200px; /* Limit container width */
-      margin: 0 auto; /* Center the container */
-    }
+    /* .two-factor-auth-container {
+      max-width: 1200px;
+      margin: 0 auto; 
+    } */
   
     .form-container {
-      max-width: 500px; /* Increase form width */
+      max-width: 500px;
     }
   }

@@ -1,29 +1,33 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Only import what's needed
-import "../styles/PasswordRecovery.css"; 
+import { useNavigate } from "react-router-dom";
+import RecoveryImage from "../assets/cuate.png";
+import "../styles/PasswordRecovery.css";
 
 const PasswordRecovery = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/password-reset-success"); // Redirect to the success page
+    navigate("/password-reset-success");
   };
 
   return (
-    <div className="password-recovery-container">
-      <div className="form-container">
-        <h1>Aktiv60</h1>
-        <p>Enter the recovery code we sent to your email</p>
+    <div className="reset-container">
+      <div className="reset-form">
+        <h1 className="reset-logo">Aktiv60</h1>
+        <p className="reset-subtitle">
+          Enter the recovery code we sent to your email
+        </p>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Recovery Code" required />
-          <button type="submit" className="reset-button">
-            Submit
-          </button>
+          <div className="reset-input-group">
+            <label>Recovery Code</label>
+            <input type="text" placeholder="Enter code" required />
+          </div>
+          <button type="submit" className="reset-button">Submit</button>
         </form>
       </div>
-      <div className="image-container">
-        <img src="path-to-your-image.jpg" alt="Password Recovery" />
+      <div className="reset-image">
+        <img src={RecoveryImage} alt="Password Recovery Illustration" />
       </div>
     </div>
   );
