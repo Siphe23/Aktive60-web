@@ -37,10 +37,10 @@ const PasswordSet = () => {
   return (
     <div className="password-set-container">
       <div className="form-container">
-                 {/* <h2 className="logo">
+                 <h2 className="logo">
   <img src={require('../assets/Screenshot 2023-08-19 at 15.11.22.png')} alt="Aktiv60" />
-</h2> */}
-        <h1>Aktiv80</h1>
+</h2>
+        
         <p>Enter your new password</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
