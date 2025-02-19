@@ -1,39 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; // Firebase Firestore imports
-import RecoveryImage from "../assets/cuate.png";
+import { getFirestore } from "firebase/firestore";
 import "../styles/PasswordRecovery.css";
+import RecoveryImage from "../assets/cuate.png";
 
 const PasswordRecovery = () => {
-  const [recoveryCode, setRecoveryCode] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  
   // Firestore setup
   const db = getFirestore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!recoveryCode) {
-      setError("Please enter the recovery code.");
+    if (!email) {
+      setError("Please enter your email.");
       return;
     }
 
     try {
-      // Query Firestore for the recovery code (assuming you store it under the "superadmin" collection)
-      const userRef = doc(db, "superadmin", recoveryCode); // Assuming recoveryCode is stored as a document ID
-      const userDoc = await getDoc(userRef);
+      // Call Firebase Cloud Function to send the recovery code
+      const sendRecoveryCode = firebase.functions().httpsCallable("requestPasswordReset");
+      await sendRecoveryCode({ email });
 
-      if (userDoc.exists()) {
-        // If recovery code exists, navigate to the reset password page
-        navigate("/reset-password");
-      } else {
-        setError("Invalid recovery code. Please try again.");
-      }
+      // Redirect to the page where user can enter the recovery code
+      navigate("/enter-recovery-code");
     } catch (error) {
-      console.error("Error during code verification:", error);
-      setError("There was an error validating the recovery code.");
+      console.error("Error during password recovery:", error);
+      setError("There was an error sending the recovery code. Please try again.");
     }
   };
 
@@ -41,18 +37,16 @@ const PasswordRecovery = () => {
     <div className="reset-container">
       <div className="reset-form">
         <h1 className="reset-logo">Aktiv60</h1>
-        <p className="reset-subtitle">
-          Enter the recovery code we sent to your email
-        </p>
+        <p className="reset-subtitle">Enter your email to receive a recovery code</p>
         <form onSubmit={handleSubmit}>
-          {/* Recovery Code Input */}
+          {/* Email Input */}
           <div className="reset-input-group">
-            <label>Recovery Code</label>
+            <label>Email</label>
             <input
-              type="text"
-              placeholder="Enter code"
-              value={recoveryCode}
-              onChange={(e) => setRecoveryCode(e.target.value)}
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
