@@ -8,6 +8,7 @@ import Signup from "./components/Signup";
 import PasswordSet from "./components/PasswordSet";
 import PasswordResetSuccess from "./components/PasswordResetSuccess";
 import TwoFactorAuth from "./components/TwoFactorAuth";
+import ResetPassword from './components/ResetPassword'
 import PasswordRecovery from "./components/PasswordRecovery";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
