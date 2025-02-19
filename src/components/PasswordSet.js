@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/passwordset.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import TwoFAImage from "../assets/pana-removebg-preview.png";
+import TwoFAImage from "../assets/bro.png";
+import "../styles/passwordset.css";
 
 const PasswordSet = () => {
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ const PasswordSet = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (newPassword.length < 8 || !/\d/.test(newPassword)) {
-      setError("Password must be at least 8 characters long and include a number.");
+    if (newPassword.length < 8 || !/\d/.test(newPassword) || !/[!@#$%^&*]/.test(newPassword)) {
+      setError("Password must be at least 8 characters long, include a number, and a special character.");
       return;
     }
     if (newPassword !== confirmPassword) {
@@ -32,7 +32,7 @@ const PasswordSet = () => {
     <div className="password-set-container">
       <div className="form-container">
         <h2 className="logo">
-          <img src={require("../assets/Screenshot 2023-08-19 at 15.11.22.png")} alt="Aktiv60" />
+        
         </h2>
         <p>Enter your new password</p>
         <div className="form-group">
@@ -66,13 +66,8 @@ const PasswordSet = () => {
           </div>
         </div>
         {error && <div className="error-message">{error}</div>}
-        <p>Password must include:</p>
-        <ul>
-          <li>Eight characters</li>
-          <li>One number</li>
-          <li>One special character</li>
-        </ul>
-        <button type="button" className="reset-button" onClick={handleSubmit}>
+        
+        <button type="button" className="auth-button" onClick={handleSubmit}>
           Reset Password
         </button>
       </div>

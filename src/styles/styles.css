@@ -26,7 +26,7 @@
   height: 47px;
   left: 300px;
   top: 150px;
-  background: url('../assets/Screenshot\ 2023-08-19\ at\ 15.11.22.png') no-repeat center center;
+  background: url('../assets/Aktiv60.png') no-repeat center center;
   background-size: contain;
   text-indent: -9999px;
   overflow: hidden;
@@ -64,16 +64,30 @@ h3 {
   margin-bottom: 5px;
 }
 
-.input-group input {
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
   width: 100%;
   padding: 10px 40px 10px 10px; /* Adjusted padding for icon */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
+  background-color: #3a3b3c; /* Input background color */
+  color: #ffffff; /* Input text color */
 }
 
-.input-group i {
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffffff;
+}
+
+.password-toggle {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -84,7 +98,7 @@ h3 {
 
 .auth-options {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Align to the left */
   align-items: center;
   margin-bottom: 20px;
 }
@@ -92,6 +106,12 @@ h3 {
 .auth-options label {
   font-size: 14px;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.auth-options input[type="checkbox"] {
+  margin-right: 10px;
 }
 
 .auth-button {

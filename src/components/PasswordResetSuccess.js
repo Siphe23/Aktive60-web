@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/PasswordResetSuccess.css';
 import { ToastContainer, toast } from 'react-toastify';
+import logo from "../assets/Aktiv60.png"; 
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,15 +18,12 @@ const PasswordResetSuccess = () => {
   return (
     <div className="password-reset-success-container">
       <div className="content">
-      <h2 className="logo">
-  <img src={require('../assets/Screenshot 2023-08-19 at 15.11.22.png')} alt="Aktiv60" />
-</h2>
-
+        <img src={logo} alt="Aktiv60" className="logo" />
         <h1>Password Reset Successfully!</h1>
         <button onClick={handleLoginClick} className="login-button">Go to login</button>
       </div>
       <div className="image-container">
-        <img src={require('../assets/pana-removebg-preview.png')} alt="Password Reset Success" />
+        <img src={require('../assets/amico.png')} alt="Password Reset Success" />
       </div>
       <ToastContainer />
     </div>

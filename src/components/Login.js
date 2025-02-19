@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
-import logo from "../assets/Screenshot 2023-08-19 at 15.11.22.png"; 
+import logo from "../assets/Aktiv60.png"
 import "../styles/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
