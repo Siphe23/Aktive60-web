@@ -4,13 +4,12 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  width: 100%; /* Allow full width on smaller screens */
-  height: 1024px;
-  background: radial-gradient(70.71% 99.44% at 110% 40%, #A3B2C8 0%, #B5C1D3 20%, #C7D0DE 40%, #D9E0E9 60%, #ECEFF4 80%, #FFFFFF 100%);
-  border: 1px solid #000000;
-  padding: 20px; /* Add padding for smaller screens */
+  width: 100%;
+  height: 100vh;
+  background: #242526;
+  padding: 20px;
   box-sizing: border-box;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  flex-wrap: wrap;
 }
 
 .login-section {
@@ -18,30 +17,37 @@
   padding: 40px;
   border-radius: 10px;
   box-sizing: border-box;
+  text-align: center;
 }
 
-.logo {
+.logo-container {
   position: absolute;
   width: 139px;
   height: 47px;
-  left: 500px;
-  top: 700px;
+  left: 300px;
+  top: 150px;
   background: url('../assets/Screenshot\ 2023-08-19\ at\ 15.11.22.png') no-repeat center center;
   background-size: contain;
-  text-indent: -9999px; 
+  text-indent: -9999px;
   overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 100px;
+  height: auto;
 }
 
 .subtitle {
   font-size: 14px;
-  color: #666;
+  color: #FFFFFF;
   margin-bottom: 20px;
   text-align: center;
 }
 
 h3 {
   font-size: 20px;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -54,26 +60,26 @@ h3 {
 .input-group label {
   display: block;
   font-size: 14px;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 5px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 40px 10px 10px; /* Adjusted padding for icon */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
 }
 
-.input-group i.fa-eye {
+.input-group i {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #666;
+  color: #ffffff;
 }
 
 .auth-options {
@@ -85,13 +91,13 @@ h3 {
 
 .auth-options label {
   font-size: 14px;
-  color: #333;
+  color: #ffffff;
 }
 
 .auth-button {
   width: 100%;
   padding: 10px;
-  background-color: #243446 !important;
+  background-color: #F10623 !important;
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -101,37 +107,17 @@ h3 {
 }
 
 .auth-button:hover {
-  background-color: #1a2835 !important;
-}
-
-.or-text {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.or-text .line {
-  flex: 1;
-  height: 1px;
-  background-color: #ccc;
-  margin: 0 10px;
-}
-
-#google-login {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  background-color: #F10623 !important;
 }
 
 .switch-auth {
   text-align: center;
   font-size: 14px;
-  color: #333;
+  color: #FFFFFF;
 }
 
 .switch-auth a {
-  color: #007bff;
+  color: #FFFFFF;
   text-decoration: none;
 }
 
@@ -151,7 +137,7 @@ h3 {
 }
 
 .forgot-password a {
-  color: #007bff;
+  color: #FFFFFF;
   text-decoration: none;
   font-size: 14px;
 }
@@ -163,86 +149,33 @@ h3 {
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .auth-container {
-    flex-direction: column; /* Stack login and image sections */
-    height: auto; /* Allow content to flow vertically */
+    flex-direction: column;
+    height: auto;
   }
 
   .login-section {
-    width: 80%; /* Increase width of login section */
+    width: 80%;
     padding: 30px;
-    margin-bottom: 20px; /* Space between login and image sections */
+    margin-bottom: 20px;
   }
 
   .image-container {
-    width: 100%; /* Full width for image on smaller screens */
+    width: 100%;
     margin-top: 20px;
-  }
-
-  .logo {
-    font-size: 20px;
-  }
-
-  .subtitle {
-    font-size: 12px;
-  }
-
-  h3 {
-    font-size: 18px;
-  }
-
-  .input-group input {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .auth-button {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  .auth-options label {
-    font-size: 12px;
-  }
-
-  .switch-auth {
-    font-size: 12px;
   }
 }
 
 @media (max-width: 768px) {
   .auth-container {
-    padding: 10px; /* Reduce padding on very small screens */
+    padding: 10px;
   }
 
   .login-section {
-    width: 100%; /* Full width of login section */
+    width: 100%;
     padding: 20px;
   }
 
   .image-container {
-    display: none; /* Hide image on very small screens */
-  }
-
-  .auth-button {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  .logo {
-    font-size: 18px;
-  }
-
-  .subtitle,
-  .forgot-password a {
-    font-size: 12px;
-  }
-
-  h3 {
-    font-size: 16px;
-  }
-
-  .input-group input {
-    font-size: 12px;
-    padding: 8px;
+    display: none;
   }
 }
