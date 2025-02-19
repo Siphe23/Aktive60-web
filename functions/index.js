@@ -10,18 +10,18 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "YOUR_EMAIL@gmail.com", // Your email
-    pass: "YOUR_EMAIL_PASSWORD",  // Your app password or email password
+    pass: "YOUR_EMAIL_PASSWORD", // Your app password or email password
   },
 });
 
 // Generate a random recovery code
 const generateRecoveryCode = () => {
-  return Math.random().toString(36).substring(2, 15);  // Generate a random string
+  return Math.random().toString(36).substring(2, 15); // Generate a random string
 };
 
 // Firebase function to handle password reset request
 exports.requestPasswordReset = functions.https.onCall(async (data, context) => {
-  const { email } = data;
+  const {email} = data;
 
   if (!email) {
     throw new functions.https.HttpsError("invalid-argument", "Email is required");
@@ -61,7 +61,7 @@ exports.requestPasswordReset = functions.https.onCall(async (data, context) => {
 
     await transporter.sendMail(mailOptions);
 
-    return { message: "Recovery code sent to email" };
+    return {message: "Recovery code sent to email"};
   } catch (error) {
     console.error("Error during password reset:", error);
     throw new functions.https.HttpsError("unknown", error.message);

@@ -1,52 +1,72 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFirestore } from "firebase/firestore";
-import "../styles/PasswordRecovery.css";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Firestore imports
 import RecoveryImage from "../assets/cuate.png";
+import "../styles/PasswordRecovery.css";
 
 const PasswordRecovery = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [recoveryCode, setRecoveryCode] = useState("");  // To track user input
+  const [error, setError] = useState("");  // For displaying errors if any
   const navigate = useNavigate();
-  
+
   // Firestore setup
   const db = getFirestore();
 
+  // Handle the form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      setError("Please enter your email.");
+    if (!recoveryCode) {
+      setError("Please enter the recovery code.");
       return;
     }
 
     try {
-      // Call Firebase Cloud Function to send the recovery code
-      const sendRecoveryCode = firebase.functions().httpsCallable("requestPasswordReset");
-      await sendRecoveryCode({ email });
+      // Query Firestore to check if the recovery code exists
+      const codeRef = doc(db, "passwordRecoveryCodes", recoveryCode); // Assuming the code is the doc ID
+      const codeDoc = await getDoc(codeRef);
 
-      // Redirect to the page where user can enter the recovery code
-      navigate("/enter-recovery-code");
+      if (codeDoc.exists()) {
+        const codeData = codeDoc.data();
+        const currentTime = Date.now();
+
+        // Check if the recovery code has expired (1 hour expiry)
+        if (currentTime > codeData.expiration) {
+          setError("The recovery code has expired. Please request a new one.");
+        } else {
+          // Code is valid and not expired, proceed to the reset password page
+          navigate("/reset-password");  // Redirect to password reset page
+        }
+      } else {
+        setError("Invalid recovery code. Please try again.");
+      }
     } catch (error) {
-      console.error("Error during password recovery:", error);
-      setError("There was an error sending the recovery code. Please try again.");
+      console.error("Error during recovery code validation:", error);
+      setError("There was an error verifying the recovery code.");
     }
   };
 
   return (
     <div className="reset-container">
       <div className="reset-form">
-        <h1 className="reset-logo">Aktiv60</h1>
-        <p className="reset-subtitle">Enter your email to receive a recovery code</p>
+        {/* Logo Image */}
+        <h2 className="logo">
+          <img src={require("../assets/Screenshot 2023-08-19 at 15.11.22.png")} alt="Aktiv60 Logo" />
+        </h2>
+
+        <p className="reset-subtitle">
+          Enter the recovery code we sent to your email
+        </p>
+
         <form onSubmit={handleSubmit}>
-          {/* Email Input */}
+          {/* Recovery Code Input */}
           <div className="reset-input-group">
-            <label>Email</label>
+            <label>Recovery Code</label>
             <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="Enter code"
+              value={recoveryCode}
+              onChange={(e) => setRecoveryCode(e.target.value)}  // Update state with input
               required
             />
           </div>
@@ -61,7 +81,6 @@ const PasswordRecovery = () => {
         </form>
       </div>
 
-      {/* Right Side Image */}
       <div className="reset-image">
         <img src={RecoveryImage} alt="Password Recovery Illustration" />
       </div>
