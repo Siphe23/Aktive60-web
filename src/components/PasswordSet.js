@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import TwoFAImage from "../assets/bro.png";
+import TwoFAImage from "../assets/pana.png";
 import "../styles/passwordset.css";
 
 const PasswordSet = () => {
@@ -32,7 +32,7 @@ const PasswordSet = () => {
     <div className="password-set-container">
       <div className="form-container">
         <h2 className="logo">
-        
+          <img src={require("../assets/Aktiv60.png")} alt="Aktiv60 Logo" />
         </h2>
         <p>Enter your new password</p>
         <div className="form-group">
