@@ -6,26 +6,21 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  getIdToken,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore"; // Firestore
-import { getDatabase, ref, set } from "firebase/database"; // Firebase Realtime Database
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
-
-// Initialize Firestore and Realtime Database
-const db = getFirestore();
-const realTimeDB = getDatabase();
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [securityQuestion, setSecurityQuestion] = useState(""); // State for security question
-  const [securityAnswer, setSecurityAnswer] = useState(""); // State for security answer
+  const [securityQuestion, setSecurityQuestion] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
 
   const isPasswordValid = (password) => {
@@ -37,36 +32,7 @@ const Signup = () => {
     );
   };
 
-  // Save user data to Firestore
-  const saveUserToFirestore = async (uid) => {
-    try {
-      const userRef = doc(db, "users", uid);
-      await setDoc(userRef, {
-        email,                 // Save the user's email
-        role: "super_Admin",   // Save the role as super_Admin
-        securityQuestion,      // Save the selected security question
-        securityAnswer,        // Save the user's answer to the security question
-      });
-    } catch (error) {
-      toast.error("Error saving user data to Firestore: " + error.message);
-    }
-  };
-
-  // Save user data to Firebase Realtime Database
-  const saveUserToRealtimeDB = async (uid) => {
-    try {
-      const userRef = ref(realTimeDB, "users/" + uid);
-      await set(userRef, {
-        email,                 // Save the user's email
-        role: "super_Admin",   // Save the role as super_Admin
-        securityQuestion,      // Save the selected security question
-        securityAnswer,        // Save the user's answer to the security question
-      });
-    } catch (error) {
-      toast.error("Error saving user data to Realtime Database: " + error.message);
-    }
-  };
-
+  // Handle registration
   const handleRegister = async () => {
     if (!email || !password || !confirmPassword || !securityQuestion || !securityAnswer) {
       toast.error("Please fill all fields");
@@ -83,16 +49,17 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save user data to both Firestore and Realtime Database
-      await saveUserToFirestore(user.uid);
-      await saveUserToRealtimeDB(user.uid);
+      // Get Firebase ID token for the user
+      const token = await getIdToken(user);
+
+      // Save the token and other necessary information to localStorage if Remember Me is checked
+      if (rememberMe) {
+        localStorage.setItem("authToken", token);  // Store the token in localStorage
+        localStorage.setItem("email", email);      // Optionally store email as well
+      }
 
       toast.success("Registration Successful!");
       navigate("/dashboard");
@@ -127,9 +94,14 @@ const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Save user data to both Firestore and Realtime Database
-      await saveUserToFirestore(user.uid);
-      await saveUserToRealtimeDB(user.uid);
+      // Get Firebase ID token for the user
+      const token = await getIdToken(user);
+
+      // Save the token and other necessary information to localStorage
+      if (rememberMe) {
+        localStorage.setItem("authToken", token);  // Store the token in localStorage
+        localStorage.setItem("email", user.email); // Optionally store email as well
+      }
 
       toast.success("Registered with Google!");
       navigate("/dashboard");
@@ -147,6 +119,7 @@ const Signup = () => {
         <p className="subtitle">System v2.1.0 (Production)</p>
         <h3>Create an account</h3>
 
+        {/* Email Input */}
         <div className="input-group">
           <input
             type="email"
@@ -158,16 +131,13 @@ const Signup = () => {
           <i className="fas fa-envelope"></i>
         </div>
 
+        {/* Password Input */}
         <div className="input-group">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Enter New Password"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setIsPasswordFocused(true);
-            }}
-            onFocus={() => setIsPasswordFocused(true)}
+            onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
           />
           <i
@@ -176,15 +146,7 @@ const Signup = () => {
           ></i>
         </div>
 
-        {isPasswordFocused && (
-          <ul className="password-requirements">
-            <li className={password.length >= 8 ? "valid" : "invalid"}>✓ 8+ characters</li>
-            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>✓ One uppercase letter</li>
-            <li className={/\d/.test(password) ? "valid" : "invalid"}>✓ One number</li>
-            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>✓ One special character</li>
-          </ul>
-        )}
-
+        {/* Confirm Password Input */}
         <div className="input-group">
           <input
             type={showConfirmPassword ? "text" : "password"}
