@@ -7,14 +7,12 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore"; // Firestore
-import { getDatabase, ref, set } from "firebase/database"; // Firebase Realtime Database
+import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
 
-// Initialize Firestore and Realtime Database
+// Initialize Firestore
 const db = getFirestore();
-const realTimeDB = getDatabase();
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -37,33 +35,17 @@ const Signup = () => {
     );
   };
 
-  // Save user data to Firestore
+  // Save user data to Firestore (UID, role, security question and answer)
   const saveUserToFirestore = async (uid) => {
     try {
-      const userRef = doc(db, "users", uid);
+      const userRef = doc(db, "users", uid); 
       await setDoc(userRef, {
-        email,                 // Save the user's email
-        role: "super_Admin",   // Save the role as super_Admin
-        securityQuestion,      // Save the selected security question
-        securityAnswer,        // Save the user's answer to the security question
+        role: "super_Admin", // Save the role as super_Admin
+        securityQuestion,    // Save the selected security question
+        securityAnswer,      // Save the user's answer to the security question
       });
     } catch (error) {
       toast.error("Error saving user data to Firestore: " + error.message);
-    }
-  };
-
-  // Save user data to Firebase Realtime Database
-  const saveUserToRealtimeDB = async (uid) => {
-    try {
-      const userRef = ref(realTimeDB, "users/" + uid);
-      await set(userRef, {
-        email,                 // Save the user's email
-        role: "super_Admin",   // Save the role as super_Admin
-        securityQuestion,      // Save the selected security question
-        securityAnswer,        // Save the user's answer to the security question
-      });
-    } catch (error) {
-      toast.error("Error saving user data to Realtime Database: " + error.message);
     }
   };
 
@@ -90,9 +72,8 @@ const Signup = () => {
       );
       const user = userCredential.user;
 
-      // Save user data to both Firestore and Realtime Database
+      // Save the user's UID, role, security question, and answer in Firestore
       await saveUserToFirestore(user.uid);
-      await saveUserToRealtimeDB(user.uid);
 
       toast.success("Registration Successful!");
       navigate("/dashboard");
@@ -127,9 +108,8 @@ const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Save user data to both Firestore and Realtime Database
+      // Save the user's UID and role in Firestore
       await saveUserToFirestore(user.uid);
-      await saveUserToRealtimeDB(user.uid);
 
       toast.success("Registered with Google!");
       navigate("/dashboard");
