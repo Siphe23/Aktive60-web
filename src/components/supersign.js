@@ -18,6 +18,8 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState(""); // State for security question
+  const [securityAnswer, setSecurityAnswer] = useState(""); // State for security answer
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
@@ -33,12 +35,14 @@ const Signup = () => {
     );
   };
 
-  // Save user data to Firestore (UID and role)
+  // Save user data to Firestore (UID, role, security question and answer)
   const saveUserToFirestore = async (uid) => {
     try {
       const userRef = doc(db, "users", uid); 
       await setDoc(userRef, {
         role: "super_Admin", // Save the role as super_Admin
+        securityQuestion,    // Save the selected security question
+        securityAnswer,      // Save the user's answer to the security question
       });
     } catch (error) {
       toast.error("Error saving user data to Firestore: " + error.message);
@@ -46,7 +50,7 @@ const Signup = () => {
   };
 
   const handleRegister = async () => {
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !securityQuestion || !securityAnswer) {
       toast.error("Please fill all fields");
       return;
     }
@@ -68,7 +72,7 @@ const Signup = () => {
       );
       const user = userCredential.user;
 
-      // Save the user's UID and role in Firestore
+      // Save the user's UID, role, security question, and answer in Firestore
       await saveUserToFirestore(user.uid);
 
       toast.success("Registration Successful!");
@@ -154,18 +158,10 @@ const Signup = () => {
 
         {isPasswordFocused && (
           <ul className="password-requirements">
-            <li className={password.length >= 8 ? "valid" : "invalid"}>
-              ✓ 8+ characters
-            </li>
-            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>
-              ✓ One uppercase letter
-            </li>
-            <li className={/\d/.test(password) ? "valid" : "invalid"}>
-              ✓ One number
-            </li>
-            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>
-              ✓ One special character
-            </li>
+            <li className={password.length >= 8 ? "valid" : "invalid"}>✓ 8+ characters</li>
+            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>✓ One uppercase letter</li>
+            <li className={/\d/.test(password) ? "valid" : "invalid"}>✓ One number</li>
+            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>✓ One special character</li>
           </ul>
         )}
 
@@ -181,6 +177,32 @@ const Signup = () => {
             className={`fas ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`}
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           ></i>
+        </div>
+
+        {/* Security Question and Answer Inputs */}
+        <div className="input-group">
+          <select
+            value={securityQuestion}
+            onChange={(e) => setSecurityQuestion(e.target.value)}
+            disabled={loading}
+          >
+            <option value="">Select a security question</option>
+            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+            <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+            <option value="What was your first car?">What was your first car?</option>
+            <option value="What city were you born in?">What city were you born in?</option>
+            <option value="What is your favorite book?">What is your favorite book?</option>
+          </select>
+        </div>
+
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Your Answer"
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
+            disabled={loading}
+          />
         </div>
 
         <button

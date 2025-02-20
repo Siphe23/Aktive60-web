@@ -1,35 +1,54 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth"; // Firebase Authentication imports
+import { getFirestore, doc, setDoc } from "firebase/firestore"; // Firebase Firestore imports
 import "../styles/resetPassword.css"; 
 import ResetImage from "../assets/pana-removebg-preview.png"; 
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
   const [error, setError] = useState("");  
   const navigate = useNavigate();
 
-  // Firebase Authentication setup
-  const auth = getAuth();  // Initialize Firebase Authentication
+  // Firestore setup
+  const db = getFirestore();  // Initialize Firestore
+
+  // Predefined security questions
+  const securityQuestions = [
+    "What is your mother's maiden name?",
+    "What was the name of your first pet?",
+    "What was your first car?",
+    "What city were you born in?",
+    "What is your favorite book?",
+  ];
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      setError("Please enter your email.");
+    if (!email || !securityQuestion || !securityAnswer) {
+      setError("Please fill in all fields.");
       return;
     }
 
     setError("");  
-
-    // Send password reset email
+    
+    // Save the input data to the Firestore superadmin collection
     try {
-      await sendPasswordResetEmail(auth, email);
-      // Redirect the user to the success page
-      navigate("/password-reset-success"); // Navigate to the success page after sending the reset email
+      // Create a unique document for the user under "superadmin" collection
+      const docRef = doc(db, "superadmin", email);  // Use email as a unique doc id
+      await setDoc(docRef, {
+        email,
+        securityQuestion,
+        securityAnswer,
+        timestamp: new Date(), // Timestamp of the record
+      });
+
+      // Redirect the user to success page
+      navigate("/password-reset-success");
     } catch (error) {
-      console.error("Error sending reset email:", error);
-      setError("There was an error sending the password reset email. Please try again.");
+      console.error("Error saving recovery data:", error);
+      setError("There was an error while resetting your password. Please try again.");
     }
   };
 
@@ -48,6 +67,35 @@ const ResetPassword = () => {
               placeholder="Enter your email" 
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
+              required
+            />
+          </div>
+
+          {/* Security Question Selection */}
+          <div className="reset-input-group">
+            <label>Security Question</label>
+            <select 
+              value={securityQuestion} 
+              onChange={(e) => setSecurityQuestion(e.target.value)}
+              required
+            >
+              <option value="">Select a security question</option>
+              {securityQuestions.map((question, index) => (
+                <option key={index} value={question}>
+                  {question}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Security Answer Input */}
+          <div className="reset-input-group">
+            <label>Answer</label>
+            <input 
+              type="text" 
+              placeholder="Enter your answer" 
+              value={securityAnswer} 
+              onChange={(e) => setSecurityAnswer(e.target.value)} 
               required
             />
           </div>
