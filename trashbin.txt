@@ -1,0 +1,37 @@
+00
+ 
+transp
+ 
+2a2a2a
+ 
+1a1a1a
+ 
+    font-weight: bold;
+ 
+.title{
+    
+}
+ 
+ gap:2px;
+ 
+          <p className="titles">Name and Surname </p>
+ 
+  <p className="titles">Name and Surname </p>
+ 
+   <select>
+            <option>Select your role</option>
+          </select>
+          <select>
+            <option>Select your branch location</option>
+          </select>
+ 
+  .select-btn .edit-btn{
+
+  }
+  
+ 
+ 
+  .full-width {
+    grid-column: span 1;
+  }
+ 

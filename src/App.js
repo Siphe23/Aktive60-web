@@ -12,6 +12,7 @@ import TwoFactorAuth from "./components/TwoFactorAuth";
 import PasswordRecovery from "./components/PasswordRecovery";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
+import Profile from './components/Profile';
 // import Dashboard from './components/Dashboard';
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         <Route path="*" element={<NotFound />} />
+        <Route path="Profile" element={<Profile />} />
       </Routes>
     </Router>
   );
