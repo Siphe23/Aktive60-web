@@ -2,78 +2,38 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/twoFactorAuth.css"; // Use the updated CSS
-import TwoFAImage from "../assets/bro-removebg-preview (2).png"; // Import the image
+import "../styles/twoFactorAuth.css"; // Ensure you have this CSS file
+import TwoFAImage from "../assets/bro-removebg-preview.png"; // Adjust the path
+import logo from "../assets/Aktiv60.png"; // Adjust the path
 
 const TwoFactorAuth = () => {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState(""); // Track selected 2FA option
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validate the selected option
-    if (!selectedOption) {
-      toast.error("Please select a 2FA verification method.");
-      return;
-    }
-
-    // Handle 2FA verification logic here
-    toast.success(`2FA verification via ${selectedOption} initiated.`);
-    navigate("/home"); // Redirect to home or dashboard after verification
+  const handleSMSVerification = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("SMS Verification Sent!");
+      navigate("/verify-code");
+    }, 1500);
   };
 
   return (
-    <div className="two-factor-auth-container">
-      <div className="form-container">
-        <h1>Aktiv80</h1>
-        <h2>Two-Factor Authentication</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="auth-options">
-            <label>
-              <input
-                type="radio"
-                name="2fa-option"
-                value="Authentication App"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Authentication App
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="2fa-option"
-                value="SMS Verification"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              SMS Verification
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="2fa-option"
-                value="Email Verification"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Email Verification
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="2fa-option"
-                value="Backup Codes"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Backup Codes
-            </label>
-          </div>
-          <button type="submit" className="submit-button">
-            Verify
+    <div className="two-fa-container">
+      <img src={logo} alt="Aktiv80 Logo" className="logo" />
+      <div className="two-fa-content">
+        <div className="two-fa-text">
+          <h2>Two-Factor Authentication</h2>
+          <button
+            className="sms-verification-btn"
+            onClick={handleSMSVerification}
+            disabled={loading}
+          >
+            {loading ? "Sending..." : "SMS Verification →"}
           </button>
-        </form>
-      </div>
-      <div className="image-container">
-        <img src={TwoFAImage} alt="Two-Factor Authentication" />
+        </div>
+        <img src={TwoFAImage} alt="2FA Illustration" className="two-fa-image" />
       </div>
     </div>
   );

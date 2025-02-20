@@ -1,16 +1,17 @@
-// Login.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
-import { auth } from "../firebase/firebase";
+import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
+import logo from "../assets/Aktiv60.png"
 import "../styles/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,20 +30,9 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // If remember me is checked, persist the auth state
-      if (rememberMe) {
-        await auth.setPersistence("local");
-      }
-
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       toast.success("Login Successful!");
-      navigate("/dashboard"); // Navigate to dashboard after successful login
+      navigate("/dashboard");
     } catch (error) {
       let errorMessage = "Login failed";
       switch (error.code) {
@@ -67,63 +57,51 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      toast.success("Logged in with Google!");
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error("Google sign-in failed: " + error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="auth-container">
       <div className="login-section">
-        <h2 className="logo">Aktiv60</h2>
-        <p className="subtitle">System v2.1.0 (Production)</p>
+        <div className="logo-container">
+          <img src={logo} alt="Aktiv60" className="logo" />
+        </div>
+
         <h3>Sign into your account</h3>
 
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label htmlFor="email">
-              <i className="fas fa-envelope"></i> Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading}
-            />
+            <label htmlFor="email">Email</label>
+            <div className="input-wrapper">
+              <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+              />
+            </div>
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">
-              <i className="fas fa-lock"></i> Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-            />
-            <i
-              className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label="Toggle password visibility"
-              role="button"
-            ></i>
+            <label htmlFor="password">Password</label>
+            <div className="input-wrapper">
+              <FontAwesomeIcon icon={faLock} className="input-icon" />
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
           </div>
 
           <div className="auth-options">
@@ -143,27 +121,9 @@ const Login = () => {
           </button>
         </form>
 
-        <div>
+        <div className="forgot-password">
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
-
-        <p className="or-text">
-          <hr className="line" />
-          Or
-          <hr className="line" />
-        </p>
-
-        <button
-          className="google-auth-button"
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-        >
-          <i className="fab fa-google"></i> Continue with Google
-        </button>
-
-        <p className="switch-auth">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
       </div>
 
       <div className="image-container">

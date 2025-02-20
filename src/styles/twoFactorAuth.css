@@ -1,113 +1,69 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #242526;
+}
 
-.two-factor-auth-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; 
-    background: radial-gradient(
-      70.71% 99.44% at 110% 40%,
-      #a3b2c8 0%,
-      #b5c1d3 20%,
-      #c7d0de 40%,
-      #d9e0e9 60%,
-      #eceff4 80%,
-      #ffffff 100%
-    );
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    padding: 20px;
-  }
-  
-  .form-container {
-    width: 100%; 
-    max-width: 500px; 
-    padding: 20px;
-    background: white; 
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-container h1 {
-    font-size: 2rem; 
-    margin-bottom: 10px;
-    color: #2d3f58; 
-  }
-  
-  .form-container h2 {
-    font-size: 1.5rem; 
-    margin-bottom: 20px;
-    color: #333; }
-  
-  .auth-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    margin-bottom: 20px;
-  }
-  
-  .auth-options label {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    font-size: 1rem;
-  }
-  
-  .submit-button {
-    background-color: #2d3f58;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 10px 20px;
-    width: 100%; 
-    max-width: 200px; 
-  }
-  
-  .submit-button:hover {
-    background-color: #1e2a3a;
-  }
-  
-  .image-container {
-    display: none; 
-  }
-  
-  
-  
- 
-  @media (min-width: 768px) {
-    .two-factor-auth-container {
-      flex-direction: row; 
-      justify-content: space-between;
-      padding: 40px;
-    }
-  
-    .form-container {
-      width: 50%; 
-      max-width: 400px; 
-    }
-  
-    .image-container {
-      display: block; 
-      width: 50%; 
-      text-align: right;
-    }
-  
-    .image-container img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
-  
+.two-fa-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 0 50px;
+}
 
-  @media (min-width: 1024px) {
-    /* .two-factor-auth-container {
-      max-width: 1200px;
-      margin: 0 auto; 
-    } */
-  
-    .form-container {
-      max-width: 500px;
-    }
-  }
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 300px;
+  width: 50px;
+}
+
+.two-fa-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.two-fa-text {
+  flex: 1;
+  padding-right: 50px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 40%;
+}
+
+.sms-verification-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 500px;
+  margin-left: 40%;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sms-verification-btn:disabled {
+  background-color:red;
+  cursor: not-allowed;
+}
+
+.sms-verification-btn:hover:not(:disabled) {
+  background-color: red;
+}
+
+.two-fa-image {
+ margin-right: 10%;
+  Width :500px;
+  Height:600px;
+  Top:321.46px;
+  Left: 894px
+}
