@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";  // Firebase Authentication imports
 import "../styles/resetPassword.css"; 
 import ResetImage from "../assets/pana-removebg-preview.png"; 
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
-  const [securityQuestion, setSecurityQuestion] = useState("");
-  const [securityAnswer, setSecurityAnswer] = useState("");
   const [error, setError] = useState("");  
+  const [loading, setLoading] = useState(false); // For loading state
   const navigate = useNavigate();
 
-  // Predefined security questions
-  const securityQuestions = [
-    "What is your mother's maiden name?",
-    "What was the name of your first pet?",
-    "What was your first car?",
-    "What city were you born in?",
-    "What is your favorite book?",
-  ];
+  const auth = getAuth();  // Initialize Firebase Authentication
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -27,8 +20,20 @@ const ResetPassword = () => {
       return;
     }
 
-    setError("");  
-    navigate("/password-reset-success");  
+    setError("");
+    setLoading(true);
+
+    // Send password reset email using Firebase Authentication
+    try {
+      await sendPasswordResetEmail(auth, email);
+      // Redirect the user to a success page after sending the reset email
+      navigate("/password-reset-success");
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      setError("There was an error while sending the reset email. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,40 +56,11 @@ const ResetPassword = () => {
             />
           </div>
 
-          {/* Security Question Selection */}
-          <div className="reset-input-group">
-            <label>Security Question</label>
-            <select 
-              value={securityQuestion} 
-              onChange={(e) => setSecurityQuestion(e.target.value)}
-              required
-            >
-              <option value="">Select a security question</option>
-              {securityQuestions.map((question, index) => (
-                <option key={index} value={question}>
-                  {question}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Security Answer Input */}
-          <div className="reset-input-group">
-            <label>Answer</label>
-            <input 
-              type="text" 
-              placeholder="Enter your answer" 
-              value={securityAnswer} 
-              onChange={(e) => setSecurityAnswer(e.target.value)} 
-              required
-            />
-          </div>
-
-          {/* Error Message */}
           {error && <p className="error-message">{error}</p>}
 
-          {/* Submit Button */}
-          <button type="submit" className="reset-button">Submit</button>
+          <button type="submit" className="reset-button" disabled={loading}>
+            {loading ? "Sending..." : "Send Reset Email"}
+          </button>
         </form>
       </div>
 

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
-import logo from "../assets/Aktiv60.png"
+import logo from "../assets/Aktiv60.png";
 import "../styles/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +32,7 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       toast.success("Login Successful!");
-      navigate("/dashboard");
+      navigate("/home");
     } catch (error) {
       let errorMessage = "Login failed";
       switch (error.code) {
@@ -61,9 +61,8 @@ const Login = () => {
     <div className="auth-container">
       <div className="login-section">
         <div className="logo-container">
-          <img src={logo} alt="Aktiv60" className="logo" />
+          <img src={logo} alt="Aktiv60 Logo" className="logo" />
         </div>
-
         <h3>Sign into your account</h3>
 
         <form onSubmit={handleLogin}>

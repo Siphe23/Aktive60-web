@@ -49,8 +49,9 @@ const PasswordRecovery = () => {
   return (
     <div className="reset-container">
       <div className="reset-form">
+        {/* Logo Image */}
         <h2 className="logo">
-          <img src={require("../assets/Aktiv60.png")} alt="Aktiv60 Logo" />
+          <img src={require("../assets/Screenshot 2023-08-19 at 15.11.22.png")} alt="Aktiv60 Logo" />
         </h2>
 
         <p className="reset-subtitle">
