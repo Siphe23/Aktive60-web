@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../firebase/firebase";
 import {
   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
 } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
 import logo from "../assets/Aktiv60.png";
@@ -21,6 +19,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Check for saved credentials on component mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    const savedPassword = localStorage.getItem("password");
+
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);  // Set remember me to true if there are saved credentials
+    }
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -32,6 +42,16 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       toast.success("Login Successful!");
+
+      // Save credentials to localStorage if "Remember Me" is checked
+      if (rememberMe) {
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+      } else {
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+      }
+
       navigate("/home");
     } catch (error) {
       let errorMessage = "Login failed";
