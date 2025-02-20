@@ -41,6 +41,7 @@ h3 {
   font-size: 20px;
   color: #FFFFFF;
   margin-bottom: 20px;
+  margin-left: 300px;
   text-align: center;
 }
 
@@ -54,6 +55,7 @@ h3 {
   font-size: 14px;
   color: #FFFFFF;
   margin-bottom: 5px;
+ 
 }
 
 .input-wrapper {
@@ -62,20 +64,23 @@ h3 {
 
 .input-wrapper input {
   width: 100%;
-  padding: 10px 40px 10px 10px; /* Adjusted padding for icon */
+  padding: 10px 40px 10px 10px; 
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
-  background-color: #3a3b3c; /* Input background color */
-  color: #ffffff; /* Input text color */
+  background-color: #3a3b3c;
+  margin-left: 300px; 
+  color: #ffffff; 
 }
 
 .input-icon {
   position: absolute;
   left: 10px;
   top: 50%;
+  margin-left: 300px;
   transform: translateY(-50%);
+
   color: #ffffff;
 }
 
@@ -90,7 +95,7 @@ h3 {
 
 .auth-options {
   display: flex;
-  justify-content: flex-start; /* Align to the left */
+  justify-content: flex-start; 
   align-items: center;
   margin-bottom: 20px;
 }
@@ -113,6 +118,7 @@ h3 {
   color: #ffffff;
   border: none;
   border-radius: 5px;
+  margin-left: 300px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -157,7 +163,9 @@ h3 {
 .forgot-password a:hover {
   text-decoration: underline;
 }
-
+.checkbox{
+  margin-left: 300px;
+}
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .auth-container {
