@@ -10,6 +10,8 @@ import PasswordResetSuccess from "./components/PasswordResetSuccess";
 import TwoFactorAuth from "./components/TwoFactorAuth";
 import ResetPassword from './components/ResetPassword'
 import PasswordRecovery from "./components/PasswordRecovery";
+import NotFound from "./components/NotFound";
+
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path="*" element={<h2>404 - Page Not Found</h2>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
