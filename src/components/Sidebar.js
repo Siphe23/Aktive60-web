@@ -1,30 +1,54 @@
 import React, { useState } from 'react';
-import { FaHome, FaChartBar, FaCog, FaUser, FaBars } from 'react-icons/fa';
 import '../styles/Sidebar.css';
+import { Dashboard, LocationOn, Settings, BarChart, People, Build, Group, Inventory } from '@mui/icons-material';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
-      <div className="toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
-        <FaBars />
-      </div>
-      <div className="sidebar-item">
-        <FaHome />
-        {isExpanded && <span>Overview</span>}
-      </div>
-      <div className="sidebar-item">
-        <FaChartBar />
-        {isExpanded && <span>Reports</span>}
-      </div>
-      <div className="sidebar-item">
-        <FaCog />
-        {isExpanded && <span>Settings</span>}
-      </div>
-      <div className="sidebar-item">
-        <FaUser />
-        {isExpanded && <span>User Management</span>}
+      <div className="sidebar-inner">
+        <button className="toggle-btn" onClick={toggleSidebar}>
+          {isExpanded ? '<' : '>'}
+        </button>
+        <div className="menu">
+          <div className="menu-item">
+            <Dashboard className="icon" />
+            <span className="text">Overview</span>
+          </div>
+          <div className="menu-item">
+            <LocationOn className="icon" />
+            <span className="text">Location</span>
+          </div>
+          <div className="menu-item">
+            <Settings className="icon" />
+            <span className="text">System Settings</span>
+          </div>
+          <div className="menu-item">
+            <BarChart className="icon" />
+            <span className="text">Generate Reports</span>
+          </div>
+          <div className="menu-item">
+            <People className="icon" />
+            <span className="text">User Management</span>
+          </div>
+          <div className="menu-item">
+            <Build className="icon" />
+            <span className="text">Trainers</span>
+          </div>
+          <div className="menu-item">
+            <Group className="icon" />
+            <span className="text">Trainees</span>
+          </div>
+          <div className="menu-item">
+            <Inventory className="icon" />
+            <span className="text">Collection</span>
+          </div>
+        </div>
       </div>
     </div>
   );
