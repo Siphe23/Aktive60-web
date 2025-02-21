@@ -1,13 +1,6 @@
-.graph-container {
-    width: 100%;
-    background: #22242a;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  h3 {
-    color: white;
-    margin-bottom: 15px;
-  }
-  
+.chart-container {
+  background-color: #1b1e2a;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+}

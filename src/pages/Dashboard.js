@@ -2,7 +2,8 @@ import React from 'react';
 import Sidebar from '../components/Sidebar';
 import NavigationBar from '../components/Navbar';
 import DataTable from '../components/DataTable';
-import Graph from '../components/Graph';
+import CustomerChart from '../components/CustomChart';
+import Cards from '../components/cards';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -12,8 +13,9 @@ const Dashboard = () => {
       <div className="main-content">
         <Sidebar />
         <div className="content">
+          <Cards/>
           <DataTable />
-          <Graph />
+          <CustomerChart />
         </div>
       </div>
     </div>

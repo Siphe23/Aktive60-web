@@ -1,0 +1,40 @@
+.cards-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .card {
+    background-color: #1b1e2a;
+    padding: 20px;
+    border-radius: 12px;
+    width: 250px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 32px;
+    margin: 5px 0;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+  .percentage {
+    font-weight: bold;
+    padding-right: 5px;
+  }
+  
