@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import '../styles/Sidebar.css';
-import { Dashboard, LocationOn, Settings, BarChart, People, Build, Group, Inventory } from '@mui/icons-material';
+import React from "react";
+import "../styles/Sidebar.css";
+import {
+  Dashboard,
+  LocationOn,
+  Settings,
+  BarChart,
+  People,
+  Build,
+  Group,
+  Inventory,
+} from "@mui/icons-material";
 
-const Sidebar = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
-  };
-
+const Sidebar = ({ isExpanded, toggle }) => {
   return (
-    <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
+    <div className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="sidebar-inner">
-        <button className="toggle-btn" onClick={toggleSidebar}>
-          {isExpanded ? '<' : '>'}
+        <button className="toggle-btn" onClick={toggle}>
+          {isExpanded ? "<" : ">"}
         </button>
         <div className="menu">
           <div className="menu-item">

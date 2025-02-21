@@ -1,14 +1,14 @@
 import React from "react";
 import { FaUsers, FaUserPlus } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
-import "../styles/Cards.css"; // Make sure to create this file for styling
+import "../styles/Cards.css"; // Ensure you have this CSS file
 
 const Cards = () => {
   const cardData = [
     {
       title: "Active Members",
       value: "412",
-      info: "from last month",
+      info: "US$: 1 from last month", // Updated info
       percentage: "+12%",
       icon: <FaUsers size={30} color="#4A90E2" />,
       color: "green",

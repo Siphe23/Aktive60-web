@@ -1,79 +1,46 @@
 .navigation-bar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background-color: #181a1b;
+  align-items: center;
   padding: 10px 20px;
-  color: white;
+  background-color: #1b1e2a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logo {
-  height: 40px;
-}
-.logo-search-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: absolute;
-  top: 10px;
-  left: 20px;
-}
-
-.logo {
-  height: 40px;
-}
-
+/* Center: Search Bar */
 .search-bar {
-  background-color: #25272a; 
-  padding: 8px 12px;
-  margin-right: 600px;
-  border-radius: 8px;
-  width: 650px;
-
+  flex: 1;
   display: flex;
   align-items: center;
-}
-
-
-.search-bar {
-  background-color: #25272a; 
-  padding: 8px 12px;
-  border-radius: 8px;
-  width: 250px;
-  display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
 .search-input {
-  background: transparent;
-  border: none;
-  color: white;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
   outline: none;
-  width: 100%;
 }
 
-.search-input::placeholder {
-  color: #888;
+.search-icon {
+  margin-left: 8px;
+  cursor: pointer;
 }
 
+/* Right Section */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
 }
 
 .notification-icon {
   position: relative;
+  margin-right: 15px;
 }
 
 .icon {
-  font-size: 1.5rem;
+  font-size: 20px;
   cursor: pointer;
 }
 
@@ -83,9 +50,16 @@
   right: -5px;
   background-color: red;
   color: white;
-  font-size: 0.8rem;
   border-radius: 50%;
-  padding: 3px 6px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .profile-section {
@@ -94,38 +68,43 @@
   cursor: pointer;
 }
 
-.profile-pic {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
+.profile-name {
   margin-right: 8px;
 }
 
-.profile-name {
-  margin-right: 5px;
-}
-
 .caret-icon {
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
+/* Logo Positioned at the Top-Right */
+.logo-container {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.logo {
+  height: 40px;
+}
+
+/* Dropdown */
 .dropdown-content {
   position: absolute;
-  right: 10px;
-  top: 50px;
-  background-color: #232526;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1;
 }
 
 .dropdown-item {
+  padding: 10px 20px;
   display: block;
-  color: white;
   text-decoration: none;
-  padding: 8px;
+  color: #333;
 }
 
 .dropdown-item:hover {
-  background-color: #333;
+  background-color: #f1f1f1;
 }

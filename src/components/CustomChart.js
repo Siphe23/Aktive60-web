@@ -12,13 +12,13 @@ import {
 } from "recharts";
 
 const data = [
-  { day: 0, midrand: 170, parktown: 340, sloane: 255 },
-  { day: 1, midrand: 90, parktown: 200, sloane: 150 },
-  { day: 2, midrand: 50, parktown: 180, sloane: 200 },
-  { day: 3, midrand: 75, parktown: 100, sloane: 85 },
-  { day: 4, midrand: 120, parktown: 350, sloane: 150 },
-  { day: 5, midrand: 200, parktown: 90, sloane: 250 },
-  { day: 6, midrand: 180, parktown: 255, sloane: 85 },
+  { day: 0, parktown: 340, sloane: 255, midrand: 170 },
+  { day: 1, parktown: 255, sloane: 170, midrand: 85 },
+  { day: 2, parktown: 170, sloane: 85, midrand: 0 },
+  { day: 3, parktown: 85, sloane: 0, midrand: 0 },
+  { day: 4, parktown: 0, sloane: 1, midrand: 2 },
+  { day: 5, parktown: 3, sloane: 4, midrand: 5 },
+  { day: 6, parktown: 6, sloane: 7, midrand: 0 },
 ];
 
 const CustomChart = () => {
