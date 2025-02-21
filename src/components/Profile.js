@@ -58,7 +58,10 @@ const Profile = () => {
       <button className="close-btn" onClick={() => setShowModal(false)}>
         &times;
       </button>
-      <h2 className="select-text">Select Your Avatar</h2>
+      <div class="container">
+    <p class="select-text">Pick an avatar</p>
+  </div>
+
       <div className="avatar-grid">
         {avatars.map((avatar, index) => (
           <img

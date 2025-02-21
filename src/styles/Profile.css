@@ -179,7 +179,7 @@
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 600px;
+  width: 664px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -229,22 +229,25 @@
 
 /* Apply Button */
 .apply-btn {
-  background: #6200ea;
+  background: #2D3F58;
   color: white;
   padding: 10px 25px;
   border: none;
   cursor: pointer;
+  font-size: 14px;
   border-radius: 5px;
   font-size: 16px;
   transition: background 0.3s;
   margin-top: 15px;
-  margin-left: 80%;
+  width: 155px;
+  margin-left: 75%;
+  font-family:'Gugi', cursive ;
  
 
 }
 
 .apply-btn:hover {
-  background: #4b00b5;
+  background: #3b9738;
 }
 
 /* Fade-in Animation */
@@ -259,4 +262,7 @@
 .select-text{
   color: #000;
   font-size: 16px;
+  text-align: left;
+  left: 0%;
+  margin-top: 0px;
 }
