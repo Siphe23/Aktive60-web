@@ -1,9 +1,10 @@
 import React from 'react';
 import '../styles/Profile.css';
 import avatarPlaceholder from '../assets/avatar-placeholder.png'; // Ensure this path points to your avatar image
-
+import Navbar from './Navbar'
 const Profile = () => {
   return (
+   
     <div className="profile-container">
       {/* Profile Image Section */}
       <div className="profile-image-section">
@@ -15,7 +16,7 @@ const Profile = () => {
           <button className="select-btn">Select Avatar</button>
         </div>
       </div>
-
+      
       {/* Form Section */}
       <div className="form-section">
         <div className="form-grid">
@@ -38,7 +39,9 @@ const Profile = () => {
           <button className="clear-btn">Clear</button>
         </div>
       </div>
+
     </div>
+    
   );
 };
 
