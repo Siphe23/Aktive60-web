@@ -1,63 +1,116 @@
-/* General container styling */
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+}
+  
+/* Main Content */
+.main-content {
+    display: flex;
+    flex: 1;
+}
+  
+/* Sidebar Content Adjustment */
+.content {
+    flex: 1;
+    transition: margin-left 0.3s;
+}
+  
+.content.expanded {
+    margin-left: 250px; /* Width of expanded sidebar */
+}
+  
+.content.collapsed {
+    margin-left: 80px; /* Width of collapsed sidebar */
+}
+  
+/* General Container Styling */
 .container {
     padding: 20px;
     font-family: Arial, sans-serif;
-   
-  }
+}
   
-  /* Header section styling */
-  .header {
+/* Header Section Styling */
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     background-color: #343a40;
-    padding: 10px;
+    padding: 15px;
     border-radius: 8px;
-    color: white;
-  }
+    margin-bottom: 20px;
+}
   
-  .location-select {
-    height: 30px;
-    width: 200px;
+.location-select {
+    height: 35px;
+    width: 250px;
     border: none;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: #ffffff;
     color: #343a40;
-  }
+    font-size: 16px;
+}
   
-  .action-button {
+.header-buttons {
+    display: flex;
+}
+  
+.action-button {
     background-color: #007bff;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     margin-left: 10px;
     border-radius: 4px;
-  }
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
   
-  .action-button:hover {
+.action-button:hover {
     background-color: #0056b3;
-  }
+}
   
-  /* Card styling */
-  .card {
-    margin-top: 20px;
-    background-color: #2F2E41;
+/* Card Grid Styling */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+  
+/* Card Styling */
+.card {
+    display: flex;
+    flex-direction: column; /* Ensure items are stacked */
+    align-items: flex-start; /* Align content properly */
+    justify-content: flex-start; /* Ensure everything stays inside */
+    background-color: #2f2e41;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
-    margin-bottom: 15px;
+    min-height: 150px; /* Prevent content from overflowing */
+}
+
+.card h3 {
+    margin: 0 0 15px 0;
     font-weight: bold;
     color: #fafdff;
-  }
-  
-  .card p {
+    text-align: left;
+    width: 100%;
+}
+
+
+.card p {
     margin: 5px 0;
     color: #caccce;
-  }
-  
+    font-size: 16px;
+}
+
+.card p strong {
+    color: #ffffff;
+}
