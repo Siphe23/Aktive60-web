@@ -1,3 +1,14 @@
+  left:50%;
+ 
+3b82f6
+ 
+flex
+ 
+  <button className="select-btn">Select Avatar</button>
+ 
+    <button className="select-btn">Select Avatar</button>
+        </div>
+ 
   wid
  
 right
