@@ -1,45 +1,95 @@
-/* LocationSettings.css */
-
-.container {
+.dashboard-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-
-.header {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.label {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #1e1e1e;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    height: 100vh;
+    width: 100%;
+  }
+  
+  /* Main content container */
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
 
-.button:hover {
-    background-color: #0056b3;
-}
+  .content {
+    flex: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .content.expanded {
+    margin-left: 250px; /* Adjust based on Sidebar width */
+  }
+  
+  .content.collapsed {
+    margin-left: 80px; /* Adjust based on Sidebar width */
+  }
+  
+
+
+.location-settings {
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+   
+  }
+  
+  .package-container {
+    background-color: #2a2a3a;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sub {
+    text-align: left;
+    font-size: x-large;
+  }
+  
+  .package-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .package-item {
+    background-color: #3a3a4a;
+    padding: 15px;
+    border: 1px solid #2a2a3a;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between; /* Position icon on the right */
+    align-items: center;
+    color: #fff;
+    width: 80%;
+    max-width: 600px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .package-item:hover {
+    border: 1px solid #ffffff;
+    background-color: #4a4a5a;
+ 
+  }
+  
+  .edit-icon {
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+  }
+  
+  .edit-icon:hover {
+    color: #fff;
+  }
+  
