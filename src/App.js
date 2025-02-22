@@ -16,12 +16,18 @@ import Dashboard from './pages/Dashboard'
 
 import LocationOverview from "./pages/Location/LocationOverview";
 import LocationDetails from "./pages/Location/LocationDetails";
+import LocationStaff from "./pages/Location/LocationStaff";
+import LocationSettings from "./pages/Location/LocationSettings";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import Users from "./pages/UsersManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
+
+
+
+
 
 function App() {
   return (
@@ -37,7 +43,7 @@ function App() {
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
-        {/* <Route path=  "/dashboard" element={<Dashboard />} /> */}
+        <Route path=  "/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
         <Route path="Profile" element={<Profile />} />
 
@@ -46,6 +52,8 @@ function App() {
            
             <Route path="/locationoverview" element={<LocationOverview />} />
             <Route path="/locationdetails" element={<LocationDetails />} />
+            <Route path="/locationstaff" element={<LocationStaff />} />
+            <Route path="/locationsettings" element={<LocationSettings />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/users" element={<Users />} />

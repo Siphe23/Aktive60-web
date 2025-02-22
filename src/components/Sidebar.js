@@ -44,8 +44,11 @@ const Sidebar = () => {
               <Link to="/locationdetails" className={`submenu-item ${isActive('/locationdetails')}`}>
                 Location Details
               </Link>
-              <Link to="/locationmap" className={`submenu-item ${isActive('/locationmap')}`}>
-                Location Map
+              <Link to="/locationsettings" className={`submenu-item ${isActive('/locationsettings')}`}>
+                Location Settings
+              </Link>
+              <Link to="/locationstaff" className={`submenu-item ${isActive('/locationstaff')}`}>
+                Location Staff
               </Link>
             </div>
           )}
