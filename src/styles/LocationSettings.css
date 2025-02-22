@@ -34,7 +34,7 @@
     color: white;
     padding: 20px;
     min-height: 100vh;
-    background-color: #1e1e2f;
+   
   }
   
   .package-container {
@@ -80,7 +80,7 @@
   .package-item:hover {
     border: 1px solid #ffffff;
     background-color: #4a4a5a;
-    transform: scale(1.02);
+ 
   }
   
   .edit-icon {
