@@ -1,33 +1,49 @@
 .data-table {
-  width: 100%;
-  padding: 10px;
-  background-color: #1b1e2a; /* Dark background */
+  max-width: 800px; /* Medium-small size constraint */
+  margin: 0 auto; /* Center align table */
+  padding: 15px;
+  background-color: #1b1e2a;
   border-radius: 10px;
+  overflow-x: auto; /* Add scroll for mobile */
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   color: white;
+  font-size: 0.9rem; /* Smaller font size */
 }
 
 th, td {
-  border: 1px solid #3a3d4d; /* Table border color */
-  padding: 12px;
+  border: 1px solid #3a3d4d;
+  padding: 10px 12px; /* Reduced vertical padding */
   text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 th {
-  background-color: #1b1e2a;
-  font-weight: bold;
+  background-color: #252836; /* Darker header background */
+  font-weight: 600;
+  font-size: 0.95rem; /* Slightly larger header text */
 }
 
 td {
   background-color: #1b1e2a;
+  font-weight: 300;
 }
+
+/* Column width adjustments */
+th:nth-child(1), td:nth-child(1) { width: 35%; } /* Location column */
+th:nth-child(2), td:nth-child(2) { width: 20%; } /* Status column */
+th:nth-child(3), td:nth-child(3) { width: 25%; } /* Users column */
+th:nth-child(4), td:nth-child(4) { width: 20%; } /* Trainers column */
 
 tr:hover {
   background-color: #252836;
+  transition: background-color 0.2s ease; /* Smooth hover effect */
 }
 
-  
+/* Optional: Add subtle stripe effect */
+tr:nth-child(even) td {
+  background-color: #202330;
+}

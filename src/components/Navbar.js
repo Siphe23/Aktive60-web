@@ -4,45 +4,49 @@ import "../styles/NavigationBar.css";
 import profilePic from "../assets/son.png";
 import logo from "../assets/Aktiv60.png";
 
-const NavigationBar = ({ isSidebarExpanded }) => {
+const NavigationBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifications, setNotifications] = useState(2); // Example notification count
+  const [notifications] = useState(2);
 
   return (
     <div className="navigation-bar">
-      <div className="logo-container">
-     
-      </div>
-      <div className="search-bar">
-        <input type="text" placeholder="Quick Search..." className="search-input" />
-        <FaSearch className="search-icon" />
+      {/* Left Section - Logo + Search */}
+      <div className="nav-left">
+        <div className="logo-container">
+          <img src={logo} alt="Aktiv60 Logo" className="logo" />
+        </div>
+
+        <div className="search-bar">
+          <FaSearch className="search-icon" />
+          <input 
+            type="text" 
+            placeholder="Quick Search..." 
+            className="search-input" 
+          />
+        </div>
       </div>
 
-      {/* Right Section: Profile, Bell Notification */}
+      {/* Right Section */}
       <div className="nav-right">
         <div className="notification-icon">
           <FaBell className="icon" />
           {notifications > 0 && <span className="badge">{notifications}</span>}
         </div>
-        <img src={profilePic} alt="Profile" className="profile-pic" />
+        
         <div className="profile-section" onClick={() => setDropdownOpen(!dropdownOpen)}>
+          <img src={profilePic} alt="Profile" className="profile-pic" />
           <span className="profile-name">Tyy Ford</span>
           <FaCaretDown className="caret-icon" />
         </div>
-      </div>
 
-      {/* Logo Positioned at the Top-Right Corner */}
-      <div className="logo-container">
-        <img src={logo} alt="Aktiv60 Logo" className="logo" />
+        {/* Dropdown Menu */}
+        {dropdownOpen && (
+          <div className="dropdown-menu">
+            <div className="dropdown-item">Edit Profile</div>
+            <div className="dropdown-item">Logout</div>
+          </div>
+        )}
       </div>
-
-      {/* Dropdown Menu */}
-      {dropdownOpen && (
-        <div className="dropdown-content">
-          <a href="#" className="dropdown-item">Edit Profile</a>
-          <a href="#" className="dropdown-item">Logout</a>
-        </div>
-      )}
     </div>
   );
 };
