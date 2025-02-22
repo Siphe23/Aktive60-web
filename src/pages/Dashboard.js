@@ -1,26 +1,28 @@
-import React, { useState } from 'react'; // ✅ Added useState
-import Sidebar from '../components/Sidebar';
-import NavigationBar from '../components/Navbar';
-import DataTable from '../components/DataTable';
-import CustomChart from '../components/CustomChart';
-import Cards from '../components/cards';
-import '../styles/Dashboard.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import NavigationBar from "../components/Navbar";
+import DataTable from "../components/DataTable";
+import CustomerChart from "../components/CustomChart";
+import Cards from "../components/cards";
+import "../styles/Dashboard.css";
 
 const Dashboard = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true); 
+
+  const toggleSidebar = () => {
+    setIsExpanded((prev) => !prev);
+  };
 
   return (
     <div className="dashboard-container">
       <NavigationBar isSidebarExpanded={isSidebarExpanded} />
       <div className="main-content">
-        <Sidebar 
-          isExpanded={isSidebarExpanded} 
-          toggle={() => setIsSidebarExpanded(!isSidebarExpanded)}
-        />
-        <div className="content" style={{ marginLeft: isSidebarExpanded ? '220px' : '60px' }}>
-          <Cards/>
+        <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
+        <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
+          <Cards />
           <DataTable />
-          <CustomChart />
+          <CustomerChart />
         </div>
       </div>
     </div>

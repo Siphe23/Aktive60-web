@@ -9,11 +9,10 @@ const NavigationBar = ({ isSidebarExpanded }) => {
   const [notifications, setNotifications] = useState(2); // Example notification count
 
   return (
-    <div
-      className="navigation-bar"
-      style={{ marginLeft: isSidebarExpanded ? "220px" : "60px" }}
-    >
-      {/* Center: Search Bar */}
+    <div className="navigation-bar">
+      <div className="logo-container">
+     
+      </div>
       <div className="search-bar">
         <input type="text" placeholder="Quick Search..." className="search-input" />
         <FaSearch className="search-icon" />

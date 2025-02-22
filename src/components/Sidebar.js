@@ -1,56 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/Sidebar.css";
-import {
-  Dashboard,
-  LocationOn,
-  Settings,
-  BarChart,
-  People,
-  Build,
-  Group,
-  Inventory,
-} from "@mui/icons-material";
+import { Dashboard, LocationOn, Settings, BarChart, People, Build, Group, Inventory, ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const Sidebar = ({ isExpanded, toggle }) => {
+const Sidebar = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isLocationDropdownVisible, setIsLocationDropdownVisible] = useState(false);
+  const location = useLocation();
+
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const toggleLocationDropdown = () => {
+    setIsLocationDropdownVisible(!isLocationDropdownVisible);
+  };
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'active' : '';
+  };
+
   return (
     <div className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="sidebar-inner">
-        <button className="toggle-btn" onClick={toggle}>
+        <button className="toggle-btn" onClick={toggleSidebar}>
           {isExpanded ? "<" : ">"}
         </button>
         <div className="menu">
-          <div className="menu-item">
+          <Link to="/" className={`menu-item ${isActive('/')}`}>
             <Dashboard className="icon" />
             <span className="text">Overview</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <div className={`menu-item ${isActive('/locationoverview') || isActive('/locationdetails') || isActive('/locationmap') ? 'active' : ''}`} onClick={toggleLocationDropdown}>
             <LocationOn className="icon" />
             <span className="text">Location</span>
+            {isLocationDropdownVisible ? <ExpandLess className="icon" /> : <ExpandMore className="icon" />}
           </div>
-          <div className="menu-item">
+          {isLocationDropdownVisible && (
+            <div className="submenu">
+              <Link to="/locationoverview" className={`submenu-item ${isActive('/locationoverview')}`}>
+                Location Overview
+              </Link>
+              <Link to="/locationdetails" className={`submenu-item ${isActive('/locationdetails')}`}>
+                Location Details
+              </Link>
+              <Link to="/locationmap" className={`submenu-item ${isActive('/locationmap')}`}>
+                Location Map
+              </Link>
+            </div>
+          )}
+          <Link to="/settings" className={`menu-item ${isActive('/settings')}`}>
             <Settings className="icon" />
             <span className="text">System Settings</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <Link to="/reports" className={`menu-item ${isActive('/reports')}`}>
             <BarChart className="icon" />
             <span className="text">Generate Reports</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <Link to="/users" className={`menu-item ${isActive('/users')}`}>
             <People className="icon" />
             <span className="text">User Management</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <Link to="/trainers" className={`menu-item ${isActive('/trainers')}`}>
             <Build className="icon" />
             <span className="text">Trainers</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <Link to="/trainees" className={`menu-item ${isActive('/trainees')}`}>
             <Group className="icon" />
             <span className="text">Trainees</span>
-          </div>
-          <div className="menu-item">
+          </Link>
+          <Link to="/collection" className={`menu-item ${isActive('/collection')}`}>
             <Inventory className="icon" />
             <span className="text">Collection</span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
