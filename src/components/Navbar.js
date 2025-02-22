@@ -11,7 +11,7 @@ const NavigationBar = () => {
   return (
     <div className="navigation-bar">
       <div className="logo-container">
-        <img src={logo} alt="Aktiv60 Logo" className="logo" />
+     
       </div>
       <div className="search-bar">
         <input type="text" placeholder="Quick Search..." className="search-input" />

@@ -24,6 +24,21 @@
   padding-top: 20px;
 }
 
+.sidebar .submenu {
+  margin-left: 20px;
+}
+
+.sidebar .submenu-item {
+  display: block;
+  padding: 5px 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar .submenu-item:hover {
+  background-color: #555;
+}
+
 .toggle-btn {
   background: none;
   border: none;
@@ -45,12 +60,16 @@
   gap: 15px;
   padding: 15px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s;
   width: 100%;
 }
 
 .menu-item:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+  color: red;
 }
 
 .icon {
@@ -61,6 +80,9 @@
   display: none;
   font-size: 16px;
   white-space: nowrap;
+  color: rgb(243, 243, 243);
+ text-decoration: none;
+  
 }
 
 .sidebar.expanded .text {
