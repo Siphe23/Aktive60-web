@@ -7,6 +7,7 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyAUBy_ynhPHHnTUmOMfQlgQ6hd1LL4xHPA",
   authDomain: "akiv60-2db6a.firebaseapp.com",
+  databaseURL: "https://akiv60-2db6a-default-rtdb.firebaseio.com",
   projectId: "akiv60-2db6a",
   storageBucket: "akiv60-2db6a.firebasestorage.app",
   messagingSenderId: "1011614744557",
