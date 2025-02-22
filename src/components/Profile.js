@@ -12,26 +12,32 @@ const Profile = () => {
         </div>
         <div className="button-group">
           <button className="edit-btn">Edit Picture</button>
-          <button className="select-btn">Select Avatar</button>
         </div>
       </div>
 
       {/* Form Section */}
       <div className="form-section">
         <div className="form-grid">
-            <p className="titles">Name and Surname </p>
-          <input type="text" placeholder="Enter your name" />
-          <p className="titles">Email </p>
-          <input type="text" placeholder="Enter your last name" />
-          <p className="titles">Personal Phone Number </p>
-          <input type="email" placeholder="Enter your email" />
-    
-          <input type="text" placeholder="Enter emergency contact number" />
-          <input
-            type="text"
-            className="full-width"
-            placeholder="Enter emergency contact name"
-          />
+          <div className="form-group">
+            <label htmlFor="name" className="titles">Name and Surname</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="titles">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="phone" className="titles">Personal Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="emergency-contact" className="titles">Emergency Contact Number</label>
+            <input type="tel" id="emergency-contact" placeholder="Enter emergency contact number" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="emergency-name" className="titles">Emergency Contact Name</label>
+            <input type="text" id="emergency-name" className="full-width" placeholder="Enter emergency contact name" />
+          </div>
         </div>
         <div className="form-buttons">
           <button className="save-btn">Save Changes</button>

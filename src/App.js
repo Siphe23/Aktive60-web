@@ -37,7 +37,7 @@ function App() {
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path=  "/dashboard" element={<Dashboard />} /> */}
         <Route path="*" element={<NotFound />} />
         <Route path="Profile" element={<Profile />} />
 
