@@ -1,18 +1,44 @@
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #121416;
-  }
-  
-  .main-content {
-    display: flex;
-    flex: 1;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    color: white;
-  }
-  
+/* Add to Dashboard.css */
+.content {
+  transition: margin-left 0.3s ease-in-out;
+  padding: 20px;
+}
+
+/* Update search bar positioning */
+.logo-search-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 650px;
+}
+
+/* Chart title styling */
+.chart-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+/* Table header contrast */
+th {
+  background-color: #16181d !important;
+}
+.message-icon {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;  
+}
