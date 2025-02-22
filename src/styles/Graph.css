@@ -1,6 +1,39 @@
-.chart-container {
-  background-color: #1b1e2a;
+.active-users {
+  background: #2a2a2a;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 12px;
+  max-width: 3000px;
+  margin: 0 auto;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 0 10px;
+}
+
+.chart-header h3 {
   color: white;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.period-select {
+  background: #444;
+  color: white;
+  border: 1px solid #666;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.recharts-legend-item-text {
+  color: white !important;
+  font-size: 0.85rem;
+}
+
+.recharts-cartesian-axis-tick text {
+  font-size: 0.8rem;
 }
