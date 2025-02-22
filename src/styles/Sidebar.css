@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   transition: width 0.3s ease-in-out;
-  margin-top: 60px;
+  margin-top: 90px;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -17,27 +17,25 @@
   width: 220px;
 }
 
-.sidebar-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding-top: 20px;
-  justify-content: space-between;
-}
-
+/* Sidebar Toggle Button */
 .sidebar-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #2a343a;
-  border-bottom: 1px solid #3a434a;
-  transition: background 0.3s;
+  padding: 12px;
 }
 
-.sidebar-toggle:hover {
-  background-color: #3a434a;
+.sidebar-toggle img.custom-icon {
+  width: 24px;  /* Adjust the size as needed */
+  height: 24px;
+  filter: none; /* Keeps the icon white without inverting */
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sidebar-toggle:hover img.custom-icon {
+  transform: scale(1.1);
+  opacity: 0.8; /* Slight fade effect on hover */
 }
 
 .sidebar-toggle .icon {
@@ -45,6 +43,7 @@
   color: #fff;
 }
 
+/* Sidebar Menu */
 .menu {
   width: 100%;
 }
@@ -70,6 +69,7 @@
   color: white;
 }
 
+/* Sidebar Text Visibility */
 .icon {
   font-size: 24px;
 }
@@ -86,6 +86,7 @@
   display: inline;
 }
 
+/* Submenu Styling */
 .submenu {
   margin-left: 20px;
   display: flex;
@@ -110,6 +111,7 @@
   color: white;
 }
 
+/* Bottom QR Code */
 .qr-code {
   margin-bottom: 20px;
   display: flex;
