@@ -15,22 +15,19 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
   const [equipmentName, setEquipmentName] = useState("");
   const [equipmentQuantity, setEquipmentQuantity] = useState(0);
   const [memberCapacity, setMemberCapacity] = useState("");
-  const [editingIndex, setEditingIndex] = useState(null); // Track which equipment is being edited
+  const [editingIndex, setEditingIndex] = useState(null);
 
-  // Add or update equipment
   const handleAddEquipment = () => {
     if (equipmentName && equipmentQuantity > 0) {
       if (editingIndex !== null) {
-        // Update existing equipment
         const updatedEquipment = [...equipment];
         updatedEquipment[editingIndex] = {
           name: equipmentName,
           quantity: equipmentQuantity,
         };
         setEquipment(updatedEquipment);
-        setEditingIndex(null); // Reset editing state
+        setEditingIndex(null);
       } else {
-        // Add new equipment
         setEquipment([
           ...equipment,
           { name: equipmentName, quantity: equipmentQuantity },
@@ -41,21 +38,18 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
     }
   };
 
-  // Edit equipment
   const handleEditEquipment = (index) => {
     const item = equipment[index];
     setEquipmentName(item.name);
     setEquipmentQuantity(item.quantity);
-    setEditingIndex(index); // Set the index of the item being edited
+    setEditingIndex(index);
   };
 
-  // Delete equipment
   const handleDeleteEquipment = (index) => {
     const updatedEquipment = equipment.filter((_, i) => i !== index);
     setEquipment(updatedEquipment);
   };
 
-  // Save the new location
   const handleSave = () => {
     const newLocation = {
       locationName,
@@ -257,6 +251,7 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
             ))}
           </div>
         </div>
+       
 
         <div className="form-group">
           <label>Member Capacity</label>

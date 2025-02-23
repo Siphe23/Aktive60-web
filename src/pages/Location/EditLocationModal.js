@@ -17,7 +17,6 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [memberCapacity, setMemberCapacity] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
 
-  // Pre-fill the form with the selected branch's data
   useEffect(() => {
     if (branchData) {
       setLocationName(branchData.branch_name || "");
@@ -34,11 +33,9 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
     }
   }, [branchData]);
 
-  // Add or update equipment
   const handleAddEquipment = () => {
     if (equipmentName && equipmentQuantity > 0) {
       if (editingIndex !== null) {
-        // Update existing equipment
         const updatedEquipment = [...equipment];
         updatedEquipment[editingIndex] = {
           name: equipmentName,
@@ -47,7 +44,6 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
         setEquipment(updatedEquipment);
         setEditingIndex(null);
       } else {
-        // Add new equipment
         setEquipment([
           ...equipment,
           { name: equipmentName, quantity: equipmentQuantity },
@@ -58,7 +54,6 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
     }
   };
 
-  // Edit equipment
   const handleEditEquipment = (index) => {
     const item = equipment[index];
     setEquipmentName(item.name);
@@ -66,13 +61,11 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
     setEditingIndex(index);
   };
 
-  // Delete equipment
   const handleDeleteEquipment = (index) => {
     const updatedEquipment = equipment.filter((_, i) => i !== index);
     setEquipment(updatedEquipment);
   };
 
-  // Save the updated location
   const handleSave = () => {
     const updatedLocation = {
       locationName,
@@ -274,6 +267,7 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
             ))}
           </div>
         </div>
+        
 
         <div className="form-group">
           <label>Member Capacity</label>
