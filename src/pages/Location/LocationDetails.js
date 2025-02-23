@@ -1,26 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/LocationDetails.css";
 import Sidebar from "../../components/Sidebar";
 import NavigationBar from "../../components/Navbar";
 import AddNewLocationModal from "./AddNewLocationModal";
 import { db, realTimeDB } from "../../firebase"; // Import Firestore and Realtime Database
-import { ref, set } from "firebase/database";
-import { collection, addDoc } from "firebase/firestore";
+import { ref, set, onValue } from "firebase/database";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LocationDetails = () => {
-  const [selectedLocation, setSelectedLocation] = useState("Sloane Street Gym");
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [branchData, setBranchData] = useState(null);
+  const [branches, setBranches] = useState([]);
 
   const toggleSidebar = () => setIsExpanded(!isExpanded);
-  const handleLocationChange = (event) => setSelectedLocation(event.target.value);
+
+  const handleLocationChange = async (event) => {
+    const selectedBranchId = event.target.value;
+    setSelectedLocation(selectedBranchId);
+
+    try {
+      // Fetch from Firestore
+      const branchRef = ref(realTimeDB, `branches/${selectedBranchId}`);
+      onValue(branchRef, (snapshot) => {
+        const realTimeData = snapshot.val();
+        setBranchData(realTimeData);
+      });
+    } catch (error) {
+      console.error("Error fetching branch data: ", error);
+      toast.error("Failed to fetch branch data. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "branches"));
+        const branchesList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBranches(branchesList);
+
+        if (branchesList.length > 0) {
+          setSelectedLocation(branchesList[0].id);
+          const branchRef = ref(realTimeDB, `branches/${branchesList[0].id}`);
+          onValue(branchRef, (snapshot) => {
+            const realTimeData = snapshot.val();
+            setBranchData(realTimeData);
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching branches: ", error);
+        toast.error("Failed to fetch branches. Please try again.");
+      }
+    };
+
+    fetchBranches();
+  }, []);
 
   const handleAddLocation = async (newLocation) => {
     try {
       // Save to Firestore
-      console.log("Saving to Firestore...");
       const docRef = await addDoc(collection(db, "branches"), {
         branch_name: newLocation.locationName,
         location_address: newLocation.address,
@@ -29,10 +73,8 @@ const LocationDetails = () => {
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
       });
-      console.log("Firestore Document written with ID: ", docRef.id);
 
       // Save to Realtime Database
-      console.log("Saving to Realtime Database...");
       const branchRef = ref(realTimeDB, `branches/${docRef.id}`);
       await set(branchRef, {
         branch_name: newLocation.locationName,
@@ -42,7 +84,20 @@ const LocationDetails = () => {
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
       });
-      console.log("Realtime Database data saved successfully!");
+
+      // Update the branches list
+      setBranches((prevBranches) => [
+        ...prevBranches,
+        {
+          id: docRef.id,
+          branch_name: newLocation.locationName,
+          location_address: newLocation.address,
+          phone: newLocation.contactNumber,
+          member_capacity: newLocation.memberCapacity,
+          operating_hours: newLocation.operatingHours,
+          equipment: newLocation.equipment,
+        },
+      ]);
 
       toast.success("Location saved successfully!");
     } catch (error) {
@@ -65,7 +120,11 @@ const LocationDetails = () => {
                 onChange={handleLocationChange}
                 className="location-select"
               >
-                <option value="sloane-street">Sloane Street Gym</option>
+                {branches.map((branch) => (
+                  <option key={branch.id} value={branch.id}>
+                    {branch.branch_name}
+                  </option>
+                ))}
               </select>
               <div className="header-buttons">
                 <button
@@ -82,17 +141,29 @@ const LocationDetails = () => {
             <div className="card-grid">
               <div className="card">
                 <h3>Basic Information</h3>
-                <p><strong>Location Name:</strong> Sloane Street Gym</p>
-                <p><strong>Address:</strong> 22 Sloane St, Bryanston, Johannesburg</p>
-                <p><strong>Contact Number:</strong> 011 845 4774</p>
+                {branchData ? (
+                  <>
+                    <p><strong>Location Name:</strong> {branchData.branch_name}</p>
+                    <p><strong>Address:</strong> {branchData.location_address}</p>
+                    <p><strong>Contact Number:</strong> {branchData.phone}</p>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
 
               <div className="card">
                 <h3>Operating Hours</h3>
-                <p><strong>Monday - Friday:</strong> 06:00 - 22:00</p>
-                <p><strong>Saturday:</strong> 06:00 - 22:00</p>
-                <p><strong>Sunday:</strong> 08:00 - 22:00</p>
-                <p><strong>Public Holidays:</strong> 06:00 - 22:00</p>
+                {branchData ? (
+                  <>
+                    <p><strong>Monday - Friday:</strong> 06:00 - 22:00</p>
+                    <p><strong>Saturday:</strong> {branchData.operating_hours?.saturday?.start} - {branchData.operating_hours?.saturday?.end}</p>
+                    <p><strong>Sunday:</strong> {branchData.operating_hours?.sunday?.start} - {branchData.operating_hours?.sunday?.end}</p>
+                    <p><strong>Public Holidays:</strong> {branchData.operating_hours?.publicHolidays?.start} - {branchData.operating_hours?.publicHolidays?.end}</p>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
 
               <div className="card">
@@ -103,9 +174,15 @@ const LocationDetails = () => {
 
               <div className="card">
                 <h3>Member Capacity</h3>
-                <p><strong>Total Capacity:</strong> 300</p>
-                <p><strong>Current Members:</strong> 250</p>
-                <p><strong>Available Slots:</strong> 50</p>
+                {branchData ? (
+                  <>
+                    <p><strong>Total Capacity:</strong> {branchData.member_capacity}</p>
+                    <p><strong>Current Members:</strong> 250</p>
+                    <p><strong>Available Slots:</strong> {branchData.member_capacity - 250}</p>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
             </div>
           </div>
