@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Message } from '@mui/icons-material';  // Import the Message icon
+import { Message } from '@mui/icons-material';  
 import Sidebar from "../components/Sidebar";
 import NavigationBar from "../components/Navbar";
 import DataTable from "../components/DataTable";
