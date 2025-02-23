@@ -69,7 +69,7 @@ const Sidebar = () => {
           <BarChart className="icon" />
           {isExpanded && <span className="text">Generate Reports</span>}
         </Link>
-        <Link to="/users" className={`menu-item ${isActive("/users")}`}>
+        <Link to="/usermanagement" className={`menu-item ${isActive("/usermanagement")}`}>
           <People className="icon" />
           {isExpanded && <span className="text">User Management</span>}
         </Link>

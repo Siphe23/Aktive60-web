@@ -20,7 +20,7 @@ import LocationStaff from "./pages/Location/LocationStaff";
 import LocationSettings from "./pages/Location/LocationSettings";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
-import Users from "./pages/UsersManagement";
+import UserManagement from "./pages/UserManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
@@ -56,7 +56,7 @@ function App() {
             <Route path="/locationsettings" element={<LocationSettings />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/users" element={<Users />} />
+            <Route path="/usermanagement" element={<UserManagement />} />
             <Route path="/trainers" element={<Trainers />} />
             <Route path="/trainees" element={<Trainees />} />
             <Route path="/collection" element={<Collection />} />
