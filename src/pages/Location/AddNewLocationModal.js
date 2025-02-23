@@ -23,12 +23,18 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
       if (editingIndex !== null) {
         // Update existing equipment
         const updatedEquipment = [...equipment];
-        updatedEquipment[editingIndex] = { name: equipmentName, quantity: equipmentQuantity };
+        updatedEquipment[editingIndex] = {
+          name: equipmentName,
+          quantity: equipmentQuantity,
+        };
         setEquipment(updatedEquipment);
         setEditingIndex(null); // Reset editing state
       } else {
         // Add new equipment
-        setEquipment([...equipment, { name: equipmentName, quantity: equipmentQuantity }]);
+        setEquipment([
+          ...equipment,
+          { name: equipmentName, quantity: equipmentQuantity },
+        ]);
       }
       setEquipmentName("");
       setEquipmentQuantity(0);
@@ -108,7 +114,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    mondayFriday: { ...operatingHours.mondayFriday, start: e.target.value },
+                    mondayFriday: {
+                      ...operatingHours.mondayFriday,
+                      start: e.target.value,
+                    },
                   })
                 }
               />
@@ -118,7 +127,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    mondayFriday: { ...operatingHours.mondayFriday, end: e.target.value },
+                    mondayFriday: {
+                      ...operatingHours.mondayFriday,
+                      end: e.target.value,
+                    },
                   })
                 }
               />
@@ -131,7 +143,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    saturday: { ...operatingHours.saturday, start: e.target.value },
+                    saturday: {
+                      ...operatingHours.saturday,
+                      start: e.target.value,
+                    },
                   })
                 }
               />
@@ -141,7 +156,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    saturday: { ...operatingHours.saturday, end: e.target.value },
+                    saturday: {
+                      ...operatingHours.saturday,
+                      end: e.target.value,
+                    },
                   })
                 }
               />
@@ -177,7 +195,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    publicHolidays: { ...operatingHours.publicHolidays, start: e.target.value },
+                    publicHolidays: {
+                      ...operatingHours.publicHolidays,
+                      start: e.target.value,
+                    },
                   })
                 }
               />
@@ -187,7 +208,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) =>
                   setOperatingHours({
                     ...operatingHours,
-                    publicHolidays: { ...operatingHours.publicHolidays, end: e.target.value },
+                    publicHolidays: {
+                      ...operatingHours.publicHolidays,
+                      end: e.target.value,
+                    },
                   })
                 }
               />
@@ -207,7 +231,9 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
             <input
               type="number"
               value={equipmentQuantity}
-              onChange={(e) => setEquipmentQuantity(parseInt(e.target.value))}
+              onChange={(e) =>
+                setEquipmentQuantity(parseInt(e.target.value || 0))
+              }
               placeholder="Quantity"
             />
             <button onClick={handleAddEquipment}>
@@ -220,8 +246,12 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
                 <span>{item.name}</span>
                 <span>{item.quantity}</span>
                 <div className="equipment-actions">
-                  <button onClick={() => handleEditEquipment(index)}>Edit</button>
-                  <button onClick={() => handleDeleteEquipment(index)}>Delete</button>
+                  <button onClick={() => handleEditEquipment(index)}>
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteEquipment(index)}>
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -233,7 +263,7 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
           <input
             type="number"
             value={memberCapacity}
-            onChange={(e) => setMemberCapacity(e.target.value)}
+            onChange={(e) => setMemberCapacity(parseInt(e.target.value || 0))}
             placeholder="Enter member capacity"
           />
         </div>

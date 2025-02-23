@@ -6,24 +6,20 @@ import AddNewLocationModal from "./AddNewLocationModal";
 import { db, realTimeDB } from "../../firebase"; // Import Firestore and Realtime Database
 import { ref, set } from "firebase/database";
 import { collection, addDoc } from "firebase/firestore";
-import { toast, ToastContainer } from "react-toastify"; // Import toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LocationDetails = () => {
   const [selectedLocation, setSelectedLocation] = useState("Sloane Street Gym");
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
-  };
+  const toggleSidebar = () => setIsExpanded(!isExpanded);
+  const handleLocationChange = (event) => setSelectedLocation(event.target.value);
 
   const handleAddLocation = async (newLocation) => {
     try {
+      // Save to Firestore
       console.log("Saving to Firestore...");
       const docRef = await addDoc(collection(db, "branches"), {
         branch_name: newLocation.locationName,
@@ -35,6 +31,7 @@ const LocationDetails = () => {
       });
       console.log("Firestore Document written with ID: ", docRef.id);
 
+      // Save to Realtime Database
       console.log("Saving to Realtime Database...");
       const branchRef = ref(realTimeDB, `branches/${docRef.id}`);
       await set(branchRef, {
@@ -47,11 +44,9 @@ const LocationDetails = () => {
       });
       console.log("Realtime Database data saved successfully!");
 
-      // Show success toast
       toast.success("Location saved successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
-      // Show error toast
       toast.error("Failed to save location. Please try again.");
     }
   };
@@ -71,7 +66,6 @@ const LocationDetails = () => {
                 className="location-select"
               >
                 <option value="sloane-street">Sloane Street Gym</option>
-                {/* Add more locations here */}
               </select>
               <div className="header-buttons">
                 <button
@@ -84,64 +78,41 @@ const LocationDetails = () => {
               </div>
             </div>
 
+            {/* Card Grid */}
             <div className="card-grid">
-              {/* Basic Information Section */}
               <div className="card">
                 <h3>Basic Information</h3>
-                <p>
-                  <strong>Location Name:</strong> Sloane Street Gym
-                </p>
-                <p>
-                  <strong>Address:</strong> 22 Sloane St, Bryanston, Johannesburg
-                </p>
-                <p>
-                  <strong>Contact Number:</strong> 011 845 4774
-                </p>
+                <p><strong>Location Name:</strong> Sloane Street Gym</p>
+                <p><strong>Address:</strong> 22 Sloane St, Bryanston, Johannesburg</p>
+                <p><strong>Contact Number:</strong> 011 845 4774</p>
               </div>
 
-              {/* Operating Hours Section */}
               <div className="card">
                 <h3>Operating Hours</h3>
-                <p>
-                  <strong>Monday - Friday:</strong> 06:00 - 22:00
-                </p>
-                <p>
-                  <strong>Saturday:</strong> 06:00 - 22:00
-                </p>
-                <p>
-                  <strong>Sunday:</strong> 08:00 - 22:00
-                </p>
-                <p>
-                  <strong>Public Holidays:</strong> 06:00 - 22:00
-                </p>
+                <p><strong>Monday - Friday:</strong> 06:00 - 22:00</p>
+                <p><strong>Saturday:</strong> 06:00 - 22:00</p>
+                <p><strong>Sunday:</strong> 08:00 - 22:00</p>
+                <p><strong>Public Holidays:</strong> 06:00 - 22:00</p>
               </div>
 
-              {/* Staff Assignments Section */}
               <div className="card">
                 <h3>Staff Assignments</h3>
                 <p>John Smith, Manager</p>
                 <p>Sarah Olson, Trainer</p>
               </div>
 
-              {/* Member Capacity Section */}
               <div className="card">
                 <h3>Member Capacity</h3>
-                <p>
-                  <strong>Total Capacity:</strong> 300
-                </p>
-                <p>
-                  <strong>Current Members:</strong> 250
-                </p>
-                <p>
-                  <strong>Available Slots:</strong> 50
-                </p>
+                <p><strong>Total Capacity:</strong> 300</p>
+                <p><strong>Current Members:</strong> 250</p>
+                <p><strong>Available Slots:</strong> 50</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Render the modal */}
+      {/* Add New Location Modal */}
       <AddNewLocationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
