@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Sidebar.css";
 import collapseIcon from "../assets/Page-1.jpg";
@@ -15,11 +15,19 @@ import {
   ExpandLess,
   ExpandMore,
   QrCode2,
+  // If you want a different icon for Branch, you can import it here:
+  // Business
 } from "@mui/icons-material";
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // For Location dropdown
   const [isLocationDropdownVisible, setIsLocationDropdownVisible] = useState(false);
+
+  // For Branch dropdown
+  const [isBranchDropdownVisible, setIsBranchDropdownVisible] = useState(false);
+
   const location = useLocation();
 
   const toggleSidebar = () => {
@@ -28,6 +36,10 @@ const Sidebar = () => {
 
   const toggleLocationDropdown = () => {
     setIsLocationDropdownVisible(!isLocationDropdownVisible);
+  };
+
+  const toggleBranchDropdown = () => {
+    setIsBranchDropdownVisible(!isBranchDropdownVisible);
   };
 
   const isActive = (path) => (location.pathname === path ? "active" : "");
@@ -46,7 +58,11 @@ const Sidebar = () => {
           {isExpanded && <span className="text">Overview</span>}
         </Link>
 
-        <div className={`menu-item ${isLocationDropdownVisible ? "active" : ""}`} onClick={toggleLocationDropdown}>
+        {/* Location Dropdown */}
+        <div
+          className={`menu-item ${isLocationDropdownVisible ? "active" : ""}`}
+          onClick={toggleLocationDropdown}
+        >
           <LocationOn className="icon" />
           {isExpanded && <span className="text">Location</span>}
           {isExpanded && (isLocationDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
@@ -54,10 +70,64 @@ const Sidebar = () => {
 
         {isLocationDropdownVisible && isExpanded && (
           <div className="submenu">
-            <Link to="/locationoverview" className={`submenu-item ${isActive("/locationoverview")}`}>Location Overview</Link>
-            <Link to="/locationdetails" className={`submenu-item ${isActive("/locationdetails")}`}>Location Details</Link>
-            <Link to="/locationsettings" className={`submenu-item ${isActive("/locationsettings")}`}>Location Settings</Link>
-            <Link to="/locationstaff" className={`submenu-item ${isActive("/locationstaff")}`}>Location Staff</Link>
+            <Link
+              to="/locationoverview"
+              className={`submenu-item ${isActive("/locationoverview")}`}
+            >
+              Location Overview
+            </Link>
+            <Link
+              to="/locationdetails"
+              className={`submenu-item ${isActive("/locationdetails")}`}
+            >
+              Location Details
+            </Link>
+            <Link
+              to="/locationsettings"
+              className={`submenu-item ${isActive("/locationsettings")}`}
+            >
+              Location Settings
+            </Link>
+            <Link
+              to="/locationstaff"
+              className={`submenu-item ${isActive("/locationstaff")}`}
+            >
+              Location Staff
+            </Link>
+          </div>
+        )}
+
+        {/* Branch Dropdown (new) */}
+        <div
+          className={`menu-item ${isBranchDropdownVisible ? "active" : ""}`}
+          onClick={toggleBranchDropdown}
+        >
+          {/* You can change LocationOn to Business or any other icon */}
+          <LocationOn className="icon" />
+          {isExpanded && <span className="text">Branch</span>}
+          {isExpanded && (isBranchDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
+        </div>
+
+        {isBranchDropdownVisible && isExpanded && (
+          <div className="submenu">
+            <Link
+              to="/branch-details"
+              className={`submenu-item ${isActive("/branch-details")}`}
+            >
+              Branch Details
+            </Link>
+            <Link
+              to="/branchpackages"
+              className={`submenu-item ${isActive("/branchpackages")}`}
+            >
+              Branch Packages
+            </Link>
+            <Link
+              to="/branchstaff"
+              className={`submenu-item ${isActive("/branchstaff")}`}
+            >
+              Branch Staff
+            </Link>
           </div>
         )}
 
