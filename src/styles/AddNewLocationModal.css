@@ -43,9 +43,10 @@
   font-weight: 500;
 }
 
-/* Disabled Input */
+/* Input and Textarea */
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #444;
@@ -57,9 +58,21 @@
   transition: 0.3s ease;
 }
 
-.form-group input:disabled {
-  background-color: #555;
-  cursor: not-allowed;
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Checkbox and Radio Buttons */
+.facilities-checkbox,
+.durations-checkbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.facilities-checkbox label,
+.durations-checkbox label {
+  margin-bottom: 5px;
 }
 
 /* Buttons */
