@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import NavigationBar from "../../../components/Navbar";
-import "../../../styles/LocationOverview.css"; // Ensure this file contains the initial styles
-import { db } from "../../../firebase"; // Adjust the path to your firebase.js file
-import { collection, getDocs } from "firebase/firestore";
+import "../../../styles/LocationOverview.css";
+import { realTimeDB, db } from "../../../firebase";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { ref, update } from "firebase/database";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LocationOverview = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,11 +27,10 @@ const LocationOverview = () => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "branches")); // Ensure collection name is correct
+        const querySnapshot = await getDocs(collection(db, "branches"));
         const locationsData = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log("Document data:", data); // Debugging: Log each document's data
           locationsData.push({
             id: doc.id,
             name: data.branch_name,
@@ -41,10 +43,10 @@ const LocationOverview = () => {
           });
         });
         setLocations(locationsData);
-        setFilteredLocations(locationsData); // Initialize filteredLocations with all data
+        setFilteredLocations(locationsData);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err); // Debugging: Log any errors
+        console.error("Error fetching data:", err);
         setError("Failed to fetch data. Please try again later.");
         setLoading(false);
       }
@@ -57,21 +59,18 @@ const LocationOverview = () => {
   useEffect(() => {
     let filtered = locations;
 
-    // Filter by status
     if (statusFilter !== "all") {
       filtered = filtered.filter((location) =>
         statusFilter === "active" ? location.active : !location.active
       );
     }
 
-    // Filter by capacity
     if (capacityFilter) {
       filtered = filtered.filter(
         (location) => location.capacity === parseInt(capacityFilter)
       );
     }
 
-    // Sort locations
     if (sortCriteria === "name") {
       filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortCriteria === "capacity") {
@@ -80,6 +79,41 @@ const LocationOverview = () => {
 
     setFilteredLocations(filtered);
   }, [statusFilter, capacityFilter, sortCriteria, locations]);
+
+  // Function to toggle status (active/inactive)
+  const toggleStatus = async (id, currentStatus) => {
+    try {
+      const newStatus = !currentStatus;
+      const locationRef = doc(db, "branches", id);
+
+      // Update Firestore
+      await updateDoc(locationRef, {
+        active: newStatus ? "yes" : "no",
+      });
+
+      // Update Realtime Database
+      const realTimeLocationRef = ref(realTimeDB, `branches/${id}`);
+      await update(realTimeLocationRef, {
+        active: newStatus ? "yes" : "no",
+      });
+
+      // Update local state
+      setLocations((prevLocations) =>
+        prevLocations.map((location) =>
+          location.id === id
+            ? { ...location, active: newStatus }
+            : location
+        )
+      );
+
+      toast.success(
+        `Location ${newStatus ? "activated" : "deactivated"} successfully!`
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
+      toast.error("Failed to update status. Please try again.");
+    }
+  };
 
   const handleFilterClick = () => {
     setShowFilterModal(true);
@@ -90,21 +124,21 @@ const LocationOverview = () => {
   };
 
   const handleResetFilters = () => {
-    setStatusFilter("all"); // Reset status filter
-    setCapacityFilter(""); // Reset capacity filter
-    setSortCriteria("name"); // Reset sort criteria
+    setStatusFilter("all");
+    setCapacityFilter("");
+    setSortCriteria("name");
   };
 
   const handleApplyFilters = () => {
-    setShowFilterModal(false); // Close modal after applying filters
+    setShowFilterModal(false);
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading spinner or message
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Show an error message
+    return <div>{error}</div>;
   }
 
   return (
@@ -126,6 +160,8 @@ const LocationOverview = () => {
                   <th>Location Name</th>
                   <th>Address</th>
                   <th>Capacity</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,11 +171,30 @@ const LocationOverview = () => {
                       <td>{location.name}</td>
                       <td>{location.address}</td>
                       <td>{location.capacity}</td>
+                      <td>
+                        {location.active ? (
+                          <span className="status-active">Active</span>
+                        ) : (
+                          <span className="status-inactive">Inactive</span>
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          className={`status-button ${
+                            location.active ? "deactivate" : "activate"
+                          }`}
+                          onClick={() =>
+                            toggleStatus(location.id, location.active)
+                          }
+                        >
+                          {location.active ? "Deactivate" : "Activate"}
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3" style={{ textAlign: "center" }}>
+                    <td colSpan="5" style={{ textAlign: "center" }}>
                       No data available.
                     </td>
                   </tr>
