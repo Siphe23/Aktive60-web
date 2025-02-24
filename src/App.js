@@ -17,13 +17,14 @@ import Dashboard from './pages/Dashboard'
 
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
-import Users from "./pages/UsersManagement";
+import UserManagement from "./pages/UserManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
 import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
 import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
 import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
+import BranchDetails from "./pages/BranchDetails";
 import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
 
 
@@ -56,8 +57,9 @@ function App() {
             <Route path="/locationstaff" element={<LocationStaff />} />
             <Route path="/locationsettings" element={<LocationSettings />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/branch-details" element={<BranchDetails />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/users" element={<Users />} />
+            <Route path="/usermanagement" element={<UserManagement />} />
             <Route path="/trainers" element={<Trainers />} />
             <Route path="/trainees" element={<Trainees />} />
             <Route path="/collection" element={<Collection />} />
