@@ -75,6 +75,46 @@
   margin-bottom: 5px;
 }
 
+/* Package Selection */
+.package-selection select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.selected-packages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.selected-package-item {
+  background-color: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selected-package-item button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.selected-package-item button:hover {
+  background-color: #e60000;
+}
+
 /* Buttons */
 .modal-buttons {
   display: flex;
