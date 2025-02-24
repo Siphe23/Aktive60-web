@@ -17,10 +17,10 @@ import StaffRegister from './components/StaffRegister';
 import StaffProfile from './components/StaffProfile';
 import StaffLogin from './components/StaffLogin';
 import SuperLogin from './components/superLogin';
-import LocationOverview from "./pages/Location/LocationOverview";
-import LocationDetails from "./pages/Location/LocationDetails";
-import LocationStaff from "./pages/Location/LocationStaff";
-import LocationSettings from "./pages/Location/LocationSettings";
+import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
+import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
+import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
+import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
@@ -64,7 +64,7 @@ function App() {
             <Route path="/locationstaff" element={<LocationStaff />} />
             <Route path="/locationsettings" element={<LocationSettings />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/branch-details" element={<BranchDetails />} />
+            {/* <Route path="/branch-details" element={<BranchDetails />} /> */}
             <Route path="/reports" element={<Reports />} />
             <Route path="/usermanagement" element={<UserManagement />} />
             <Route path="/trainers" element={<Trainers />} />
