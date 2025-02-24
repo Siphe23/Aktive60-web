@@ -1,116 +1,96 @@
-/* Dashboard Container */
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    background-color: #1e1e1e;
-    color: white;
-    min-height: 100vh;
-    width: 100%;
-}
-  
-/* Main Content */
-.main-content {
-    display: flex;
-    flex: 1;
-}
-  
-/* Sidebar Content Adjustment */
-.content {
-    flex: 1;
-    transition: margin-left 0.3s;
-}
-  
-.content.expanded {
-    margin-left: 250px; /* Width of expanded sidebar */
-}
-  
-.content.collapsed {
-    margin-left: 80px; /* Width of collapsed sidebar */
-}
-  
-/* General Container Styling */
-.container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-  
-/* Header Section Styling */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #343a40;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-  
-.location-select {
-    height: 35px;
-    width: 250px;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: #343a40;
-    font-size: 16px;
-}
-  
-.header-buttons {
-    display: flex;
-}
-  
-.action-button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-left: 10px;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-  
-.action-button:hover {
-    background-color: #0056b3;
-}
-  
-/* Card Grid Styling */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-  
-/* Card Styling */
-.card {
-    display: flex;
-    flex-direction: column; /* Ensure items are stacked */
-    align-items: flex-start; /* Align content properly */
-    justify-content: flex-start; /* Ensure everything stays inside */
-    background-color: #2f2e41;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    min-height: 150px; /* Prevent content from overflowing */
+/* Header Container */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #2a2a3a;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card h3 {
-    margin: 0 0 15px 0;
-    font-weight: bold;
-    color: #fafdff;
-    text-align: left;
-    width: 100%;
+.header-container h1 {
+  font-size: 24px;
+  color: #fff;
+  margin: 0;
 }
 
-
-.card p {
-    margin: 5px 0;
-    color: #caccce;
-    font-size: 16px;
+/* Add Button */
+.add-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-.card p strong {
-    color: #ffffff;
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+/* Sub Title */
+.sub-title {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+/* Package Grid */
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Package Card */
+.package-card {
+  background-color: #3a3a4a;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.package-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit Icon */
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.edit-icon:hover {
+  color: #fff;
+}
+
+/* Package Details */
+.package-card h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.package-card p {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #ddd;
+}
+
+.package-card strong {
+  color: #fff;
 }
