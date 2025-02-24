@@ -14,16 +14,17 @@ import NotFound from "./components/NotFound";
 import Profile from './components/Profile';
 import Dashboard from './pages/Dashboard'
 
-import LocationOverview from "./pages/Location/LocationOverview";
-import LocationDetails from "./pages/Location/LocationDetails";
-import LocationStaff from "./pages/Location/LocationStaff";
-import LocationSettings from "./pages/Location/LocationSettings";
+
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
+import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
+import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
+import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
+import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
 
 
 

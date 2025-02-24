@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/AddNewLocationModal.css";
+import "../../../styles/AddNewLocationModal.css";
 
 const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [locationName, setLocationName] = useState("");
