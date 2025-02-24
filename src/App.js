@@ -66,8 +66,8 @@ function App() {
             <Route path="/collection" element={<Collection />} />
 
 
-{/* 
-            <Route path="/branch-details" element={<BranchDetails />} /> */}
+
+            {/* <Route path="/branch-details" element={<BranchDetails />} /> */}
 
         
       </Routes>
