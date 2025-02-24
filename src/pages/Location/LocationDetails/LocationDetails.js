@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/LocationDetails.css";
-import Sidebar from "../../components/Sidebar";
-import NavigationBar from "../../components/Navbar";
+import "../../../styles/LocationDetails.css";
+import Sidebar from "../../../components/Sidebar";
+import NavigationBar from "../../../components/Navbar";
 import AddNewLocationModal from "./AddNewLocationModal";
 import EditLocationModal from "./EditLocationModal";
-import { db, realTimeDB } from "../../firebase"; // Import Firestore and Realtime Database
+import { db, realTimeDB } from "../../../firebase"; // Import Firestore and Realtime Database
 import { ref, set, onValue } from "firebase/database";
 import {
   collection,
