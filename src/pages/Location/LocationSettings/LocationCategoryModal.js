@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/LocationCategoryModal.css";
+import "../../../styles/LocationCategoryModal.css";
 
 const LocationCategoryModal = ({ isOpen, onClose, onSave }) => {
   const [categoryName, setCategoryName] = useState("");

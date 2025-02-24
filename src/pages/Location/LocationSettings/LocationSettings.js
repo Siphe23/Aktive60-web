@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../../styles/LocationSettings.css";
+import "../../../styles/LocationSettings.css";
 import { FaEdit } from "react-icons/fa";
-import Sidebar from "../../components/Sidebar";
-import NavigationBar from "../../components/Navbar";
+import Sidebar from "../../../components/Sidebar";
+import NavigationBar from "../../../components/Navbar";
 
 const LocationSettings = () => {
   const [isExpanded, setIsExpanded] = useState(false);

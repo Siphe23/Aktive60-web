@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
-import NavigationBar from "../../components/Navbar";
-import "../../styles/LocationOverview.css"; // Ensure this file contains the initial styles
-import { db } from "../../firebase"; // Adjust the path to your firebase.js file
+import Sidebar from "../../../components/Sidebar";
+import NavigationBar from "../../../components/Navbar";
+import "../../../styles/LocationOverview.css"; // Ensure this file contains the initial styles
+import { db } from "../../../firebase"; // Adjust the path to your firebase.js file
 import { collection, getDocs } from "firebase/firestore";
 
 const LocationOverview = () => {

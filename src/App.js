@@ -64,6 +64,7 @@ function App() {
             <Route path="/locationstaff" element={<LocationStaff />} />
             <Route path="/locationsettings" element={<LocationSettings />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/branch-details" element={<BranchDetails />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/usermanagement" element={<UserManagement />} />
             <Route path="/trainers" element={<Trainers />} />
