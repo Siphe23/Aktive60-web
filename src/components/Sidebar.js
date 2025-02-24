@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Sidebar.css";
 import collapseIcon from "../assets/Page-1.jpg";
-
 import {
   Dashboard,
   LocationOn,
@@ -15,19 +14,12 @@ import {
   ExpandLess,
   ExpandMore,
   QrCode2,
-  // If you want a different icon for Branch, you can import it here:
-  // Business
 } from "@mui/icons-material";
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // For Location dropdown
   const [isLocationDropdownVisible, setIsLocationDropdownVisible] = useState(false);
-
-  // For Branch dropdown
   const [isBranchDropdownVisible, setIsBranchDropdownVisible] = useState(false);
-
   const location = useLocation();
 
   const toggleSidebar = () => {
@@ -97,12 +89,11 @@ const Sidebar = () => {
           </div>
         )}
 
-        {/* Branch Dropdown (new) */}
+        {/* Branch Dropdown */}
         <div
           className={`menu-item ${isBranchDropdownVisible ? "active" : ""}`}
           onClick={toggleBranchDropdown}
         >
-          {/* You can change LocationOn to Business or any other icon */}
           <LocationOn className="icon" />
           {isExpanded && <span className="text">Branch</span>}
           {isExpanded && (isBranchDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
