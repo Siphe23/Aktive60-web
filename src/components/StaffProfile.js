@@ -5,28 +5,6 @@ import avatarPlaceholder from '../assets/avatar-placeholder.png'; // Ensure this
 import '../styles/StaffProfile.css';
 import Navbar from '../components/Navbar';
 
-// Import avatars
-const avatars = [
-  require('../assets/avatars/avatar1.png'),
-  require('../assets/avatars/avatar2.png'),
-  require('../assets/avatars/avatar3.png'),
-  require('../assets/avatars/avatar4.png'),
-  require('../assets/avatars/avatar5.png'),
-  require('../assets/avatars/avatar6.png'),
-  require('../assets/avatars/avatar7.png'),
-  require('../assets/avatars/avatar8.png'),
-  require('../assets/avatars/avatar9.png'),
-  require('../assets/avatars/avatar10.png'),
-  require('../assets/avatars/avatar11.png'),
-  require('../assets/avatars/avatar12.png'),
-  require('../assets/avatars/avatar13.png'),
-  require('../assets/avatars/avatar14.png'),
-  require('../assets/avatars/avatar15.png'),
-  require('../assets/avatars/avatar16.png'),
-  require('../assets/avatars/avatar17.png'),
-  require('../assets/avatars/avatar18.png'),
-];
-
 const StaffProfile = () => {
   const [branches, setBranches] = useState([]);
   const [formData, setFormData] = useState({
@@ -72,6 +50,17 @@ const StaffProfile = () => {
             console.error('No user data found in Firestore');
             setError('No user data found.');
           }
+
+          // Check if profile picture exists in the `profilepictures` table
+          const avatarRef = doc(db, 'profilepictures', user.uid);
+          const avatarDoc = await getDoc(avatarRef);
+          if (avatarDoc.exists()) {
+            const avatarData = avatarDoc.data();
+            setFormData((prevData) => ({
+              ...prevData,
+              avatar: avatarData.base64 || avatarPlaceholder,
+            }));
+          }
         } catch (err) {
           console.error('Error fetching user data:', err);
           setError('Failed to fetch user data. Please try again later.');
@@ -83,9 +72,8 @@ const StaffProfile = () => {
     };
 
     fetchUserData();
-  }, []); // Empty dependency array ensures this runs only once when the component is mounted
+  }, []);
 
-  // Fetch branches function moved outside useEffect to avoid re-creating it every time
   const fetchBranches = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "branches"));
@@ -96,17 +84,14 @@ const StaffProfile = () => {
     }
   };
 
-  // Call fetchBranches once on component mount
   useEffect(() => {
     fetchBranches();
   }, []);
 
-  // Handle form field changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle save button click
   const handleSave = async () => {
     setIsLoading(true);
     try {
@@ -114,6 +99,13 @@ const StaffProfile = () => {
       if (user) {
         const userRef = doc(db, 'users', user.uid);
         await setDoc(userRef, formData, { merge: true });
+
+        // If the user has updated the avatar, save the new base64 data to Firestore
+        if (tempAvatar) {
+          const avatarRef = doc(db, 'profilepictures', user.uid);
+          await setDoc(avatarRef, { base64: tempAvatar }, { merge: true });
+        }
+
         alert('Profile updated successfully!');
       } else {
         alert('You need to be logged in to update your profile.');
@@ -126,7 +118,6 @@ const StaffProfile = () => {
     }
   };
 
-  // Handle clear button click
   const handleClear = () => {
     setFormData({
       name: '',
@@ -136,11 +127,21 @@ const StaffProfile = () => {
       role: '',
       branch: '',
       workId: '',
-      avatar: avatarPlaceholder, // Reset avatar on clear
+      avatar: avatarPlaceholder,
     });
   };
 
-  // Handle avatar application
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setTempAvatar(reader.result); // base64 string
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleApplyAvatar = () => {
     if (tempAvatar) {
       setFormData({ ...formData, avatar: tempAvatar });
@@ -150,20 +151,17 @@ const StaffProfile = () => {
 
   return (
     <div className="profile-container">
-      {/* Profile Image Section */}
       <div className="profile-image-section">
         <div className="avatar">
           <img src={formData.avatar} alt="Avatar" />
         </div>
         <div className="button-group">
-          <button className="edit-btn">Edit Picture</button>
-          <button className="select-btn" onClick={() => setShowModal(true)}>
-            Select Avatar
+          <button className="edit-btn" onClick={() => setShowModal(true)}>
+            Edit Picture
           </button>
         </div>
       </div>
 
-      {/* Modal for Avatar Selection */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -171,19 +169,8 @@ const StaffProfile = () => {
               &times;
             </button>
             <div className="container">
-              <p className="select-text">Pick an avatar</p>
-            </div>
-
-            <div className="avatar-grid">
-              {avatars.map((avatar, index) => (
-                <img
-                  key={index}
-                  src={avatar}
-                  alt={`Avatar ${index + 1}`}
-                  className={`avatar-option ${tempAvatar === avatar ? 'selected' : ''}`}
-                  onClick={() => setTempAvatar(avatar)}
-                />
-              ))}
+              <p className="select-text">Pick an avatar or upload a picture</p>
+              <input type="file" onChange={handleFileChange} />
             </div>
             <button className="apply-btn" onClick={handleApplyAvatar}>
               Apply
@@ -192,7 +179,6 @@ const StaffProfile = () => {
         </div>
       )}
 
-      {/* Error Message */}
       {error && <div className="error-message">{error}</div>}
 
       <div className="form-section">
@@ -286,6 +272,7 @@ const StaffProfile = () => {
             />
           </div>
         </div>
+
 
         <div className="form-buttons">
           <button

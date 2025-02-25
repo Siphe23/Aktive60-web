@@ -1,3 +1,35 @@
+     </div>
+ 
+, commented coz avatar is constantly brought back
+ 
+// Fallback to default avatar if not available
+ 
+   )}
+ 
+ <div className="avatar-grid">
+              {avatars.map((avatar, index) => (
+                <img
+                  key={index}
+                  src={avatar}
+                  alt={`Avatar ${index + 1}`}
+                  className={`avatar-option ${tempAvatar === avatar ? 'selected' : ''}`}
+                  onClick={() => setTempAvatar(avatar)}
+                />
+              ))}
+            </div>
+ 
+<button className="select-btn" onClick={() => setShowModal(true)}>
+            Select Avatar
+          </button>
+ 
+   {/* User's Avatar and Name */}
+ 
+  <img
+              src={userData.avatar || "default-avatar-url"} // Fallback to default if avatar is missing
+              alt="Profile"
+              className="profile-pic"
+            />
+ 
 @@ -31,26 +32,48 @@
  
     return <div>Loading...</div>;

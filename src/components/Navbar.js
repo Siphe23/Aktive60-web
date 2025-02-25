@@ -46,7 +46,7 @@ const Navbar = ({ userData }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth); // Log the user out
-      navigate("/login"); // Redirect to the login page after logout
+      navigate("/staff-login"); // Redirect to the login page after logout
     } catch (err) {
       console.error("Error logging out:", err);
     }
@@ -77,29 +77,18 @@ const Navbar = ({ userData }) => {
           {notifications > 0 && <span className="badge">{notifications}</span>}
         </div>
 
-        {/* Conditionally render profile section */}
-        {userData ? (
-          <div
-            className="profile-section"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            {/* User's Avatar and Name */}
-            <img
-              src={userData.avatar || "default-avatar-url"} // Fallback to default if avatar is missing
-              alt="Profile"
-              className="profile-pic"
-            />
-            <span className="profile-name">
-              {userData.name} {userData.lastName}
-            </span>
-            <FaCaretDown className="caret-icon" />
-          </div>
-        ) : (
-          <div className="loading">Loading...</div> // Or some other fallback content if userData is not yet available
-        )}
+        <div
+          className="profile-section"
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+        >
+          {/* User's Avatar and Name */}
+          <img src={userData.avatar} alt="Profile" className="profile-pic" />
+          <span className="profile-name">{userData.name} {userData.lastName}</span>
+          <FaCaretDown className="caret-icon" />
+        </div>
 
         {/* Dropdown Menu */}
-        {dropdownOpen && userData && (
+        {dropdownOpen && (
           <div className="dropdown-menu">
             <div className="dropdown-item">Edit Profile</div>
             <div className="dropdown-item" onClick={handleLogout}>Logout</div>

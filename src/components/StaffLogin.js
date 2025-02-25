@@ -74,7 +74,7 @@ const StaffLogin = () => {
       localStorage.setItem("uid", user.uid); // Store the uid in localStorage for later use
 
       // Navigate to profile page, passing the uid
-      navigate("/StaffProfile"); // Assuming you have a route for the profile page
+      navigate("/Staff-Profile"); // Assuming you have a route for the profile page
 
     } catch (error) {
       handleError(error);
