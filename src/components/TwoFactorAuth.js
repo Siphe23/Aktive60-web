@@ -1,51 +1,39 @@
 import React, { useState } from "react";
-import "../styles/twoFactorAuth.css"; 
-import TwoFAImage from "../assets/bro.jpg";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../styles/twoFactorAuth.css"; // Ensure you have this CSS file
+import TwoFAImage from "../assets/bro-removebg-preview.png"; // Adjust the path
+import logo from "../assets/Aktiv60.png"; // Adjust the path
 
 const TwoFactorAuth = () => {
-  const [authMethod, setAuthMethod] = useState("auth-app");
-  const [code, setCode] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleVerify = (e) => {
-    e.preventDefault();
-    alert("2FA Code Submitted: " + code);
+  const handleSMSVerification = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("SMS Verification Sent!");
+      navigate("/verify-code");
+    }, 1500);
   };
 
   return (
-    <div className="twofa-container">
-      {/* Right Side: Authentication Form */}
-      <div className="auth-container">
-        <h2 className="logo">Aktiv60</h2>
-        <p className="subtitle">Two-Factor Authentication</p>
-
-        <select 
-          value={authMethod} 
-          onChange={(e) => setAuthMethod(e.target.value)} 
-          className="input-group"
-        >
-          <option value="auth-app">Authentication App</option>
-          <option value="sms">SMS Verification</option>
-          <option value="email">Email Verification</option>
-          <option value="backup">Backup Codes</option>
-        </select>
-
-        <form onSubmit={handleVerify}>
-          <div className="input-group">
-            <input 
-              type="text" 
-              placeholder="Enter Code" 
-              value={code} 
-              onChange={(e) => setCode(e.target.value)} 
-              required
-            />
-          </div>
-          <button type="submit" className="auth-button">Verify</button>
-        </form>
-      </div>
-
-      {/* Left Side: Image */}
-      <div className="image-container">
-        <img src={TwoFAImage} alt="Two Factor Authentication" />
+    <div className="two-fa-container">
+      <img src={logo} alt="Aktiv80 Logo" className="logo" />
+      <div className="two-fa-content">
+        <div className="two-fa-text">
+          <h2>Two-Factor Authentication</h2>
+          <button
+            className="sms-verification-btn"
+            onClick={handleSMSVerification}
+            disabled={loading}
+          >
+            {loading ? "Sending..." : "SMS Verification →"}
+          </button>
+        </div>
+        <img src={TwoFAImage} alt="2FA Illustration" className="two-fa-image" />
       </div>
     </div>
   );

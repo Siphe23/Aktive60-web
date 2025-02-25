@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 900px;
+  background-color: #1a1a1a;
+  color: white;
+  font-family: 'Gugi', cursive;
+  padding: auto;
+  gap: 200px;
+}
+
+/* Form Section */
+.form-section {
+  width: 100%;
+  max-width: 455px;
+  background-color: transparent;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 50px; /* Increased gap between textboxes */
+}
+
+.titles {
+  font-size: 14px;
+  margin-bottom: -40px;
+  margin-top: -10px;
+}
+
+.form-grid input {
+  width: 433px;
+  height: 13px;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px black;
+  border-radius: 10px;
+  color: rgb(161, 161, 161);
+  font-family: 'Gugi', cursive;
+  position: relative;
+  margin-bottom: -15px;
+}
+
+.form-grid select {
+  width: 100%;
+  padding: 12px;
+  background-color: #444;
+  border: none;
+  border-radius: 5px;
+  color: rgb(161, 161, 161);
+  font-family: 'Gugi', cursive;
+  position: relative;
+}
+
+.form-grid input[type="email"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
+/* Form Buttons */
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-buttons button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Gugi', cursive;
+}
+
+.save-btn {
+  background-color: #2D3F58;
+  color: white;
+  width: 163px;
+  margin-top: 35px;
+  height: 46px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+}
+
+.clear-btn {
+  background-color: white;
+  color: black;
+  width: 163px;
+  margin-top: 35px;
+  margin-left: 0px;
+}
+
+/* Profile Image Section */
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  padding: auto;
+  border-radius: 12px;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar img {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 5px solid rgb(0, 0, 0);
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* Increased gap between edit and select button */
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Gugi', cursive;
+}
+
+.edit-btn {
+  background-color: #2D3F58;
+  color: white;
+  margin-top: 60px;
+  width: 163px;
+  height: 46px;
+}
+
+.select-btn {
+  background-color: white;
+  color: black;
+  margin-top: 60px;
+  width: 163px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the modal is above other content */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 664px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #000000;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Avatar Grid */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+/* Avatar Options */
+.avatar-option {
+  width: 72px;
+  height: 73px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s, border 0.2s;
+  border: 3px solid transparent;
+}
+
+.avatar-option:hover {
+  transform: scale(1.1);
+}
+
+.avatar-option.selected {
+  border: 3px solid #6200ea; /* Highlight selected avatar */
+}
+
+/* Apply Button */
+.apply-btn {
+  background: #2D3F58;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background 0.3s;
+  margin-top: 15px;
+  width: 155px;
+  margin-left: 75%;
+  font-family: 'Gugi', cursive;
+}
+
+.apply-btn:hover {
+  background: #3b9738;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.select-text {
+  color: #000;
+  font-size: 16px;
+  text-align: left;
+  left: 0%;
+  margin-top: 0px;
+}

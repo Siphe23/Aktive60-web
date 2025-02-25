@@ -1,0 +1,128 @@
+.sidebar {
+  height: 100vh;
+  background: #1e252b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease-in-out;
+  margin-top: 90px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+}
+
+.sidebar.expanded {
+  width: 220px;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.sidebar-toggle img.custom-icon {
+  width: 24px;  /* Adjust the size as needed */
+  height: 24px;
+  filter: none; /* Keeps the icon white without inverting */
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sidebar-toggle:hover img.custom-icon {
+  transform: scale(1.1);
+  opacity: 0.8; /* Slight fade effect on hover */
+}
+
+.sidebar-toggle .icon {
+  font-size: 24px;
+  color: #fff;
+}
+
+/* Sidebar Menu */
+.menu {
+  width: 100%;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  width: 100%;
+  text-decoration: none;
+  color: white;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+  background: red;
+  color: white;
+}
+
+/* Sidebar Text Visibility */
+.icon {
+  font-size: 24px;
+}
+
+.text {
+  display: none;
+  font-size: 16px;
+  white-space: nowrap;
+  text-decoration: none;
+  color: rgb(243, 243, 243);
+}
+
+.sidebar.expanded .text {
+  display: inline;
+}
+
+/* Submenu Styling */
+.submenu {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.submenu-item {
+  padding: 8px 15px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.submenu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.submenu-item.active {
+  background-color: red;
+  color: white;
+}
+
+/* Bottom QR Code */
+.qr-code {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #2a343a;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+.qr-code .icon {
+  font-size: 32px;
+  color: #fff;
+}

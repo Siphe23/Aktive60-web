@@ -1,13 +1,14 @@
-// Signup.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../src/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  getIdToken,
 } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database"; // Import Firebase Realtime Database functions
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
 
@@ -15,10 +16,12 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
 
   const isPasswordValid = (password) => {
@@ -30,8 +33,15 @@ const Signup = () => {
     );
   };
 
+  // Handle registration
   const handleRegister = async () => {
-    if (!email || !password || !confirmPassword) {
+    if (
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !securityQuestion ||
+      !securityAnswer
+    ) {
       toast.error("Please fill all fields");
       return;
     }
@@ -53,8 +63,25 @@ const Signup = () => {
       );
       const user = userCredential.user;
 
-      // You can add additional user data to your database here
-      // await addUserToDatabase(user.uid, { email: user.email });
+      // Get Firebase ID token for the user
+      const token = await getIdToken(user);
+
+      // Save user details in Firebase Realtime Database under the "users" node
+      const db = getDatabase();
+      const userRef = ref(db, "users/" + user.uid); // Using the user's UID as the key
+      await set(userRef, {
+        email: email,
+        role: "pending", // Assign role as 'pending'
+        status: "pending", // Assign status as 'pending'
+        securityQuestion: securityQuestion,
+        securityAnswer: securityAnswer,
+      });
+
+      // Save the token and other necessary information to localStorage if Remember Me is checked
+      if (rememberMe) {
+        localStorage.setItem("authToken", token); // Store the token in localStorage
+        localStorage.setItem("email", email); // Optionally store email as well
+      }
 
       toast.success("Registration Successful!");
       navigate("/dashboard");
@@ -89,8 +116,14 @@ const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // You can add additional user data to your database here
-      // await addUserToDatabase(user.uid, { email: user.email });
+      // Get Firebase ID token for the user
+      const token = await getIdToken(user);
+
+      // Save the token and other necessary information to localStorage
+      if (rememberMe) {
+        localStorage.setItem("authToken", token); // Store the token in localStorage
+        localStorage.setItem("email", user.email); // Optionally store email as well
+      }
 
       toast.success("Registered with Google!");
       navigate("/dashboard");
@@ -108,6 +141,7 @@ const Signup = () => {
         <p className="subtitle">System v2.1.0 (Production)</p>
         <h3>Create an account</h3>
 
+        {/* Email Input */}
         <div className="input-group">
           <input
             type="email"
@@ -119,16 +153,13 @@ const Signup = () => {
           <i className="fas fa-envelope"></i>
         </div>
 
+        {/* Password Input */}
         <div className="input-group">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Enter New Password"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setIsPasswordFocused(true);
-            }}
-            onFocus={() => setIsPasswordFocused(true)}
+            onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
           />
           <i
@@ -137,23 +168,7 @@ const Signup = () => {
           ></i>
         </div>
 
-        {isPasswordFocused && (
-          <ul className="password-requirements">
-            <li className={password.length >= 8 ? "valid" : "invalid"}>
-              ✓ 8+ characters
-            </li>
-            <li className={/[A-Z]/.test(password) ? "valid" : "invalid"}>
-              ✓ One uppercase letter
-            </li>
-            <li className={/\d/.test(password) ? "valid" : "invalid"}>
-              ✓ One number
-            </li>
-            <li className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>
-              ✓ One special character
-            </li>
-          </ul>
-        )}
-
+        {/* Confirm Password Input */}
         <div className="input-group">
           <input
             type={showConfirmPassword ? "text" : "password"}
@@ -166,6 +181,42 @@ const Signup = () => {
             className={`fas ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`}
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           ></i>
+        </div>
+
+        {/* Security Question and Answer Inputs */}
+        <div className="input-group">
+          <select
+            value={securityQuestion}
+            onChange={(e) => setSecurityQuestion(e.target.value)}
+            disabled={loading}
+          >
+            <option value="">Select a security question</option>
+            <option value="What is your mother's maiden name?">
+              What is your mother's maiden name?
+            </option>
+            <option value="What was the name of your first pet?">
+              What was the name of your first pet?
+            </option>
+            <option value="What was your first car?">
+              What was your first car?
+            </option>
+            <option value="What city were you born in?">
+              What city were you born in?
+            </option>
+            <option value="What is your favorite book?">
+              What is your favorite book?
+            </option>
+          </select>
+        </div>
+
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Your Answer"
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
+            disabled={loading}
+          />
         </div>
 
         <button

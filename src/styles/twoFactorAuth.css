@@ -1,67 +1,69 @@
-.twofa-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-    /* background: linear-gradient(to right, #f8f9fa, #d0d7e0); */
-  }
-  
-  .image-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .image-container img {
-    max-width: 80%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .subtitle {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .input-group {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .input-group input,
-  .input-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .auth-button {
-    width: 100%;
-    padding: 12px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .auth-button:hover {
-    background: #0056b3;
-  }
-  
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #242526;
+}
+
+.two-fa-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 0 50px;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 300px;
+  width: 50px;
+}
+
+.two-fa-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.two-fa-text {
+  flex: 1;
+  padding-right: 50px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 40%;
+}
+
+.sms-verification-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 500px;
+  margin-left: 40%;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sms-verification-btn:disabled {
+  background-color:red;
+  cursor: not-allowed;
+}
+
+.sms-verification-btn:hover:not(:disabled) {
+  background-color: red;
+}
+
+.two-fa-image {
+ margin-right: 10%;
+  Width :500px;
+  Height:600px;
+  Top:321.46px;
+  Left: 894px
+}
