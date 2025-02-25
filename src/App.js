@@ -25,7 +25,9 @@ import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
 import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
 import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
 import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
-// import BranchDetails from "./pages/Branch/BranchDetails";
+import BranchDetails from "./pages/Branch/BranchDetails";
+import BranchPackages from "./pages/Branch/BranchPackages";
+import BranchStaff from "./pages/Branch/Branchstaff";
 
 
 
@@ -66,8 +68,17 @@ function App() {
             <Route path="/collection" element={<Collection />} />
 
 
+            <Route path="/branchdetails" element={<BranchDetails />} />
 
-            {/* <Route path="/branch-details" element={<BranchDetails />} /> */}
+            <Route path="/branchpackages" element={<BranchPackages />} />
+            <Route path="/branchstaff" element={<BranchStaff />} />
+
+
+
+
+
+
+       
 
         
       </Routes>

@@ -28,6 +28,7 @@ const BranchDetails = () => {
 
   return (
     <div className="branch-container">
+       <Link to="/edit" className="edit-button"><FaEdit /> Edit Details</Link>
       <h1 className="branch-title">{branchData.name}</h1>
       <p className="branch-subtitle">Manage your branch here</p>
 
@@ -66,7 +67,7 @@ const BranchDetails = () => {
         </div>
       </div>
 
-      <Link to="/edit" className="edit-button"><FaEdit /> Edit Details</Link>
+     
     </div>
   );
 };

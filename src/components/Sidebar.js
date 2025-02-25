@@ -102,7 +102,7 @@ const Sidebar = () => {
         {isBranchDropdownVisible && isExpanded && (
           <div className="submenu">
             <Link
-              to="/branch-details"
+              to="/branchdetails"
               className={`submenu-item ${isActive("/branch-details")}`}
             >
               Branch Details
