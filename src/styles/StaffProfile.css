@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
-
+.body{
+  margin-bottom: 100px;
+}
 /* Profile Container */
 .profile-container {
   display: flex;
@@ -21,12 +23,13 @@
   background-color: transparent;
   padding: 0px;
   border-radius: 10px;
+  margin-top: 200px
 }
 
 .form-grid {
   display: flex;
   flex-direction: column;
-  gap: 50px; /* Increased gap between textboxes */
+  gap: 20px; /* Increased gap between textboxes */
 }
 
 .titles {
@@ -65,7 +68,36 @@
   background-repeat: no-repeat;
   background-size: 20px;
 }
-
+.form-grid input[type="tel"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.form-grid input[name="workId"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.form-grid input[name="name"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.form-grid input[name="lastName"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.form-grid input[name="role"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
 /* Form Buttons */
 .form-buttons {
   margin-top: 20px;

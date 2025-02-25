@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase'; // Import Firebase auth and Firestore instances
-import { doc, getDoc, setDoc } from 'firebase/firestore'; // Firestore functions
+import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore'; // Firestore functions
 import avatarPlaceholder from '../assets/avatar-placeholder.png'; // Ensure this path points to your avatar image
 import '../styles/StaffProfile.css';
 import Navbar from '../components/Navbar';
+
 // Import avatars
 const avatars = [
   require('../assets/avatars/avatar1.png'),
@@ -27,6 +28,7 @@ const avatars = [
 ];
 
 const StaffProfile = () => {
+  const [branches, setBranches] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
@@ -83,6 +85,22 @@ const StaffProfile = () => {
     fetchUserData();
   }, []); // Empty dependency array ensures this runs only once when the component is mounted
 
+  // Fetch branches function moved outside useEffect to avoid re-creating it every time
+  const fetchBranches = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "branches"));
+      const branchList = querySnapshot.docs.map((doc) => doc.data().branch_name);
+      setBranches(branchList);
+    } catch (error) {
+      console.error("Error fetching branches:", error);
+    }
+  };
+
+  // Call fetchBranches once on component mount
+  useEffect(() => {
+    fetchBranches();
+  }, []);
+
   // Handle form field changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -131,9 +149,7 @@ const StaffProfile = () => {
   };
 
   return (
-    
     <div className="profile-container">
-      
       {/* Profile Image Section */}
       <div className="profile-image-section">
         <div className="avatar">
@@ -179,7 +195,6 @@ const StaffProfile = () => {
       {/* Error Message */}
       {error && <div className="error-message">{error}</div>}
 
-      {/* Form Section */}
       <div className="form-section">
         <div className="form-grid">
           <div className="form-group">
@@ -243,16 +258,20 @@ const StaffProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="branch" className="titles">Branch</label>
-            <input
-              type="text"
-              id="branch"
-              name="branch"
-              placeholder="Enter your branch"
-              value={formData.branch}
-              onChange={handleChange}
-              className="p-2 bg-gray-700 text-white rounded"
-            />
+          <select
+            name="branch"
+            value={formData.branch}
+            onChange={handleChange}
+            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
+            required
+          >
+            <option value="">Select your branch location</option>
+            {branches.map((branch, index) => (
+              <option key={index} value={branch}>
+                {branch}
+              </option>
+            ))}
+          </select>
           </div>
           <div className="form-group">
             <label htmlFor="workId" className="titles">Work ID</label>

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // For navigation after logout
 import "../styles/NavigationBar.css";
-import profilePic from "../assets/son.png";
-import logo from "../assets/Aktiv60.png";
-import { db, realTimeDB } from "../firebase";
+import logo from "../assets/Aktiv60.png"; // Assuming your logo is at this location
+import { db, realTimeDB } from "../firebase"; // Ensure Firebase is correctly imported
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { ref, onValue } from "firebase/database";
+import { signOut } from "firebase/auth"; // Import signOut from Firebase
+import { auth } from "../firebase"; // Import Firebase authentication
 
-const NavigationBar = () => {
+const Navbar = ({ userData }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState(0);
+  const navigate = useNavigate(); // To navigate after logout
 
   useEffect(() => {
     // Count pending admin requests (Supervisors) from Firestore
@@ -40,6 +43,15 @@ const NavigationBar = () => {
     return () => adminUnsubscribe();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Log the user out
+      navigate("/login"); // Redirect to the login page after logout
+    } catch (err) {
+      console.error("Error logging out:", err);
+    }
+  };
+
   return (
     <div className="navigation-bar">
       {/* Left Section - Logo + Search */}
@@ -69,8 +81,9 @@ const NavigationBar = () => {
           className="profile-section"
           onClick={() => setDropdownOpen(!dropdownOpen)}
         >
-          <img src={profilePic} alt="Profile" className="profile-pic" />
-          <span className="profile-name">Tyy Ford</span>
+          {/* User's Avatar and Name */}
+          <img src={userData.avatar} alt="Profile" className="profile-pic" />
+          <span className="profile-name">{userData.name} {userData.lastName}</span>
           <FaCaretDown className="caret-icon" />
         </div>
 
@@ -78,7 +91,7 @@ const NavigationBar = () => {
         {dropdownOpen && (
           <div className="dropdown-menu">
             <div className="dropdown-item">Edit Profile</div>
-            <div className="dropdown-item">Logout</div>
+            <div className="dropdown-item" onClick={handleLogout}>Logout</div>
           </div>
         )}
       </div>
@@ -86,4 +99,4 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar;
+export default Navbar;
