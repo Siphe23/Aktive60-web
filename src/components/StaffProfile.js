@@ -51,7 +51,7 @@ const StaffProfile = () => {
             setError('No user data found.');
           }
 
-          // Check if profile picture exists in the `profilepictures` table
+          // Check if profile picture exists in the profilepictures table
           const avatarRef = doc(db, 'profilepictures', user.uid);
           const avatarDoc = await getDoc(avatarRef);
           if (avatarDoc.exists()) {
@@ -232,16 +232,18 @@ const StaffProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="role" className="titles">Role</label>
-            <input
-              type="text"
-              id="role"
-              name="role"
-              placeholder="Enter your role"
-              value={formData.role}
-              onChange={handleChange}
-              className="p-2 bg-gray-700 text-white rounded"
-            />
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
+            required
+          >
+            <option value="">Select your role</option>
+            <option value="Trainer">Trainer</option>
+            <option value="Staff">Staff</option>
+            {/* <option value="Supervisor">Supervisor</option> */}
+          </select>
           </div>
           <div className="form-group">
           <select
