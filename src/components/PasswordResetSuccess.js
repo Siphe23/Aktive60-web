@@ -1,24 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SuccessImage from "../assets/pana-removebg-preview.png"; // Success image import
-
-import "../styles/styles.css";
+import SuccessImage from "../assets/rafiki-removebg-preview.png"; 
+import "../styles/PasswordSuccess.css";
 
 const PasswordResetSuccess = () => {
   return (
     <div className="auth-container">
-      <h2 className="logo">Aktiv60</h2>
-      <p className="subtitle">Password Reset Successful!</p>
+      {/* Left Section */}
+      <div className="left-content">
+        <h2 className="logo">
+          <img src={require("../assets/Aktiv60.png")} alt="Aktiv60 Logo" />
+        </h2>
+        <p className="subtitle">Password Reset Successful!</p>
 
-      {/* Success Image */}
+        {/* Navigation Button */}
+        <Link to="/login" className="auth-button">Go to Login</Link>
+      </div>
+
+      {/* Right Section */}
       <div className="success-image-container">
         <img src={SuccessImage} alt="Password Reset Success" className="success-image" />
       </div>
-
-      {/* Navigation Button */}
-      <Link to="/login" className="auth-button">Go to Login</Link>
     </div>
   );
 };
 
 export default PasswordResetSuccess;
+
