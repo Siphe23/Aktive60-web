@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, doc, getDoc } from "firebase/firestore"; 
-import RecoveryImage from "../assets/cuate.png";
+import RecoveryImage from "../assets/uate.png";
 import "../styles/PasswordRecovery.css";
 
 const PasswordRecovery = () => {

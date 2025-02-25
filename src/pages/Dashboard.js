@@ -26,7 +26,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="message-icon">
-        <Message /> {/* Use the Message icon */}
+        <Message /> 
       </div>
     </div>
   );

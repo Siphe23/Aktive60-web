@@ -112,13 +112,13 @@ h3 {
 }
 
 .auth-button {
-  width: 100%;
+  width: 105% !important;
   padding: 10px;
   background-color: #F10623 !important;
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  margin-left: 300px;
+  margin-left: 10px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;

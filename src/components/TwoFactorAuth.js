@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/twoFactorAuth.css"; // Ensure you have this CSS file
-import TwoFAImage from "../assets/bro-removebg-preview.png"; // Adjust the path
-import logo from "../assets/Aktiv60.png"; // Adjust the path
+import TwoFAImage from "../assets/bro-removebg-preview.png"; 
+import logo from "../assets/Aktiv60.png"; 
 
 const TwoFactorAuth = () => {
   const navigate = useNavigate();
