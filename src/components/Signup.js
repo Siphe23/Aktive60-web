@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   getIdToken,
 } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database"; // Import Firebase Realtime Database functions
 import TwoFAImage from "../assets/amico.png";
 import "../styles/styles.css";
 
@@ -34,7 +35,13 @@ const Signup = () => {
 
   // Handle registration
   const handleRegister = async () => {
-    if (!email || !password || !confirmPassword || !securityQuestion || !securityAnswer) {
+    if (
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !securityQuestion ||
+      !securityAnswer
+    ) {
       toast.error("Please fill all fields");
       return;
     }
@@ -49,16 +56,31 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Get Firebase ID token for the user
       const token = await getIdToken(user);
 
+      // Save user details in Firebase Realtime Database under the "users" node
+      const db = getDatabase();
+      const userRef = ref(db, "users/" + user.uid); // Using the user's UID as the key
+      await set(userRef, {
+        email: email,
+        role: "pending", // Assign role as 'pending'
+        status: "pending", // Assign status as 'pending'
+        securityQuestion: securityQuestion,
+        securityAnswer: securityAnswer,
+      });
+
       // Save the token and other necessary information to localStorage if Remember Me is checked
       if (rememberMe) {
-        localStorage.setItem("authToken", token);  // Store the token in localStorage
-        localStorage.setItem("email", email);      // Optionally store email as well
+        localStorage.setItem("authToken", token); // Store the token in localStorage
+        localStorage.setItem("email", email); // Optionally store email as well
       }
 
       toast.success("Registration Successful!");
@@ -99,7 +121,7 @@ const Signup = () => {
 
       // Save the token and other necessary information to localStorage
       if (rememberMe) {
-        localStorage.setItem("authToken", token);  // Store the token in localStorage
+        localStorage.setItem("authToken", token); // Store the token in localStorage
         localStorage.setItem("email", user.email); // Optionally store email as well
       }
 
@@ -169,11 +191,21 @@ const Signup = () => {
             disabled={loading}
           >
             <option value="">Select a security question</option>
-            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
-            <option value="What was the name of your first pet?">What was the name of your first pet?</option>
-            <option value="What was your first car?">What was your first car?</option>
-            <option value="What city were you born in?">What city were you born in?</option>
-            <option value="What is your favorite book?">What is your favorite book?</option>
+            <option value="What is your mother's maiden name?">
+              What is your mother's maiden name?
+            </option>
+            <option value="What was the name of your first pet?">
+              What was the name of your first pet?
+            </option>
+            <option value="What was your first car?">
+              What was your first car?
+            </option>
+            <option value="What city were you born in?">
+              What city were you born in?
+            </option>
+            <option value="What is your favorite book?">
+              What is your favorite book?
+            </option>
           </select>
         </div>
 

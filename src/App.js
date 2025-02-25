@@ -1,5 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
@@ -11,34 +16,49 @@ import TwoFactorAuth from "./components/TwoFactorAuth";
 import PasswordRecovery from "./components/PasswordRecovery";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
-import Profile from './components/Profile';
-import Dashboard from './pages/Dashboard'
-
-
+import SuperProfile from "./components/SuperProfile";
+import Dashboard from "./pages/Dashboard";
+import StaffRegister from "./components/StaffRegister";
+import StaffProfile from "./components/StaffProfile";
+import StaffLogin from "./components/StaffLogin";
+import SuperLogin from "./components/superLogin";
+import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
+import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
+import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
+import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
-import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
-import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
-import LocationSettings from "./pages/Location/LocationSettings/LocationSettings";
-import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
-// import BranchDetails from "./pages/Branch/BranchDetails";
-// import BranchPackages from "./pages/Branch/BranchPackages";
-// import BranchStaff from "./pages/Branch/Branchstaff";
-
-
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 
 
 
 
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, () => {
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // You can replace this with a loading spinner or component bafethu
+  }
+
   return (
     <Router>
       <ToastContainer position="top-right" autoClose={3000} />
+      <Navbar />
+      <Sidebar />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/home" element={<Home />} />
@@ -46,41 +66,29 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
-        <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
+        <Route
+          path="/password-reset-success"
+          element={<PasswordResetSuccess />}
+        />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path=  "/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="Profile" element={<Profile />} />
-
-
-       
-           
-            <Route path="/locationoverview" element={<LocationOverview />} />
-            <Route path="/locationdetails" element={<LocationDetails />} />
-            <Route path="/locationstaff" element={<LocationStaff />} />
-            <Route path="/locationsettings" element={<LocationSettings />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/usermanagement" element={<UserManagement />} />
-            <Route path="/trainers" element={<Trainers />} />
-            <Route path="/trainees" element={<Trainees />} />
-            <Route path="/collection" element={<Collection />} />
-
-
-            {/* <Route path="/branchdetails" element={<BranchDetails />} />
-
-            <Route path="/branchpackages" element={<BranchPackages />} />
-            <Route path="/branchstaff" element={<BranchStaff />} /> */}
-
-
-
-
-
-
-       
-
-        
+        <Route path="/super-profile" element={<SuperProfile />} />
+        <Route path="/staff-register" element={<StaffRegister />} />
+        <Route path="/staff-profile" element={<StaffProfile />} />
+        <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/super-login" element={<SuperLogin />} />
+        <Route path="/location-overview" element={<LocationOverview />} />
+        <Route path="/location-details" element={<LocationDetails />} />
+        <Route path="/location-staff" element={<LocationStaff />} />
+        <Route path="/location-settings" element={<LocationSettings />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/trainers" element={<Trainers />} />
+        <Route path="/trainees" element={<Trainees />} />
+        <Route path="/collection" element={<Collection />} />
       </Routes>
     </Router>
   );

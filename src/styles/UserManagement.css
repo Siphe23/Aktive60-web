@@ -56,4 +56,23 @@
   .restrict {
     color: orange;
   }
-  
+  .accept {
+  color: #28a745;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.decline {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+.accept:hover {
+  color: #218838;
+  text-decoration: underline;
+}
+
+.decline:hover {
+  color: #c82333;
+  text-decoration: underline;
+}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../styles/AddNewLocationModal.css";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [locationName, setLocationName] = useState("");
@@ -17,6 +19,45 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [memberCapacity, setMemberCapacity] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
 
+  // New state for packages
+  const [packages, setPackages] = useState([]); // List of all packages from the database
+  const [selectedPackages, setSelectedPackages] = useState([]); // Packages selected by the user
+
+  // Fetch packages from Firestore on component mount
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const packagesCollection = collection(db, "packages");
+        const packagesSnapshot = await getDocs(packagesCollection);
+        const packagesList = packagesSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPackages(packagesList);
+      } catch (error) {
+        console.error("Failed to fetch packages:", error);
+      }
+    };
+    fetchPackages();
+  }, []);
+
+  // Handle package selection
+  const handlePackageSelection = (packageId) => {
+    const isSelected = selectedPackages.includes(packageId);
+    if (isSelected) {
+      // Remove package if already selected
+      setSelectedPackages((prev) => prev.filter((id) => id !== packageId));
+    } else {
+      // Add package if not selected
+      setSelectedPackages((prev) => [...prev, packageId]);
+    }
+  };
+
+  // Handle removing a selected package
+  const handleRemovePackage = (packageId) => {
+    setSelectedPackages((prev) => prev.filter((id) => id !== packageId));
+  };
+
   useEffect(() => {
     if (branchData) {
       setLocationName(branchData.branch_name || "");
@@ -30,6 +71,7 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
       });
       setEquipment(branchData.equipment || []);
       setMemberCapacity(branchData.member_capacity || "");
+      setSelectedPackages(branchData.packages || []);
     }
   }, [branchData]);
 
@@ -74,6 +116,7 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
       operatingHours,
       equipment,
       memberCapacity,
+      packages: selectedPackages, // Include selected packages in the saved data
     };
     onSave(updatedLocation);
     onClose();
@@ -267,7 +310,39 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
             ))}
           </div>
         </div>
-        
+
+        {/* New Package Selection Field */}
+        <div className="form-group">
+          <label>Packages</label>
+          <div className="package-selection">
+            <select
+              onChange={(e) => handlePackageSelection(e.target.value)}
+              value=""
+            >
+              <option value="" disabled>
+                Select a package
+              </option>
+              {packages.map((pkg) => (
+                <option key={pkg.id} value={pkg.id}>
+                  {pkg.packageName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="selected-packages">
+            {selectedPackages.map((packageId) => {
+              const selectedPackage = packages.find((pkg) => pkg.id === packageId);
+              return (
+                <div key={packageId} className="selected-package-item">
+                  <span>{selectedPackage?.packageName}</span>
+                  <button onClick={() => handleRemovePackage(packageId)}>
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         <div className="form-group">
           <label>Member Capacity</label>

@@ -76,8 +76,10 @@ const LocationDetails = () => {
         member_capacity: newLocation.memberCapacity,
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
+        packages: newLocation.packages, // Include selected packages
+        active: "yes", // Set active to "yes" (as a string)
       });
-
+  
       // Save to Realtime Database
       const branchRef = ref(realTimeDB, `branches/${docRef.id}`);
       await set(branchRef, {
@@ -87,8 +89,10 @@ const LocationDetails = () => {
         member_capacity: newLocation.memberCapacity,
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
+        packages: newLocation.packages, // Include selected packages
+        active: "yes", // Set active to "yes" (as a string)
       });
-
+  
       toast.success("Location saved successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -107,6 +111,7 @@ const LocationDetails = () => {
         member_capacity: updatedLocation.memberCapacity,
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
+        packages: updatedLocation.packages, // Include selected packages
       });
 
       // Update Realtime Database
@@ -118,6 +123,7 @@ const LocationDetails = () => {
         member_capacity: updatedLocation.memberCapacity,
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
+        packages: updatedLocation.packages, // Include selected packages
       });
 
       toast.success("Location updated successfully!");

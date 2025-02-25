@@ -1,77 +1,59 @@
-/* Header with Buttons */
-.header {
+/* Header Container */
+.header-container {
   display: flex;
-  justify-content: space-between; /* Align items to the left and right */
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.header-buttons {
-  display: flex;
-  gap: 10px; /* Space between buttons */
+/* Package Grid */
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
 }
 
-/* Add Button Styles */
-.add-button {
-  background-color: #007bff; /* Blue background */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-/* Package Container */
-.package-container {
-  background-color: #2a2a3a;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-
-.sub {
-  text-align: left;
-  font-size: x-large;
-}
-
-.package-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.package-item {
+/* Package Card */
+.package-card {
   background-color: #3a3a4a;
   padding: 15px;
-  border: 1px solid #2a2a3a;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between; /* Position icon on the right */
-  align-items: center;
+  border-radius: 10px;
   color: #fff;
-  width: 80%;
-  max-width: 600px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  transition: transform 0.3s ease;
 }
 
-.package-item:hover {
-  border: 1px solid #ffffff;
-  background-color: #4a4a5a;
+.package-card:hover {
+  transform: scale(1.05);
 }
 
+/* Edit Icon */
 .edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
-  color: #888;
+  color: #ccc;
   transition: color 0.3s ease;
 }
 
 .edit-icon:hover {
   color: #fff;
+}
+
+/* Add Button */
+.add-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
 }
