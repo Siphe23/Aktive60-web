@@ -35,9 +35,8 @@ import Collection from "./pages/Collection";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
-
-
-
+// Import Firebase functions
+import { auth, onAuthStateChanged } from './firebase'; // Import Firebase authentication
 
 function App() {
   const [loading, setLoading] = useState(true);

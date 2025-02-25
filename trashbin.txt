@@ -1,3 +1,9 @@
+@@ -31,26 +32,48 @@
+ 
+    return <div>Loading...</div>;
+ 
+@@ -82,6 +105,6 @@ function App() 
+ 
   left:50%;
  
 3b82f6
