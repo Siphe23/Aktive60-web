@@ -4,7 +4,7 @@ import { db, realTimeDB, auth } from "../firebase";
 import { collection, query, where, onSnapshot, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, onValue, update } from "firebase/database";
-import { toast } from "react-toastify"; // Import toast
+import { toast } from "react-toastify";
 
 const UserManagement = () => {
   const [admins, setAdmins] = useState([]);
@@ -16,7 +16,7 @@ const UserManagement = () => {
   const [showPendingAdmins, setShowPendingAdmins] = useState(false);
   const [showPendingUsers, setShowPendingUsers] = useState(false);
 
-  // Check current user role on mount
+  // Previous useEffect hooks remain unchanged
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -29,18 +29,16 @@ const UserManagement = () => {
       }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
-  // Fetch Active Admins (Supervisors) from Firestore
   useEffect(() => {
     const q = query(
       collection(db, "staff"),
       where("role", "==", "Supervisor"),
-      where("status", "==", "active") // Only active supervisors
+      where("status", "==", "active"),
+      
     );
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const adminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -49,18 +47,16 @@ const UserManagement = () => {
       }));
       setAdmins(adminList);
     });
-
     return () => unsubscribe();
   }, []);
 
-  // Fetch Pending Admins (Supervisors) from Firestore
   useEffect(() => {
     const q = query(
       collection(db, "staff"),
       where("role", "==", "Supervisor"),
-      where("status", "==", "pending") // Only pending supervisors
+      where("status", "==", "pending"),
+      
     );
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const pendingAdminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -69,11 +65,9 @@ const UserManagement = () => {
       }));
       setPendingAdmins(pendingAdminList);
     });
-
     return () => unsubscribe();
   }, []);
 
-  // Fetch Active Users (clients) and Pending Users from Realtime Database
   useEffect(() => {
     const usersRef = ref(realTimeDB, "users");
     const unsubscribe = onValue(usersRef, (snapshot) => {
@@ -102,42 +96,47 @@ const UserManagement = () => {
         setPendingUsers(pendingList);
       }
     });
-
     return () => unsubscribe();
   }, []);
 
-  // Remove admin function
   const handleRemoveAdmin = async (adminId) => {
     if (currentUserRole !== "super_Admin") {
-      toast.error("Only Super Admins can remove admins"); // Use toast for error
+      toast.error("Only Super Admins can remove admins");
       return;
     }
-
     try {
       await update(ref(realTimeDB, `users/${adminId}`), {
         role: "client",
       });
-      toast.success("Admin removed successfully"); // Use toast for success
+      toast.success("Admin removed successfully");
     } catch (error) {
-      toast.error("Error removing admin: " + error.message); // Use toast for error
+      toast.error("Error removing admin: " + error.message);
     }
   };
 
-  // Restrict user access function
-  const handleRestrictAccess = async (userId) => {
+  // Updated handleAccess function with accept/decline options
+  const handleAccess = async (userId, action) => {
     if (currentUserRole !== "Supervisor" && currentUserRole !== "super_Admin") {
-      toast.error("Only Supervisors and Super Admins can restrict access"); // Use toast for error
+      toast.error("Only Supervisors and Super Admins can manage user access");
       return;
     }
 
     try {
-      await update(ref(realTimeDB, `users/${userId}`), {
-        status: "restricted",
+      const updates = {
         updatedAt: new Date().toISOString(),
-      });
-      toast.success("User access restricted successfully"); // Use toast for success
+      };
+
+      if (action === "accept") {
+        updates.status = "active";
+        toast.success("User access approved successfully");
+      } else if (action === "decline") {
+        updates.status = "restricted";
+        toast.success("User access declined successfully");
+      }
+
+      await update(ref(realTimeDB, `users/${userId}`), updates);
     } catch (error) {
-      toast.error("Error restricting access: " + error.message); // Use toast for error
+      toast.error(`Error managing access: ${error.message}`);
     }
   };
 
@@ -175,7 +174,6 @@ const UserManagement = () => {
         </div>
       </div>
 
-      {/* Pending Admins Table */}
       {showPendingAdmins && (
         <section className="table-section">
           <h4>Pending Admin Requests</h4>
@@ -186,7 +184,7 @@ const UserManagement = () => {
                 <th>Location Name</th>
                 <th>Joined</th>
                 <th>Work ID</th>
-                <th>Actions</th> {/* Restored Actions column */}
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -215,7 +213,6 @@ const UserManagement = () => {
         </section>
       )}
 
-      {/* Pending Users Table */}
       {showPendingUsers && (
         <section className="table-section">
           <h4>Pending User Requests</h4>
@@ -226,7 +223,7 @@ const UserManagement = () => {
                 <th>Location Name</th>
                 <th>Subscription Package</th>
                 <th>Joined</th>
-                <th>Actions</th> {/* Restored Actions column */}
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -239,13 +236,23 @@ const UserManagement = () => {
                   <td>
                     <a
                       href="#"
-                      className="restrict"
+                      className="accept"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleRestrictAccess(user.id);
+                        handleAccess(user.id, "accept");
                       }}
                     >
-                      Restrict Access
+                      Accept
+                    </a>
+                    <a
+                      href="#"
+                      className="decline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAccess(user.id, "decline");
+                      }}
+                    >
+                      Decline
                     </a>
                   </td>
                 </tr>
@@ -255,7 +262,6 @@ const UserManagement = () => {
         </section>
       )}
 
-      {/* Active Admins Table */}
       <section className="table-section">
         <h4>Admins</h4>
         <table>
@@ -293,7 +299,6 @@ const UserManagement = () => {
         </table>
       </section>
 
-      {/* Active Users Table */}
       <section className="table-section">
         <h4>Active Users</h4>
         <table>
@@ -319,7 +324,7 @@ const UserManagement = () => {
                     className="restrict"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleRestrictAccess(user.id);
+                      handleAccess(user.id, "decline");
                     }}
                   >
                     Restrict Access
