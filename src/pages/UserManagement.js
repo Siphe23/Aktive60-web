@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/UserManagement.css";
 import { db, realTimeDB, auth } from "../firebase";
-import { collection, query, where, onSnapshot, doc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, onValue, update } from "firebase/database";
 import { toast } from "react-toastify";
@@ -16,7 +23,6 @@ const UserManagement = () => {
   const [showPendingAdmins, setShowPendingAdmins] = useState(false);
   const [showPendingUsers, setShowPendingUsers] = useState(false);
 
-  // Previous useEffect hooks remain unchanged
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -36,8 +42,7 @@ const UserManagement = () => {
     const q = query(
       collection(db, "staff"),
       where("role", "==", "Supervisor"),
-      where("status", "==", "active"),
-      
+      where("status", "==", "active")
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const adminList = querySnapshot.docs.map((doc) => ({
@@ -54,8 +59,7 @@ const UserManagement = () => {
     const q = query(
       collection(db, "staff"),
       where("role", "==", "Supervisor"),
-      where("status", "==", "pending"),
-      
+      where("status", "==", "pending")
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const pendingAdminList = querySnapshot.docs.map((doc) => ({
@@ -108,13 +112,15 @@ const UserManagement = () => {
       await update(ref(realTimeDB, `users/${adminId}`), {
         role: "client",
       });
+      await updateDoc(doc(db, "staff", adminId), {
+        role: "client",
+      });
       toast.success("Admin removed successfully");
     } catch (error) {
       toast.error("Error removing admin: " + error.message);
     }
   };
 
-  // Updated handleAccess function with accept/decline options
   const handleAccess = async (userId, action) => {
     if (currentUserRole !== "Supervisor" && currentUserRole !== "super_Admin") {
       toast.error("Only Supervisors and Super Admins can manage user access");
@@ -137,6 +143,33 @@ const UserManagement = () => {
       await update(ref(realTimeDB, `users/${userId}`), updates);
     } catch (error) {
       toast.error(`Error managing access: ${error.message}`);
+    }
+  };
+
+  const handleAdminRequest = async (adminId, action) => {
+    if (currentUserRole !== "super_Admin") {
+      toast.error("Only Super Admins can manage admin requests");
+      return;
+    }
+
+    try {
+      const updates = {
+        updatedAt: new Date().toISOString(),
+      };
+
+      if (action === "accept") {
+        updates.status = "active";
+        toast.success("Admin request approved successfully");
+      } else if (action === "decline") {
+        updates.status = "restricted";
+        toast.success("Admin request declined successfully");
+      }
+
+      // Update both Realtime Database and Firestore
+      await update(ref(realTimeDB, `staff/${adminId}`), updates);
+      await updateDoc(doc(db, "staff", adminId), updates);
+    } catch (error) {
+      toast.error(`Error managing admin request: ${error.message}`);
     }
   };
 
@@ -184,7 +217,9 @@ const UserManagement = () => {
                 <th>Location Name</th>
                 <th>Joined</th>
                 <th>Work ID</th>
-                <th>Actions</th>
+                <th>Accept Request</th>
+                <th>Decline Request</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
@@ -197,13 +232,37 @@ const UserManagement = () => {
                   <td>
                     <a
                       href="#"
+                      className="accept"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAdminRequest(admin.id, "accept");
+                      }}
+                    >
+                      Accept
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      href="#"
+                      className="decline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAdminRequest(admin.id, "decline");
+                      }}
+                    >
+                      Decline
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      href="#"
                       className="remove"
                       onClick={(e) => {
                         e.preventDefault();
                         handleRemoveAdmin(admin.id);
                       }}
                     >
-                      Remove admin
+                      Remove
                     </a>
                   </td>
                 </tr>
