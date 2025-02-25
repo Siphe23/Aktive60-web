@@ -204,6 +204,7 @@ const StaffRegister = () => {
             <option value="">Select your role</option>
             <option value="Trainer">Trainer</option>
             <option value="Staff">Staff</option>
+            <option value="Supervisor">Supervisor</option>
           </select>
 
           <select

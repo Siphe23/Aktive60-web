@@ -52,8 +52,7 @@ function App() {
   return (
     <Router>
       <ToastContainer position="top-right" autoClose={3000} />
-      <Navbar />
-      <Sidebar />
+      
       <Routes>
         <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
         <Route path="/home" element={<Home />} />
