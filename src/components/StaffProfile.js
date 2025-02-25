@@ -22,7 +22,6 @@ const StaffProfile = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false); // Modal visibility
   const [tempAvatar, setTempAvatar] = useState(null); // Temporary avatar selection
-  const [isEditing, setIsEditing] = useState(false); // Track whether the user is editing
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -150,10 +149,6 @@ const StaffProfile = () => {
     setShowModal(false);
   };
 
-  const toggleEditMode = () => {
-    setIsEditing(!isEditing);
-  };
-
   return (
     <div className="profile-container">
       <div className="profile-image-section">
@@ -161,11 +156,9 @@ const StaffProfile = () => {
           <img src={formData.avatar} alt="Avatar" />
         </div>
         <div className="button-group">
-          {!isEditing && (
-            <button className="edit-btn" onClick={toggleEditMode}>
-              Edit Profile
-            </button>
-          )}
+          <button className="edit-btn" onClick={() => setShowModal(true)}>
+            Edit Picture
+          </button>
         </div>
       </div>
 
@@ -200,7 +193,6 @@ const StaffProfile = () => {
               value={formData.name}
               onChange={handleChange}
               className="p-2 bg-gray-700 text-white rounded"
-              disabled={!isEditing} // Disable when not editing
             />
           </div>
           <div className="form-group">
@@ -213,7 +205,6 @@ const StaffProfile = () => {
               value={formData.lastName}
               onChange={handleChange}
               className="p-2 bg-gray-700 text-white rounded"
-              disabled={!isEditing} // Disable when not editing
             />
           </div>
           <div className="form-group">
@@ -226,7 +217,6 @@ const StaffProfile = () => {
               value={formData.email}
               onChange={handleChange}
               className="p-2 bg-gray-700 text-white rounded"
-              disabled={!isEditing} // Disable when not editing
             />
           </div>
           <div className="form-group">
@@ -239,39 +229,37 @@ const StaffProfile = () => {
               value={formData.phone}
               onChange={handleChange}
               className="p-2 bg-gray-700 text-white rounded"
-              disabled={!isEditing} // Disable when not editing
             />
           </div>
           <div className="form-group">
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="p-2 w-full bg-gray-700 text-white rounded mt-4"
-              required
-              disabled={!isEditing} // Disable when not editing
-            >
-              <option value="">Select your role</option>
-              <option value="Trainer">Trainer</option>
-              <option value="Staff">Staff</option>
-            </select>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
+            required
+          >
+            <option value="">Select your role</option>
+            <option value="Trainer">Trainer</option>
+            <option value="Staff">Staff</option>
+            {/* <option value="Supervisor">Supervisor</option> */}
+          </select>
           </div>
           <div className="form-group">
-            <select
-              name="branch"
-              value={formData.branch}
-              onChange={handleChange}
-              className="p-2 w-full bg-gray-700 text-white rounded mt-4"
-              required
-              disabled={!isEditing} // Disable when not editing
-            >
-              <option value="">Select your branch location</option>
-              {branches.map((branch, index) => (
-                <option key={index} value={branch}>
-                  {branch}
-                </option>
-              ))}
-            </select>
+          <select
+            name="branch"
+            value={formData.branch}
+            onChange={handleChange}
+            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
+            required
+          >
+            <option value="">Select your branch location</option>
+            {branches.map((branch, index) => (
+              <option key={index} value={branch}>
+                {branch}
+              </option>
+            ))}
+          </select>
           </div>
           <div className="form-group">
             <label htmlFor="workId" className="titles">Work ID</label>
@@ -283,32 +271,26 @@ const StaffProfile = () => {
               value={formData.workId}
               onChange={handleChange}
               className="p-2 bg-gray-700 text-white rounded"
-              disabled={!isEditing} // Disable when not editing
             />
           </div>
         </div>
 
-        {isEditing && (
-          <div className="form-buttons">
-            <button
-              className="save-btn"
-              onClick={handleSave}
-              disabled={isLoading}
-            >
-              {isLoading ? 'Saving...' : 'Save Changes'}
-            </button>
-            <button className="clear-btn" onClick={handleClear}>
-              Clear
-            </button>
-          </div>
-        )}
+
+        <div className="form-buttons">
+          <button
+            className="save-btn"
+            onClick={handleSave}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Saving...' : 'Save Changes'}
+          </button>
+          <button className="clear-btn" onClick={handleClear}>
+            Clear
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default StaffProfile;
-
-      
-
-     
