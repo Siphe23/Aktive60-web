@@ -81,6 +81,8 @@ function App() {
         <Route path="/trainers" element={user ? <Trainers /> : <Navigate to="/login" />} />
         <Route path="/trainees" element={user ? <Trainees /> : <Navigate to="/login" />} />
         <Route path="/collection" element={user ? <Collection /> : <Navigate to="/login" />} />
+
+        
       </Routes>
     </Router>
   );
