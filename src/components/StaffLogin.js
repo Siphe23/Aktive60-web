@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../src/firebase";
-import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
 import logo from "../assets/Aktiv60.png";
 import "../styles/styles.css";
@@ -57,9 +56,6 @@ const StaffLogin = () => {
 
     setLoading(true);
     try {
-      // Set persistence to localStorage
-      await setPersistence(auth, browserLocalPersistence);
-
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
