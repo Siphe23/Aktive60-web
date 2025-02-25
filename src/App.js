@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebase"; // Ensure this is correctly imported
@@ -13,12 +18,12 @@ import TwoFactorAuth from "./components/TwoFactorAuth";
 import PasswordRecovery from "./components/PasswordRecovery";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
-import SuperProfile from './components/SuperProfile';
-import Dashboard from './pages/Dashboard';
-import StaffRegister from './components/StaffRegister';
-import StaffProfile from './components/StaffProfile';
-import StaffLogin from './components/StaffLogin';
-import SuperLogin from './components/superLogin';
+import SuperProfile from "./components/SuperProfile";
+import Dashboard from "./pages/Dashboard";
+import StaffRegister from "./components/StaffRegister";
+import StaffProfile from "./components/StaffProfile";
+import StaffLogin from "./components/StaffLogin";
+import SuperLogin from "./components/superLogin";
 import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
 import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
 import LocationStaff from "./pages/Location/LocationStaff/LocationStaff";
@@ -29,7 +34,7 @@ import UserManagement from "./pages/UserManagement";
 import Trainers from "./pages/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -59,7 +64,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
-        <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
+        <Route
+          path="/password-reset-success"
+          element={<PasswordResetSuccess />}
+        />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/dashboard" element={<Dashboard />} />
