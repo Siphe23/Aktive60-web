@@ -1,4 +1,3 @@
-/* NavigationBar.css */
 .navigation-bar {
   display: flex;
   align-items: center;
@@ -26,16 +25,19 @@
 
 .logo-container {
   flex-shrink: 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .logo-container img {
   height: 30px;
 }
+
 .logo { 
-  position: absolute;
-  top: 20px; 
-  left: 300px;
-  width: 300px;
+  width: 100%; /* Adjust width to fit within its container */
+  max-width: 200px; /* Limit the width to avoid overflow */
+  object-fit: contain; /* Keep the aspect ratio of the logo intact */
 }
 
 .search-bar {
