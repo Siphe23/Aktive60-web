@@ -3,7 +3,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   width: 100%;
   height: 100vh;
   background: #242526;
@@ -12,6 +11,8 @@
   flex-wrap: wrap;
 }
 
+/* Left Section (Login Form) */
+/* Left Section (Login Form) */
 .login-section {
   width: 40%;
   padding: 40px;
@@ -20,7 +21,8 @@
   text-align: center;
 }
 
-.logo-container {
+/* .logo-container {
+/* .logo-container {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -28,26 +30,22 @@
 .logo {
   max-width: 100px;
   height: auto;
-}
+} */
 
-.subtitle {
-  font-size: 14px;
-  color: #FFFFFF;
-  margin-bottom: 20px;
-  text-align: center;
-}
 
 h3 {
   font-size: 20px;
   color: #FFFFFF;
   margin-bottom: 20px;
-  margin-left: 300px;
   text-align: center;
 }
 
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-bottom: 15px;
   position: relative;
+  width: 100%; /* Ensure full width */
+  width: 100%; /* Ensure full width */
 }
 
 .input-group label {
@@ -55,32 +53,34 @@ h3 {
   font-size: 14px;
   color: #FFFFFF;
   margin-bottom: 5px;
- 
+  text-align: left;
+  text-align: left;
 }
 
 .input-wrapper {
   position: relative;
+  width: 100%;
+  width: 100%;
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 10px 40px 10px 10px; 
+  padding: 10px 40px 10px 10px;
+  padding: 10px 40px 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
   background-color: #3a3b3c;
-  margin-left: 300px; 
-  color: #ffffff; 
+  color: #ffffff;
+  color: #ffffff;
 }
 
 .input-icon {
   position: absolute;
   left: 10px;
   top: 50%;
-  margin-left: 300px;
   transform: translateY(-50%);
-
   color: #ffffff;
 }
 
@@ -93,11 +93,17 @@ h3 {
   color: #ffffff;
 }
 
+/* Align "Remember Me" and "Forgot Password" */
+/* Align "Remember Me" and "Forgot Password" */
 .auth-options {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .auth-options label {
@@ -111,47 +117,10 @@ h3 {
   margin-right: 10px;
 }
 
-.auth-button {
-  width: 105% !important;
-  padding: 10px;
-  background-color: #F10623 !important;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  margin-left: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.auth-button:hover {
-  background-color: #F10623 !important;
-}
-
-.switch-auth {
-  text-align: center;
-  font-size: 14px;
-  color: #FFFFFF;
-}
-
-.switch-auth a {
-  color: #FFFFFF;
-  text-decoration: none;
-}
-
-.image-container {
-  width: 50%;
-  text-align: center;
-}
-
-.image-container img {
-  max-width: 100%;
-  height: auto;
-}
-
+/* Fix Forgot Password Alignment */
 .forgot-password {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: right;
+  width: 100%;
 }
 
 .forgot-password a {
@@ -163,10 +132,38 @@ h3 {
 .forgot-password a:hover {
   text-decoration: underline;
 }
-.checkbox{
-  margin-left: 300px;
+
+/* Fix Auth Button to Match Input Width */
+.auth-button {
+  width: 500px !important; /* Now exactly the same width as input */
+  padding: 12px;
+  background-color: #F10623 !important;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  display: block; /* Ensures it behaves like the input */
 }
-/* Responsive Styles */
+
+.auth-button:hover {
+  background-color: #D0051F !important;
+}
+
+/* Right Section (Image) */
+.image-container {
+  width: 50%;
+  text-align: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
   .auth-container {
     flex-direction: column;

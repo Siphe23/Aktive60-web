@@ -3,7 +3,7 @@ import { auth, db } from '../firebase'; // Import Firebase auth and Firestore in
 import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore'; // Firestore functions
 import avatarPlaceholder from '../assets/avatar-placeholder.png'; // Ensure this path points to your avatar image
 import '../styles/StaffProfile.css';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 
 const SuperProfile = () => {
   const [branches, setBranches] = useState([]);

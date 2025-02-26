@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { auth } from "../../src/firebase";
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth"; 
+import { auth, db } from "../../src/firebase"; // Ensure you import db for Firestore
+import { signInWithEmailAndPassword } from "firebase/auth";
 import TwoFAImage from "../assets/amico-removebg-preview.png";
 import logo from "../assets/Aktiv60.png";
 import "../styles/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { doc, getDoc } from "firebase/firestore"; // Firestore v9+ imports
 
-const Login = () => {
+const InputField = ({ label, type, value, onChange, disabled, placeholder, icon }) => (
+  <div className="input-group">
+    <label htmlFor={label}>{label}</label>
+    <div className="input-wrapper">
+      <FontAwesomeIcon icon={icon} className="input-icon" />
+      <input
+        type={type}
+        id={label}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        required
+        disabled={disabled}
+      />
+    </div>
+  </div>
+);
+
+const SuperAdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -39,8 +56,28 @@ const Login = () => {
     }
 
     setLoading(true);
+
     try {
+      // Firebase authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if the user exists in Firestore and is a super_Admin
+      const userRef = doc(db, "users", user.uid); // Use UID as the document ID
+      const userDoc = await getDoc(userRef);  // Use getDoc function to retrieve the document
+
+      if (!userDoc.exists()) {
+        toast.error("No user found with this email.");
+        return;
+      }
+
+      const userData = userDoc.data();
+
+      if (userData.role !== "super_Admin") {
+        toast.error("You are not permitted to access this page.");
+        return;
+      }
+
       toast.success("Login Successful!");
 
       // Save credentials to localStorage if "Remember Me" is checked
@@ -52,29 +89,38 @@ const Login = () => {
         localStorage.removeItem("password");
       }
 
-      navigate("/home");
+      // Store the user uid (unique identifier for the user)
+      localStorage.setItem("uid", user.uid); // Store the uid in localStorage for later use
+
+      // Navigate to the super admin dashboard or home page
+      navigate("/super-admin-dashboard"); // Redirect to the super-admin dashboard
+
     } catch (error) {
-      let errorMessage = "Login failed";
-      switch (error.code) {
-        case "auth/user-not-found":
-          errorMessage = "No user found with this email";
-          break;
-        case "auth/wrong-password":
-          errorMessage = "Invalid password";
-          break;
-        case "auth/invalid-email":
-          errorMessage = "Invalid email address";
-          break;
-        case "auth/too-many-requests":
-          errorMessage = "Too many failed attempts. Please try again later";
-          break;
-        default:
-          errorMessage = error.message;
-      }
-      toast.error(errorMessage);
+      handleError(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleError = (error) => {
+    let errorMessage = "Login failed";
+    switch (error.code) {
+      case "auth/user-not-found":
+        errorMessage = "No user found with this email";
+        break;
+      case "auth/wrong-password":
+        errorMessage = "Invalid password";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Invalid email address";
+        break;
+      case "auth/too-many-requests":
+        errorMessage = "Too many failed attempts. Please try again later";
+        break;
+      default:
+        errorMessage = error.message;
+    }
+    toast.error(errorMessage);
   };
 
   return (
@@ -86,21 +132,15 @@ const Login = () => {
         <h3>Sign into your account</h3>
 
         <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <div className="input-wrapper">
-              <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-              />
-            </div>
-          </div>
+          <InputField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+            placeholder="Enter your email"
+            icon={faEnvelope}
+          />
 
           <div className="input-group">
             <label htmlFor="password">Password</label>
@@ -109,9 +149,9 @@ const Login = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
-                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
                 required
                 disabled={loading}
               />
@@ -152,4 +192,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SuperAdminLogin;
