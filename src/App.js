@@ -33,7 +33,9 @@ import Collection from "./pages/Collection";
 import Navbar from './components/Navbar';
 import Sidebar from "./components/Sidebar";
 import defaultProfilePic from "./assets/avatar-placeholder.png"; // Import default profile picture
-
+import BranchDetails from "./pages/Branch/BranchDetails";
+import BranchPackages from "./pages/Branch/BranchPackages";
+  // import BranchStaff from "./pages/Branch/Branchstaff";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
