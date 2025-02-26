@@ -12,12 +12,12 @@ const StaffProfile = () => {
     lastName: '',
     email: '',
     phone: '',
-    role: '',
     branch: '',
     workId: '',
     avatar: avatarPlaceholder, // Add avatar to form data
   });
 
+  const [role, setRole] = useState(''); // Separate role state to display only
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false); // Modal visibility
@@ -41,11 +41,11 @@ const StaffProfile = () => {
               lastName: userData.lastName,
               email: userData.email,
               phone: userData.phone,
-              role: userData.role,
               branch: userData.branch,
               workId: userData.workId,
               avatar: userData.avatar || avatarPlaceholder, // Default to placeholder if no avatar
             });
+            setRole(userData.role); // Set role separately (non-editable)
           } else {
             console.error('No user data found in Firestore');
             setError('No user data found.');
@@ -124,7 +124,6 @@ const StaffProfile = () => {
       lastName: '',
       email: '',
       phone: '',
-      role: '',
       branch: '',
       workId: '',
       avatar: avatarPlaceholder,
@@ -231,36 +230,37 @@ const StaffProfile = () => {
               className="p-2 bg-gray-700 text-white rounded"
             />
           </div>
+
+          {/* Role field should be displayed as plain text */}
           <div className="form-group">
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
-            required
-          >
-            <option value="">Select your role</option>
-            <option value="Trainer">Trainer</option>
-            <option value="Staff">Staff</option>
-            {/* <option value="Supervisor">Supervisor</option> */}
-          </select>
+            <label htmlFor="role" className="titles">Role</label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              value={role}
+              readOnly
+              className="p-2 bg-gray-700 text-white rounded"
+            />
           </div>
+
           <div className="form-group">
-          <select
-            name="branch"
-            value={formData.branch}
-            onChange={handleChange}
-            className="p-2 w-full bg-gray-700 text-white rounded mt-4"
-            required
-          >
-            <option value="">Select your branch location</option>
-            {branches.map((branch, index) => (
-              <option key={index} value={branch}>
-                {branch}
-              </option>
-            ))}
-          </select>
+            <select
+              name="branch"
+              value={formData.branch}
+              onChange={handleChange}
+              className="p-2 w-full bg-gray-700 text-white rounded mt-4"
+              required
+            >
+              <option value="">Select your branch location</option>
+              {branches.map((branch, index) => (
+                <option key={index} value={branch}>
+                  {branch}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className="form-group">
             <label htmlFor="workId" className="titles">Work ID</label>
             <input
@@ -274,7 +274,6 @@ const StaffProfile = () => {
             />
           </div>
         </div>
-
 
         <div className="form-buttons">
           <button

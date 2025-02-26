@@ -254,7 +254,7 @@ const StaffRegister = () => {
         </form>
 
         <p className="text-white text-center mt-4">
-          Already have access? <a href="#" className="text-red-500">Login</a>
+          Already have access? <a href="/staff-login" className="text-red-500">Login</a>
         </p>
       </div>
     </div>

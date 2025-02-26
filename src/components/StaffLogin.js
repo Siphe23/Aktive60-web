@@ -164,6 +164,9 @@ const StaffLogin = () => {
         <div className="forgot-password">
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
+        <div className="register-link">
+          <Link to="/staff-register">Not yet registered?</Link>
+        </div>
       </div>
 
       <div className="image-container">
