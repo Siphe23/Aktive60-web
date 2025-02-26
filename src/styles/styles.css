@@ -12,6 +12,7 @@
 }
 
 /* Left Section (Login Form) */
+/* Left Section (Login Form) */
 .login-section {
   width: 40%;
   padding: 40px;
@@ -21,6 +22,7 @@
 }
 
 /* .logo-container {
+/* .logo-container {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -28,6 +30,7 @@
 .logo {
   max-width: 100px;
   height: auto;
+} */
 } */
 
 h3 {
@@ -39,7 +42,9 @@ h3 {
 
 .input-group {
   margin-bottom: 15px;
+  margin-bottom: 15px;
   position: relative;
+  width: 100%; /* Ensure full width */
   width: 100%; /* Ensure full width */
 }
 
@@ -49,21 +54,25 @@ h3 {
   color: #FFFFFF;
   margin-bottom: 5px;
   text-align: left;
+  text-align: left;
 }
 
 .input-wrapper {
   position: relative;
+  width: 100%;
   width: 100%;
 }
 
 .input-wrapper input {
   width: 100%;
   padding: 10px 40px 10px 10px;
+  padding: 10px 40px 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
   background-color: #3a3b3c;
+  color: #ffffff;
   color: #ffffff;
 }
 
@@ -85,10 +94,14 @@ h3 {
 }
 
 /* Align "Remember Me" and "Forgot Password" */
+/* Align "Remember Me" and "Forgot Password" */
 .auth-options {
   display: flex;
   justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
   width: 100%;
   margin-bottom: 10px;
 }

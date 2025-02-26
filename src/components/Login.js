@@ -5,7 +5,7 @@ import { auth } from "../../src/firebase";
 import {
   signInWithEmailAndPassword,
 } from "firebase/auth"; 
-import TwoFAImage from "../assets/amico-removebg-preview.png";
+import TwoFAImage from "../assets/Login.png";
 import logo from "../assets/Aktiv60.png";
 import "../styles/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
