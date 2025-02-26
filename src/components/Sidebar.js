@@ -63,26 +63,26 @@ const Sidebar = () => {
         {isLocationDropdownVisible && isExpanded && (
           <div className="submenu">
             <Link
-              to="/locationoverview"
-              className={`submenu-item ${isActive("/locationoverview")}`}
+              to="/location-overview"
+              className={`submenu-item ${isActive("/location-overview")}`}
             >
               Location Overview
             </Link>
             <Link
-              to="/locationdetails"
-              className={`submenu-item ${isActive("/locationdetails")}`}
+              to="/location-details"
+              className={`submenu-item ${isActive("/location-details")}`}
             >
               Location Details
             </Link>
             <Link
-              to="/locationsettings"
-              className={`submenu-item ${isActive("/locationsettings")}`}
+              to="/location-settings"
+              className={`submenu-item ${isActive("/location-settings")}`}
             >
               Location Settings
             </Link>
             <Link
-              to="/locationstaff"
-              className={`submenu-item ${isActive("/locationstaff")}`}
+              to="/location-staff"
+              className={`submenu-item ${isActive("/location-staff")}`}
             >
               Location Staff
             </Link>
@@ -130,7 +130,7 @@ const Sidebar = () => {
           <BarChart className="icon" />
           {isExpanded && <span className="text">Generate Reports</span>}
         </Link>
-        <Link to="/usermanagement" className={`menu-item ${isActive("/usermanagement")}`}>
+        <Link to="/user-management" className={`menu-item ${isActive("/user-management")}`}>
           <People className="icon" />
           {isExpanded && <span className="text">User Management</span>}
         </Link>

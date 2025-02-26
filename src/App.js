@@ -84,7 +84,10 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
-        <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
+        <Route
+          path="/password-reset-success"
+          element={<PasswordResetSuccess />}
+        />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -105,6 +108,8 @@ const App = () => {
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/trainees" element={<Trainees />} />
         <Route path="/collection" element={<Collection />} />
+        <Route path="/BranchDetails" element={<BranchDetails />} />
+        <Route path="/BranchPackages" element={<BranchPackages />} />
       </Routes>
     </Router>
   );
