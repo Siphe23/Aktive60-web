@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { db, realTimeDB, auth } from "../firebase"; // Ensure you have Firestore, Realtime DB, and Auth instances
-import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; // Firestore functions
-import { ref, set } from "firebase/database"; // Realtime Database functions
-import { createUserWithEmailAndPassword } from "firebase/auth"; // Firebase Auth function
+import { db, realTimeDB, auth } from "../firebase";
+import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
+import { ref, set } from "firebase/database";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import "../styles/StaffRegister.css";
 
 const StaffRegister = () => {
@@ -16,14 +16,13 @@ const StaffRegister = () => {
     workId: "",
     password: "",
     confirmPassword: "",
-    status: "pending", // Default status
+    status: "pending",
   });
 
-  const [branches, setBranches] = useState([]); // State to hold branches
-  const [isLoading, setIsLoading] = useState(false); // Loading state for form submission
-  const [error, setError] = useState(null); // Error state for form submission
+  const [branches, setBranches] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Fetch branches from Firestore
   useEffect(() => {
     const fetchBranches = async () => {
       try {
@@ -38,7 +37,6 @@ const StaffRegister = () => {
     fetchBranches();
   }, []);
 
-  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -52,7 +50,6 @@ const StaffRegister = () => {
     }
   
     try {
-      // Check if email already exists in Firestore
       const querySnapshot = await getDocs(collection(db, "users"));
       const emailExists = querySnapshot.docs.some((doc) => doc.data().email === formData.email);
   
@@ -61,13 +58,11 @@ const StaffRegister = () => {
         return;
       }
   
-      // Create the user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const user = userCredential.user; // Get the UID from Auth
+      const user = userCredential.user;
   
       const fullName = `${formData.name} ${formData.lastName}`;
   
-      // Add to Firestore - staff collection (using UID as document ID)
       await setDoc(doc(db, "staff", user.uid), {
         email: formData.email,
         fullName,
@@ -78,11 +73,10 @@ const StaffRegister = () => {
         branch: formData.branch,
         workId: formData.workId,
         status: formData.status,
-        uid: user.uid, // Ensure UID is stored
+        uid: user.uid,
         createdAt: new Date(),
       });
   
-      // Add to Firestore - users collection (using UID as document ID)
       await setDoc(doc(db, "users", user.uid), {
         email: formData.email,
         fullName,
@@ -93,11 +87,10 @@ const StaffRegister = () => {
         branch: formData.branch,
         workId: formData.workId,
         status: formData.status,
-        uid: user.uid, // Ensure UID is stored
+        uid: user.uid,
         createdAt: new Date(),
       });
   
-      // Add to Realtime Database (using UID as the key)
       await set(ref(realTimeDB, `staff/${user.uid}`), {
         email: formData.email,
         fullName,
@@ -108,7 +101,7 @@ const StaffRegister = () => {
         branch: formData.branch,
         workId: formData.workId,
         status: formData.status,
-        uid: user.uid, // Ensure UID is stored
+        uid: user.uid,
         createdAt: new Date(),
       });
   
@@ -150,8 +143,7 @@ const StaffRegister = () => {
           Register to request access to the platform
         </h2>
 
-        {error && <p className="text-red-500 text-center">{error}</p>} {/* Show error message */}
-
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <input
@@ -255,7 +247,7 @@ const StaffRegister = () => {
           <button
             type="submit"
             className="w-full bg-red-600 text-white p-2 rounded mt-4 hover:bg-red-700"
-            disabled={isLoading} // Disable button while loading
+            disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Request Access"}
           </button>
