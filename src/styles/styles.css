@@ -119,25 +119,25 @@ h3 {
 .forgot-password a:hover {
   text-decoration: underline;
 }
+/* .auth-button {
+  display: flex; */
 
-/* Fix Auth Button to Match Input Width */
-.auth-button {
-  width: 500px !important; /* Now exactly the same width as input */
-  padding: 12px;
-  background-color: #F10623 !important;
-  color: #ffffff;
+  /* width: 400px !important;
+  margin-left: 400px; */
+  /* padding: 10px 20px;
+  background-color: #e60000; 
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-  display: block; /* Ensures it behaves like the input */
-}
-
+  transition: 0.3s ease;
+} */
+/* 
 .auth-button:hover {
   background-color: #D0051F !important;
-}
+} */
 
 /* Right Section (Image) */
 .image-container {
