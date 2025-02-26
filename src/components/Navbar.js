@@ -52,6 +52,10 @@ const Navbar = ({ userData }) => {
     }
   };
 
+  if (!userData) {
+    return <div className="loading">Loading...</div>; // Prevents rendering before data is available
+  }
+
   return (
     <div className="navigation-bar">
       {/* Left Section - Logo + Search */}
@@ -82,8 +86,14 @@ const Navbar = ({ userData }) => {
           onClick={() => setDropdownOpen(!dropdownOpen)}
         >
           {/* User's Avatar and Name */}
-          <img src={userData.avatar} alt="Profile" className="profile-pic" />
-          <span className="profile-name">{userData.name} {userData.lastName}</span>
+          <img 
+            src={userData?.avatar || "default-avatar.png"} 
+            alt="Profile" 
+            className="profile-pic" 
+          />
+          <span className="profile-name">
+            {userData?.name ?? "Guest"} {userData?.lastName ?? ""}
+          </span>
           <FaCaretDown className="caret-icon" />
         </div>
 
