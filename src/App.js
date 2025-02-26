@@ -33,9 +33,9 @@ import Collection from "./pages/Collection";
 import Navbar from './components/Navbar';
 import Sidebar from "./components/Sidebar";
 import defaultProfilePic from "./assets/avatar-placeholder.png"; // Import default profile picture
-// import BranchDetails from "./pages/Branch/BranchDetails";
-// import BranchPackages from "./pages/Branch/BranchPackages";
-  // import BranchStaff from "./pages/Branch/Branchstaff";
+import BranchDetails from "./pages/Branch/BranchDetails";
+import BranchPackages from "./pages/Branch/BranchPackages";
+  import BranchStaff from "./pages/Branch/Branchstaff";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
@@ -101,6 +101,7 @@ const App = () => {
         <Route path="/location-details" element={<LocationDetails />} />
         <Route path="/location-staff" element={<LocationStaff />} />
         <Route path="/location-settings" element={<LocationSettings />} />
+        <Route path="/branchdetails" element={<BranchDetails />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/user-management" element={<UserManagement />} />
@@ -108,6 +109,7 @@ const App = () => {
         <Route path="/trainees" element={<Trainees />} />
         <Route path="/collection" element={<Collection />} />
         <Route path="/BranchDetails" element={<BranchDetails />} />
+        <Route path = "/BranchStaff" element = {<BranchStaff />} />  
         <Route path="/BranchPackages" element={<BranchPackages />} />
       </Routes>
     </Router>

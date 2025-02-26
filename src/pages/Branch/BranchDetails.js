@@ -1,73 +1,100 @@
-import React, { useEffect, useState } from "react";
-import { FaEdit, FaClock, FaUsers } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { FaTimes, FaClock } from "react-icons/fa";
 import "../../styles/BranchDetails.css";
 
 const BranchDetails = () => {
-  const [branchData, setBranchData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [branch, setBranch] = useState({
+    location: "Sloane Street Gym",
+    address: "22 Sloane St, Bryanston Johannesburg",
+    contact: "011 845 4774",
+    capacity: "300",
+    packages: ["ONE-ON-ONE SESSIONS"],
+    hours: {
+      weekday: { open: "00:00", close: "00:00" },
+      saturday: { open: "00:00", close: "00:00" },
+      sunday: { open: "00:00", close: "00:00" },
+      holidays: { open: "00:00", close: "00:00" },
+    },
+  });
 
-  // Fetch branch data on component mount
-  useEffect(() => {
-    // Example of API call to fetch branch details
-    const fetchBranchData = async () => {
-      try {
-        const response = await fetch("/api/branch-details");
-        const data = await response.json();
-        setBranchData(data);
-      } catch (error) {
-        console.error("Error fetching branch data:", error);
-      }
-    };
-
-    fetchBranchData();
-  }, []);
-
-  if (!branchData) {
-    return <p>Loading...</p>;
-  }
+  const togglePackage = (pkg) => {
+    setBranch((prev) => ({
+      ...prev,
+      packages: prev.packages.includes(pkg)
+        ? prev.packages.filter((p) => p !== pkg)
+        : [...prev.packages, pkg],
+    }));
+  };
 
   return (
-    <div className="branch-container">
-       <Link to="/edit" className="edit-button"><FaEdit /> Edit Details</Link>
-      <h1 className="branch-title">{branchData.name}</h1>
-      <p className="branch-subtitle">Manage your branch here</p>
+    <div>
+      <button className="edit-button" onClick={() => setShowModal(true)}>
+        Edit Branch Details
+      </button>
 
-      <div className="info-sections">
-        <div className="info-box">
-          <div className="info-header">
-            <h3>Basic Information</h3>
-            <FaEdit className="icon" />
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Edit Branch Details</h3>
+              <button className="close-modal" onClick={() => setShowModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+
+            <label>Location Name</label>
+            <input type="text" value={branch.location} disabled />
+
+            <label>Address</label>
+            <input type="text" value={branch.address} disabled />
+
+            <label>Contact Number</label>
+            <input type="text" value={branch.contact} disabled />
+
+            <label>Operating Hours</label>
+            {Object.entries(branch.hours).map(([day, time]) => (
+              <div className="time-row" key={day}>
+                <span>{day.replace(/\b\w/g, (c) => c.toUpperCase())}</span>
+                <div>
+                  <FaClock />
+                  <input type="time" value={time.open} />
+                  -
+                  <FaClock />
+                  <input type="time" value={time.close} />
+                </div>
+              </div>
+            ))}
+
+            <label>Packages</label>
+            {[
+              "ONE-ON-ONE SESSIONS",
+              "PERSONALISED MEAL PLANS & PROGRAMS",
+              "GROUP SESSIONS",
+              "ONLINE HOURLY SESSIONS",
+            ].map((pkg) => (
+              <div key={pkg} className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={branch.packages.includes(pkg)}
+                  onChange={() => togglePackage(pkg)}
+                />
+                <span>{pkg}</span>
+              </div>
+            ))}
+
+            <label>Member Capacity</label>
+            <input type="number" value={branch.capacity} />
+
+            <div className="modal-footer">
+              <button className="save-button">Save</button>
+              <button className="clear-button" onClick={() => setShowModal(false)}>
+                Clear
+              </button>
+            </div>
           </div>
-          <p><strong>Location Name:</strong> {branchData.name}</p>
-          <p><strong>Address:</strong> {branchData.address}</p>
-          <p><strong>Contact Number:</strong> {branchData.contact}</p>
         </div>
-
-        <div className="info-box">
-          <div className="info-header">
-            <h3>Operating Hours</h3>
-            <FaClock className="icon" />
-          </div>
-          <p><strong>Monday - Friday:</strong> {branchData.operatingHours.weekdays}</p>
-          <p><strong>Saturday:</strong> {branchData.operatingHours.saturday}</p>
-          <p><strong>Sunday:</strong> {branchData.operatingHours.sunday}</p>
-          <p><strong>Public Holidays:</strong> {branchData.operatingHours.holidays}</p>
-        </div>
-      </div>
-
-      <div className="capacity-section">
-        <div className="capacity-header">
-          <h3>Member Capacity</h3>
-          <FaUsers className="icon" />
-        </div>
-        <div className="capacity-boxes">
-          <div className="capacity-box"><strong>Total Capacity</strong><p>{branchData.capacity.total}</p></div>
-          <div className="capacity-box"><strong>Current Members</strong><p>{branchData.capacity.current}</p></div>
-          <div className="capacity-box"><strong>Available Slots</strong><p>{branchData.capacity.available}</p></div>
-        </div>
-      </div>
-
-     
+      )}
     </div>
   );
 };
