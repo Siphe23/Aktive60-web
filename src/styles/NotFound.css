@@ -8,8 +8,10 @@
   color: white;
 }
 
-/* .logo {
+.logo {
   font-size: 2rem;
+
+  display: flex;
   font-weight: bold;
   color: #ccc;
   text-align: left; 
@@ -24,7 +26,7 @@
   justify-content: flex-start; 
   width: 100%;
   padding-left: 200px; 
-} */
+} 
 
 
 .error-image img {
@@ -32,7 +34,7 @@
   max-width: 100%;
 }
 
-.go-back {
+/* .go-back {
   background-color: red;
   color: white;
   border: none;
@@ -40,4 +42,17 @@
   margin-top: 20px;
   cursor: pointer;
   border-radius: 5px;
+} */
+.go-back {
+  width: 500px !important; /* Now exactly the same width as input */
+  padding: 12px;
+  background-color: #F10623 !important;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  display: block; /* Ensures it behaves like the input */
 }

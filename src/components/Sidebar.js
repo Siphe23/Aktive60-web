@@ -103,7 +103,7 @@ const Sidebar = () => {
           <div className="submenu">
             <Link
               to="/branchdetails"
-              className={`submenu-item ${isActive("/branch-details")}`}
+              className={`submenu-item ${isActive("/branchdetails")}`}
             >
               Branch Details
             </Link>

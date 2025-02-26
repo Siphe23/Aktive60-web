@@ -98,10 +98,10 @@ const App = () => {
         <Route path="/location-details" element={<LocationDetails />} />
         <Route path="/location-staff" element={<LocationStaff />} />
         <Route path="/location-settings" element={<LocationSettings />} />
+        <Route path="/branchdetails" element={<BranchDetails />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/user-management" element={<UserManagement />} />
-        <Route path = "/branch-details" element={<BranchDetails />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/trainees" element={<Trainees />} />
         <Route path="/collection" element={<Collection />} />
