@@ -48,6 +48,7 @@ const UserManagement = () => {
       const adminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         email: doc.data().email || "",
+        branch_name: doc.data().branch_name || "", // Added branch_name
         ...doc.data(),
       }));
       setAdmins(adminList);
@@ -65,6 +66,7 @@ const UserManagement = () => {
       const pendingAdminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         email: doc.data().email || "",
+        branch_name: doc.data().branch || "", // Added branch_name
         ...doc.data(),
       }));
       setPendingAdmins(pendingAdminList);
@@ -84,6 +86,8 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
+            branch_name: user.branch_name || "", // Added branch_name
+            packageCategory: user.packageCategory || "", // Added packageCategory
             ...user,
           }));
         setActiveUsers(activeList);
@@ -95,6 +99,8 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
+            branch_name: user.branch_name || "", // Added branch_name
+            packageCategory: user.packageCategory || "", // Added packageCategory
             ...user,
           }));
         setPendingUsers(pendingList);
@@ -165,7 +171,6 @@ const UserManagement = () => {
         toast.success("Admin request declined successfully");
       }
 
-      // Update both Realtime Database and Firestore
       await update(ref(realTimeDB, `staff/${adminId}`), updates);
       await updateDoc(doc(db, "staff", adminId), updates);
     } catch (error) {
@@ -213,7 +218,7 @@ const UserManagement = () => {
           <table>
             <thead>
               <tr>
-                <th>Admin Email</th>
+                <th>Admin Name</th>
                 <th>Location Name</th>
                 <th>Joined</th>
                 <th>Work ID</th>
@@ -226,7 +231,7 @@ const UserManagement = () => {
               {pendingAdmins.map((admin) => (
                 <tr key={admin.id}>
                   <td>{admin.email}</td>
-                  <td>{admin.location}</td>
+                  <td>{admin.branch_name}</td>
                   <td>{new Date(admin.joined).toLocaleDateString()}</td>
                   <td>{admin.workId}</td>
                   <td>
@@ -289,8 +294,8 @@ const UserManagement = () => {
               {pendingUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.email}</td>
-                  <td>{user.location}</td>
-                  <td>{user.subscriptionPackage}</td>
+                  <td>{user.branch_name}</td>
+                  <td>{user.packageCategory}</td>
                   <td>{new Date(user.joined).toLocaleDateString()}</td>
                   <td>
                     <a
@@ -326,7 +331,7 @@ const UserManagement = () => {
         <table>
           <thead>
             <tr>
-              <th>Admin Email</th>
+              <th>Admin Name</th>
               <th>Location Name</th>
               <th>Joined</th>
               <th>Work ID</th>
@@ -337,7 +342,7 @@ const UserManagement = () => {
             {admins.map((admin) => (
               <tr key={admin.id}>
                 <td>{admin.email}</td>
-                <td>{admin.location}</td>
+                <td>{admin.branch_name}</td>
                 <td>{new Date(admin.joined).toLocaleDateString()}</td>
                 <td>{admin.workId}</td>
                 <td>
@@ -374,8 +379,8 @@ const UserManagement = () => {
             {activeUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.email}</td>
-                <td>{user.location}</td>
-                <td>{user.subscriptionPackage}</td>
+                <td>{user.branch_name}</td>
+                <td>{user.packageCategory}</td>
                 <td>{new Date(user.joined).toLocaleDateString()}</td>
                 <td>
                   <a
