@@ -33,7 +33,7 @@ import Collection from "./pages/Collection";
 import Navbar from './components/Navbar';
 import Sidebar from "./components/Sidebar";
 import defaultProfilePic from "./assets/avatar-placeholder.png"; // Import default profile picture
-// import BranchDetails from "./pages/Branch/BranchDetails";
+import BranchDetails from "./pages/Branch/BranchDetails";
 // import BranchPackages from "./pages/Branch/BranchPackages";
   // import BranchStaff from "./pages/Branch/Branchstaff";
 const App = () => {
@@ -101,6 +101,7 @@ const App = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/user-management" element={<UserManagement />} />
+        <Route path = "/branch-details" element={<BranchDetails />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/trainees" element={<Trainees />} />
         <Route path="/collection" element={<Collection />} />
