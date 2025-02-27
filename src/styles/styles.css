@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  font-family: 'Poppins', sans-serif;
 }
 
 .login-page {
@@ -21,13 +21,16 @@
 .login-container {
   display: flex;
   width: 100%;
-  max-width: 1200px;
+  max-width: 600px;
   justify-content: space-between;
   align-items: center;
+  background-color: transparent;
+  padding: 20px;
+text-align: center;
 }
 
 .login-form {
-  width: 45%;
+  width: 100%;
   max-width: 450px;
 }
 
@@ -37,49 +40,28 @@
   justify-content: center;
 }
 
-.logo {
-  margin-bottom: 20px;
-  font-size: 32px;
-  font-weight: 600;
+.logo-container {
+  display: flex;
+  flex-direction: column; /* Stack the items vertically */
+  align-items: center; /* Optionally center the items horizontally */
+  justify-content: center; /* Center the items vertically, if necessary */
+  text-align: center; /* Center the text inside the <p> */
 }
 
-.logo-gray {
-  color: #aaa;
-}
-
-.logo-red {
-  color: #ff0025;
-}
-
-.subtitle {
-  font-size: 16px;
-  margin-bottom: 30px;
-  color: #ccc;
+.login-logo {
+  margin-bottom: 10px; /* Optional: Adjust the space between the image and the text */
 }
 
 .form-group {
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #fff;
-}
+
 
 .input-container {
   position: relative;
   display: flex;
-}
-
-.input-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #88868f;
-
+  justify-content: center;
 }
 
 .password-toggle {
@@ -96,18 +78,37 @@ input[type="email"],
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  padding: 16px 16px 16px 45px; 
+  padding: 16px 16px 16px 60px; /* Increased left padding to move text to the left */
   border: none;
   background: transparent;
   color: white;
   font-size: 14px;
   height: 60px;
-  
-  
+ text-align: flex; /* Align text to the left */
+  position: relative;
+  border-radius: 6px;
+  border: 2px solid #333;
 }
 
-input:focus {
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #ff0025;
   outline: none;
+}
+
+input[type="password"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
+input[type="email"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
 }
 
 .forgot-password {
@@ -150,7 +151,7 @@ input:focus {
   background-color: #ff0025;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -185,6 +186,7 @@ input:focus {
 .illustration-container img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
 }
 
 /* Toast notification styles */
@@ -214,6 +216,10 @@ input:focus {
   .login-illustration {
     margin-top: 40px;
     order: 2;
+  }
+
+  .logo-container {
+    text-align: center;
   }
 
   .logo {
