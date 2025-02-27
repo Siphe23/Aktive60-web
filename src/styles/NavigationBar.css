@@ -135,3 +135,26 @@
   font-size: 1rem;
   margin-bottom: 5px;
 }
+/* NavigationBar.css */
+/* ... (rest of the styles remain the same) */
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff0000; /* Red background */
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.notification-icon {
+  position: relative;
+  color: white;
+}
