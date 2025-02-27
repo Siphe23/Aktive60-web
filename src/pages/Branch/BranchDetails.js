@@ -1,100 +1,115 @@
-import React, { useState } from "react";
-import { FaTimes, FaClock } from "react-icons/fa";
+import React from "react";
+import { FaEdit, FaClock, FaUsers } from "react-icons/fa";
+// Make sure the path to your CSS file is correct
 import "../../styles/BranchDetails.css";
 
 const BranchDetails = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [branch, setBranch] = useState({
-    location: "Sloane Street Gym",
-    address: "22 Sloane St, Bryanston Johannesburg",
-    contact: "011 845 4774",
-    capacity: "300",
-    packages: ["ONE-ON-ONE SESSIONS"],
-    hours: {
-      weekday: { open: "00:00", close: "00:00" },
-      saturday: { open: "00:00", close: "00:00" },
-      sunday: { open: "00:00", close: "00:00" },
-      holidays: { open: "00:00", close: "00:00" },
-    },
-  });
-
-  const togglePackage = (pkg) => {
-    setBranch((prev) => ({
-      ...prev,
-      packages: prev.packages.includes(pkg)
-        ? prev.packages.filter((p) => p !== pkg)
-        : [...prev.packages, pkg],
-    }));
-  };
-
   return (
-    <div>
-      <button className="edit-button" onClick={() => setShowModal(true)}>
-        Edit Branch Details
-      </button>
+    <div className="branch-details">
+      <div className="header">
+        <div className="title-section">
+          <h1>Sloane Street Gym</h1>
+          <p>Manage your branch here</p>
+        </div>
+        <button className="edit-details-btn">
+          <FaEdit /> Edit Details
+        </button>
+      </div>
 
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3>Edit Branch Details</h3>
-              <button className="close-modal" onClick={() => setShowModal(false)}>
-                <FaTimes />
-              </button>
-            </div>
-
-            <label>Location Name</label>
-            <input type="text" value={branch.location} disabled />
-
-            <label>Address</label>
-            <input type="text" value={branch.address} disabled />
-
-            <label>Contact Number</label>
-            <input type="text" value={branch.contact} disabled />
-
-            <label>Operating Hours</label>
-            {Object.entries(branch.hours).map(([day, time]) => (
-              <div className="time-row" key={day}>
-                <span>{day.replace(/\b\w/g, (c) => c.toUpperCase())}</span>
-                <div>
-                  <FaClock />
-                  <input type="time" value={time.open} />
-                  -
-                  <FaClock />
-                  <input type="time" value={time.close} />
-                </div>
-              </div>
-            ))}
-
-            <label>Packages</label>
-            {[
-              "ONE-ON-ONE SESSIONS",
-              "PERSONALISED MEAL PLANS & PROGRAMS",
-              "GROUP SESSIONS",
-              "ONLINE HOURLY SESSIONS",
-            ].map((pkg) => (
-              <div key={pkg} className="checkbox-row">
-                <input
-                  type="checkbox"
-                  checked={branch.packages.includes(pkg)}
-                  onChange={() => togglePackage(pkg)}
-                />
-                <span>{pkg}</span>
-              </div>
-            ))}
-
-            <label>Member Capacity</label>
-            <input type="number" value={branch.capacity} />
-
-            <div className="modal-footer">
-              <button className="save-button">Save</button>
-              <button className="clear-button" onClick={() => setShowModal(false)}>
-                Clear
-              </button>
-            </div>
+      <div className="cards-row">
+        {/* Basic Information Card */}
+        <div className="info-card">
+          <h2>Basic Information</h2> {/* Fixed typo: "Infomation" to "Information" */}
+          <button className="icon-btn edit-btn">
+            <FaEdit />
+          </button>
+          
+          <div className="info-item">
+            <p className="label">Location Name</p>
+            <p className="value">Sloane Street Gym</p>
+          </div>
+          
+          <div className="info-item">
+            <p className="label">Address</p>
+            <p className="value">22 Sloane St, Bryanston Johannesburg</p>
+          </div>
+          
+          <div className="info-item">
+            <p className="label">Contact Number</p>
+            <p className="value">011 845 4774</p>
           </div>
         </div>
-      )}
+
+        {/* Operating Hours Card */}
+        <div className="info-card">
+          <h2>Operating Hours</h2>
+          <button className="icon-btn clock-btn">
+            <FaClock />
+          </button>
+          
+          <div className="hours-row">
+            <p>Monday - Friday</p>
+            <p className="hours">06:00 - 22:00</p>
+          </div>
+          
+          <div className="hours-row">
+            <p>Saturday</p>
+            <p className="hours">06:00 - 22:00</p>
+          </div>
+          
+          <div className="hours-row">
+            <p>Sunday</p>
+            <p className="hours">06:00 - 22:00</p>
+          </div>
+          
+          <div className="hours-row">
+            <p>Public Holidays</p>
+            <p className="hours">06:00 - 22:00</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Selected Packages Section */}
+      <div className="packages-section">
+        <h2>Selected Packages</h2>
+        <div className="package-buttons">
+          <button className="package-btn">
+            ONE-ON-ONE SESSIONS
+            <span className="toggle-icon">⊠</span>
+          </button>
+          <button className="package-btn">
+            PERSONALISED MEAL PLANS & PROGRAMS
+            <span className="toggle-icon">⊠</span>
+          </button>
+          <button className="package-btn">
+            ONLINE HOURLY SESSIONS
+            <span className="toggle-icon">⊠</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Member Capacity Section */}
+      <div className="capacity-section">
+        <h2>Member Capacity</h2>
+        <button className="icon-btn users-btn">
+          <FaUsers />
+        </button>
+        
+        <div className="capacity-boxes">
+          <div className="capacity-box">
+            <p className="box-title">Total Capacity</p>
+            <h3 className="box-value">300</h3>
+          </div>
+          <div className="capacity-box">
+            <p className="box-title">Current members</p>
+            <h3 className="box-value">250</h3>
+          </div>
+          <div className="capacity-box">
+            <p className="box-title">Available Slots</p>
+            <h3 className="box-value">50</h3>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
