@@ -108,9 +108,9 @@ const StaffLogin = () => {
     <div className="auth-container">
       <div className="login-section">
         <div className="logo-container">
-          <img src={logo} alt="Aktiv60 Logo" className="logo" />
+          <img src={logo} alt="Aktiv60 Logo" className="login-logo" />
         </div>
-        <h3>Sign into your account</h3>
+        <h3 className="">Sign into your account</h3>
 
         <form onSubmit={handleLogin}>
           <InputField
