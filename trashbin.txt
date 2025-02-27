@@ -1,3 +1,9 @@
+
+            {/* Registration Link */}
+            <div className="register-link">
+              Don't have access? <Link to="/register">Register</Link>
+            </div
+ 
 wheat
  
  {/* Right side - Illustration */}

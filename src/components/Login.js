@@ -192,11 +192,6 @@ const SuperAdminLogin = () => {
               {loading ? "Logging in..." : "Login"}
               <span className="arrow">→</span>
             </button>
-
-            {/* Registration Link */}
-            <div className="register-link">
-              Don't have access? <Link to="/register">Register</Link>
-            </div>
           </form>
         </div>
 
