@@ -1,3 +1,4 @@
+// UserManagement.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/UserManagement.css";
 import { db, realTimeDB, auth } from "../firebase";
@@ -22,6 +23,8 @@ const UserManagement = () => {
   const [loading, setLoading] = useState(true);
   const [showPendingAdmins, setShowPendingAdmins] = useState(false);
   const [showPendingUsers, setShowPendingUsers] = useState(false);
+  const [showRemovedAdmins, setShowRemovedAdmins] = useState(false);
+  const [showRestrictedUsers, setShowRestrictedUsers] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -48,7 +51,7 @@ const UserManagement = () => {
       const adminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         email: doc.data().email || "",
-        branch_name: doc.data().branch_name || "", // Added branch_name
+        branch_name: doc.data().branch_name || "",
         ...doc.data(),
       }));
       setAdmins(adminList);
@@ -66,7 +69,7 @@ const UserManagement = () => {
       const pendingAdminList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         email: doc.data().email || "",
-        branch_name: doc.data().branch || "", // Added branch_name
+        branch_name: doc.data().branch || "",
         ...doc.data(),
       }));
       setPendingAdmins(pendingAdminList);
@@ -86,8 +89,8 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
-            branch_name: user.branch_name || "", // Added branch_name
-            packageCategory: user.packageCategory || "", // Added packageCategory
+            branch_name: user.branch_name || "",
+            packageCategory: user.packageCategory || "",
             ...user,
           }));
         setActiveUsers(activeList);
@@ -99,8 +102,8 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
-            branch_name: user.branch_name || "", // Added branch_name
-            packageCategory: user.packageCategory || "", // Added packageCategory
+            branch_name: user.branch_name || "",
+            packageCategory: user.packageCategory || "",
             ...user,
           }));
         setPendingUsers(pendingList);
@@ -187,11 +190,12 @@ const UserManagement = () => {
         <div className="request-box">
           <h4>Pending Admin Requests</h4>
           <p className="counters">{pendingAdmins.length}</p>
-          <a className="viewall"
+          <a
             href="#"
+            className="viewall"
             onClick={(e) => {
               e.preventDefault();
-              setShowPendingAdmins(!showPendingAdmins);
+              setShowPendingAdmins(true);
             }}
           >
             View All
@@ -200,11 +204,12 @@ const UserManagement = () => {
         <div className="request-box">
           <h4>Pending User Requests</h4>
           <p className="counters">{pendingUsers.length}</p>
-          <a className="viewall"
+          <a
             href="#"
+            className="viewall"
             onClick={(e) => {
               e.preventDefault();
-              setShowPendingUsers(!showPendingUsers);
+              setShowPendingUsers(true);
             }}
           >
             View All
@@ -213,25 +218,26 @@ const UserManagement = () => {
         <div className="request-box">
           <h4>Removed Admins</h4>
           <p className="counters">{pendingUsers.length}</p>
-          <a className="viewall"
+          <a
             href="#"
+            className="viewall"
             onClick={(e) => {
               e.preventDefault();
-              setShowPendingUsers(!showPendingUsers);
+              setShowRemovedAdmins(true);
             }}
           >
-
             View All
           </a>
         </div>
         <div className="request-box">
           <h4>Restricted Users</h4>
           <p className="counters">{pendingUsers.length}</p>
-          <a className="viewall"
+          <a
             href="#"
+            className="viewall"
             onClick={(e) => {
               e.preventDefault();
-              setShowPendingUsers(!showPendingUsers);
+              setShowRestrictedUsers(true);
             }}
           >
             View All
@@ -239,29 +245,23 @@ const UserManagement = () => {
         </div>
       </div>
 
+      {/* Modals */}
       {showPendingAdmins && (
-        <section className="table-section">
-          <h4>Pending Admin Requests</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Admin Name</th>
-                <th>Location Name</th>
-                <th>Joined</th>
-                <th>Work ID</th>
-                <th>Accept Request</th>
-                <th>Decline Request</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="modal" onClick={() => setShowPendingAdmins(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="top-content">
+              <h4>Pending Admin Requests</h4>
+              <p onClick={() => setShowPendingAdmins(false)}>X</p>
+            </div>
+            <div className="list">
               {pendingAdmins.map((admin) => (
-                <tr key={admin.id}>
-                  <td>{admin.email}</td>
-                  <td>{admin.branch_name}</td>
-                  <td>{new Date(admin.joined).toLocaleDateString()}</td>
-                  <td>{admin.workId}</td>
-                  <td>
+                <div key={admin.id} className="list-item">
+                  <p>
+                    {admin.email} - {admin.branch_name}
+                  </p>
+                  <p>Joined: {new Date(admin.joined).toLocaleDateString()}</p>
+                  <p>Work ID: {admin.workId}</p>
+                  <div>
                     <a
                       href="#"
                       className="accept"
@@ -272,59 +272,47 @@ const UserManagement = () => {
                     >
                       Accept
                     </a>
-                  </td>
-                  <td>
                     <a
                       href="#"
-                      className="decline"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleAdminRequest(admin.id, "decline");
+                        handleAccess(admin.id, "decline");
                       }}
                     >
-                      Decline
+                      <img
+                        src=""
+                        alt="Decline"
+                        className="decline-image"
+                      />
                     </a>
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="remove"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleRemoveAdmin(admin.id);
-                      }}
-                    >
-                      Remove
-                    </a>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </section>
+            </div>
+          </div>
+        </div>
       )}
 
       {showPendingUsers && (
-        <section className="table-section">
-          <h4>Pending User Requests</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>User Email</th>
-                <th>Location Name</th>
-                <th>Subscription Package</th>
-                <th>Joined</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="modal" onClick={() => setShowPendingUsers(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="top-content">
+            <h4>Pending Requests </h4>
+            <p onClick={() => setShowPendingUsers(false)}>X</p>
+            </div>
+            <div className="list">
               {pendingUsers.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.email}</td>
-                  <td>{user.branch_name}</td>
-                  <td>{user.packageCategory}</td>
-                  <td>{new Date(user.joined).toLocaleDateString()}</td>
-                  <td>
+                <div key={user.id} className="list-item">
+                  <p>{user.email}</p>
+                  <p>Role: {user.role || "Trainer"}</p>
+                  <p>Work ID: {user.workId || "N/A"}</p>
+                  <p>
+                    Requested:{" "}
+                    {new Date(
+                      user.requested || user.joined
+                    ).toLocaleDateString()}
+                  </p>
+                  <div>
                     <a
                       href="#"
                       className="accept"
@@ -333,7 +321,7 @@ const UserManagement = () => {
                         handleAccess(user.id, "accept");
                       }}
                     >
-                      Accept
+                      <span className="checkmark">✔</span>
                     </a>
                     <a
                       href="#"
@@ -343,16 +331,114 @@ const UserManagement = () => {
                         handleAccess(user.id, "decline");
                       }}
                     >
-                      Decline
+
                     </a>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </section>
+            </div>
+
+          </div>
+        </div>
       )}
 
+      {showRemovedAdmins && (
+       <div className="modal" onClick={() => setShowRemovedAdmins(false)}>
+       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+       <div className="top-content">
+         <h4>Removed Admins </h4>
+         <p onClick={() => setShowRemovedAdmins(false)}>X</p>
+         </div>
+         <div className="list">
+           {pendingUsers.map((user) => (
+             <div key={user.id} className="list-item">
+               <p>{user.email}</p>
+               <p>Role: {user.role || "Trainer"}</p>
+               <p>Work ID: {user.workId || "N/A"}</p>
+               <p>
+                 Requested:{" "}
+                 {new Date(
+                   user.requested || user.joined
+                 ).toLocaleDateString()}
+               </p>
+               <div>
+                 <a
+                   href="#"
+                   className="accept"
+                   onClick={(e) => {
+                     e.preventDefault();
+                     handleAccess(user.id, "accept");
+                   }}
+                 >
+                   <span className="checkmark">✔</span>
+                 </a>
+                 <a
+                   href="#"
+                   className="decline"
+                   onClick={(e) => {
+                     e.preventDefault();
+                     handleAccess(user.id, "decline");
+                   }}
+                 >
+
+                 </a>
+               </div>
+             </div>
+           ))}
+         </div>
+         </div>
+        </div>
+      )}
+
+      {showRestrictedUsers && (
+        <div className="modal" onClick={() => setShowRestrictedUsers(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+       <div className="top-content">
+         <h4>Removed Admins </h4>
+         <p onClick={() => setShowRestrictedUsers(false)}>X</p>
+         </div>
+         <div className="list">
+           {pendingUsers.map((user) => (
+             <div key={user.id} className="list-item">
+               <p>{user.email}</p>
+               <p>Role: {user.role || "Trainer"}</p>
+               <p>Work ID: {user.workId || "N/A"}</p>
+               <p>
+                 Requested:{" "}
+                 {new Date(
+                   user.requested || user.joined
+                 ).toLocaleDateString()}
+               </p>
+               <div>
+                 <a
+                   href="#"
+                   className="accept"
+                   onClick={(e) => {
+                     e.preventDefault();
+                     handleAccess(user.id, "accept");
+                   }}
+                 >
+                   <span className="checkmark">✔</span>
+                 </a>
+                 <a
+                   href="#"
+                   className="decline"
+                   onClick={(e) => {
+                     e.preventDefault();
+                     handleAccess(user.id, "decline");
+                   }}
+                 >
+
+                 </a>
+               </div>
+             </div>
+           ))}
+          </div>
+        </div>
+        </div>
+      )}
+
+      {/* Admins and Active Users Tables */}
       <section className="table-section">
         <h4>Admins</h4>
         <table>
