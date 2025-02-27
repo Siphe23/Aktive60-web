@@ -186,8 +186,8 @@ const UserManagement = () => {
       <div className="requests">
         <div className="request-box">
           <h4>Pending Admin Requests</h4>
-          <p>{pendingAdmins.length}</p>
-          <a
+          <p className="counters">{pendingAdmins.length}</p>
+          <a className="viewall"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -199,8 +199,35 @@ const UserManagement = () => {
         </div>
         <div className="request-box">
           <h4>Pending User Requests</h4>
-          <p>{pendingUsers.length}</p>
-          <a
+          <p className="counters">{pendingUsers.length}</p>
+          <a className="viewall"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowPendingUsers(!showPendingUsers);
+            }}
+          >
+            View All
+          </a>
+        </div>
+        <div className="request-box">
+          <h4>Removed Admins</h4>
+          <p className="counters">{pendingUsers.length}</p>
+          <a className="viewall"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowPendingUsers(!showPendingUsers);
+            }}
+          >
+
+            View All
+          </a>
+        </div>
+        <div className="request-box">
+          <h4>Restricted Users</h4>
+          <p className="counters">{pendingUsers.length}</p>
+          <a className="viewall"
             href="#"
             onClick={(e) => {
               e.preventDefault();
