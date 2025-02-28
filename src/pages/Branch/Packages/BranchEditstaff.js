@@ -10,7 +10,7 @@ export default function BranchEditstaff({ onClose }) {
   
   // Form state for adding new staff
   const [newStaffName, setNewStaffName] = useState('');
-  const [newTimeRange, setNewTimeRange] = useState({start: '', end: ''});
+  const [newTimeRange, setNewTimeRange] = useState({ start: '', end: '' });
   const [newRole, setNewRole] = useState('Trainer');
 
   const handleSave = () => {
@@ -21,11 +21,13 @@ export default function BranchEditstaff({ onClose }) {
   return (
     <div className="popup-overlay">
       <div className="popup-form">
+        {/* Header */}
         <div className="popup-header">
           <h2>Location</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
         
+        {/* Date Range Selector */}
         <div className="date-range">
           <label>Date range</label>
           <div className="date-input-group">
@@ -35,6 +37,7 @@ export default function BranchEditstaff({ onClose }) {
           </div>
         </div>
         
+        {/* Staff Table */}
         <div className="staff-table-container">
           <table className="staff-table">
             <thead>
@@ -59,6 +62,7 @@ export default function BranchEditstaff({ onClose }) {
                   </td>
                 </tr>
               ))}
+              {/* Add New Entry Row */}
               <tr className="new-entry-row">
                 <td>
                   <input 
@@ -73,13 +77,13 @@ export default function BranchEditstaff({ onClose }) {
                     <input 
                       type="time" 
                       value={newTimeRange.start}
-                      onChange={(e) => setNewTimeRange({...newTimeRange, start: e.target.value})}
+                      onChange={(e) => setNewTimeRange({ ...newTimeRange, start: e.target.value })}
                     />
                     <span>-</span>
                     <input 
                       type="time"
                       value={newTimeRange.end}
-                      onChange={(e) => setNewTimeRange({...newTimeRange, end: e.target.value})}
+                      onChange={(e) => setNewTimeRange({ ...newTimeRange, end: e.target.value })}
                     />
                   </div>
                 </td>
@@ -101,6 +105,7 @@ export default function BranchEditstaff({ onClose }) {
           </table>
         </div>
         
+        {/* Footer Buttons */}
         <div className="popup-actions">
           <button className="save-btn" onClick={handleSave}>Save</button>
           <button className="clear-btn" onClick={onClose}>Clear</button>
@@ -109,3 +114,4 @@ export default function BranchEditstaff({ onClose }) {
     </div>
   );
 }
+
