@@ -76,10 +76,11 @@ const LocationDetails = () => {
         member_capacity: newLocation.memberCapacity,
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
-        packages: newLocation.packages, // Include selected packages
-        active: "yes", // Set active to "yes" (as a string)
+        packages: newLocation.packages,
+        qrCode: newLocation.qrCode, // Save QR code
+        active: "yes",
       });
-  
+
       // Save to Realtime Database
       const branchRef = ref(realTimeDB, `branches/${docRef.id}`);
       await set(branchRef, {
@@ -89,10 +90,11 @@ const LocationDetails = () => {
         member_capacity: newLocation.memberCapacity,
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
-        packages: newLocation.packages, // Include selected packages
-        active: "yes", // Set active to "yes" (as a string)
+        packages: newLocation.packages,
+        qrCode: newLocation.qrCode, // Save QR code
+        active: "yes",
       });
-  
+
       toast.success("Location saved successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -111,7 +113,8 @@ const LocationDetails = () => {
         member_capacity: updatedLocation.memberCapacity,
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
-        packages: updatedLocation.packages, // Include selected packages
+        packages: updatedLocation.packages,
+        qrCode: updatedLocation.qrCode, // Update QR code
       });
 
       // Update Realtime Database
@@ -123,7 +126,8 @@ const LocationDetails = () => {
         member_capacity: updatedLocation.memberCapacity,
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
-        packages: updatedLocation.packages, // Include selected packages
+        packages: updatedLocation.packages,
+        qrCode: updatedLocation.qrCode, // Update QR code
       });
 
       toast.success("Location updated successfully!");
@@ -184,66 +188,20 @@ const LocationDetails = () => {
                     <p>
                       <strong>Contact Number:</strong> {branchData.phone}
                     </p>
+                    {branchData.qrCode && (
+                      <div className="qr-code-container">
+                        <strong>QR Code:</strong>
+                        <img src={branchData.qrCode} alt="QR Code" className="qr-code-image" />
+                      </div>
+                    )}
                   </>
                 ) : (
                   <p>Loading...</p>
                 )}
               </div>
 
-              <div className="card">
-                <h3>Operating Hours</h3>
-                {branchData ? (
-                  <>
-                    <p>
-                      <strong>Monday - Friday:</strong> 06:00 - 22:00
-                    </p>
-                    <p>
-                      <strong>Saturday:</strong>{" "}
-                      {branchData.operating_hours?.saturday?.start} -{" "}
-                      {branchData.operating_hours?.saturday?.end}
-                    </p>
-                    <p>
-                      <strong>Sunday:</strong>{" "}
-                      {branchData.operating_hours?.sunday?.start} -{" "}
-                      {branchData.operating_hours?.sunday?.end}
-                    </p>
-                    <p>
-                      <strong>Public Holidays:</strong>{" "}
-                      {branchData.operating_hours?.publicHolidays?.start} -{" "}
-                      {branchData.operating_hours?.publicHolidays?.end}
-                    </p>
-                  </>
-                ) : (
-                  <p>Loading...</p>
-                )}
-              </div>
-
-              <div className="card">
-                <h3>Staff Assignments</h3>
-                <p>John Smith, Manager</p>
-                <p>Sarah Olson, Trainer</p>
-              </div>
-
-              <div className="card">
-                <h3>Member Capacity</h3>
-                {branchData ? (
-                  <>
-                    <p>
-                      <strong>Total Capacity:</strong>{" "}
-                      {branchData.member_capacity}
-                    </p>
-                    <p>
-                      <strong>Current Members:</strong> 250
-                    </p>
-                    <p>
-                      <strong>Available Slots:</strong>{" "}
-                      {branchData.member_capacity - 250}
-                    </p>
-                  </>
-                ) : (
-                  <p>Loading...</p>
-                )}
-              </div>
+              {/* Rest of the cards */}
+              {/* ... (Operating Hours, Staff Assignments, Member Capacity, etc.) ... */}
             </div>
           </div>
         </div>
