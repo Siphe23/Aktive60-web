@@ -1,3 +1,5 @@
+import { } from "../firebase";
+ 
 
             {/* Registration Link */}
             <div className="register-link">

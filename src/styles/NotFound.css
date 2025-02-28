@@ -8,7 +8,7 @@
   color: white;
 }
 
-.logo {
+/* .logo {
   font-size: 2rem;
 
   display: flex;
@@ -19,7 +19,7 @@
   justify-content: flex-start; 
   width: auto; 
   margin: 20px; 
-}
+} */
 
 .logo-container {
   display: flex;
