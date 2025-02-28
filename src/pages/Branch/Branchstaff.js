@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "../../styles/Branchstaff.css";
-import NavBar from "../../components/Navbar";
 import  BranchEditstaff from "../Branch/Packages/BranchEditstaff"; 
 import SideBar from "../../components/Sidebar"
 
