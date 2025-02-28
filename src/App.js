@@ -35,7 +35,7 @@ import Sidebar from "./components/Sidebar";
 import defaultProfilePic from "./assets/avatar-placeholder.png"; 
 import BranchDetails from "./pages/Branch/BranchDetails";
 import BranchPackages from "./pages/Branch/BranchPackages";
-  import BranchStaff from "./pages/Branch/Branchstaff";
+import BranchStaff from "./pages/Branch/Branchstaff";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({

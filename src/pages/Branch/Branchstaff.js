@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../../styles/Branchstaff.css";
 import NavBar from "../../components/Navbar";
 import  BranchEditstaff from "../Branch/Packages/BranchEditstaff"; 
+import SideBar from "../../components/Sidebar"
 
 export default function Branchstaff() {
   const [size, setSize] = useState('medium'); // 'medium' is default, can be 'small'
@@ -17,7 +18,7 @@ export default function Branchstaff() {
 
   return (
     <div className={size}>
-      <NavBar />  
+      <SideBar />  
       <div className="branch-staff-container">
         <div className="header">
           <div className="gym-info">
