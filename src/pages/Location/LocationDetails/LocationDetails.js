@@ -199,6 +199,70 @@ const LocationDetails = () => {
                   <p>Loading...</p>
                 )}
               </div>
+              <div className="card">
+                <h3>Operating Hours</h3>
+                {branchData ? (
+                  <>
+                    <p>
+                      <strong>Monaday - Friday</strong> {branchData.branch_name}
+                    </p>
+                    <p>
+                      <strong>Saturday:</strong> {branchData.location_address}
+                    </p>
+                    <p>
+                      <strong>Sunday:</strong> {branchData.phone}
+                    </p>
+                    <p>
+                      <strong>Public Holidays:</strong> {branchData.phone}
+                    </p>
+                   
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </div>
+              </div>
+              <div className="card-package">
+                <h3>Selected Packages</h3>
+                {branchData ? (
+                  <>
+                  <div className="packages">
+                    <p>
+                      <strong>ONE-ON-ONE SESSIONS</strong> 
+                    </p>
+                    <p>
+                      <strong>PERSONALISED MEAL PLANS & PROGRAMS</strong> 
+                    </p>
+                    <p>
+                      <strong>ONLINE HOURLY SESSIONS</strong> 
+                    </p>
+                    </div>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
+             
+              </div>
+              <div className="card-capacity">
+                <h3>Member Capacity</h3>
+                {branchData ? (
+                  <>
+                  <div className="capacities">
+                    <p>
+                      <strong>Total Capacity: {branchData.branch_name}</strong> 
+                    </p>
+                    <p>
+                      <strong>Current members:  {branchData.branch_name}</strong> 
+                    </p>
+                    <p>
+                      <strong>Available Slots:  {branchData.branch_name}</strong> 
+                    </p>
+                    </div>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
+             
 
               {/* Rest of the cards */}
               {/* ... (Operating Hours, Staff Assignments, Member Capacity, etc.) ... */}

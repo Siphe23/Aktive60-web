@@ -146,7 +146,10 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+      <div className="top-content">
         <h2>Add New Location</h2>
+        <p onClick={onClose}>X</p>
+        </div>
         <div className="form-group">
           <label>Location Name</label>
           <input

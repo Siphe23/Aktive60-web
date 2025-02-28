@@ -93,13 +93,25 @@ body {
 }
 
 /* Info Cards */
+.card-grid{
+  display: flex;
+  gap: 0.8em;
+ 
+  
+}
+
 .card {
-  background-color: #2a2a38;
+  background-color: #2F2E41;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
   position: relative;
+  min-width: 300px;
 }
+.card h3{
+  text-align:left ;
+}
+
 
 .card-header {
   font-size: 16px;
@@ -107,6 +119,46 @@ body {
   margin-bottom: 20px;
   color: white;
 }
+.card-package{
+  background-color: #2F2E41;
+  border-radius: 10px;
+  padding: 20px;
+  width: "70%";
+  margin-bottom: 20px;
+}
+.card-package h3{
+  text-align:left ;
+}
+.packages{
+  display: flex;
+  gap: 3.3em;
+  
+}
+.packages strong{
+  background-color: #3F3D56;
+  padding: 6px;
+  border-radius: 10px;
+}
+.card-capacity{
+  background-color: #2F2E41;
+  border-radius: 10px;
+  padding: 20px;
+  width: "70%";
+}
+.card-capacity h3{
+  text-align:left ;
+}
+
+.capacities{
+  display: flex;
+  gap: 3.3em;
+}
+.capacities strong{
+  background-color: #3F3D56;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 
 .edit-icon {
   position: absolute;

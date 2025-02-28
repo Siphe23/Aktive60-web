@@ -144,7 +144,10 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+      <div className="top-content">
         <h2>Edit Location</h2>
+        <p onClick={onClose}>X</p>
+        </div>
         <div className="form-group">
           <label>Location Name</label>
           <input
