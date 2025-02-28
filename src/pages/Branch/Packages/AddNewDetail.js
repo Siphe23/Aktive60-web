@@ -4,20 +4,20 @@ import "../../../styles/EditBranchPopup.css";
 
 const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
   const [formData, setFormData] = useState(branchData || {
-    locationName: "",
-    address: "",
-    contactNumber: "",
+    locationName: "Sloane Street Gym",
+    address: "22 Sloane St, Bryanston Johannesburg",
+    contactNumber: "011 845 4774",
     operatingHours: {
-      mondayFriday: { open: "06:00", close: "22:00" },
-      saturday: { open: "06:00", close: "22:00" },
-      sunday: { open: "06:00", close: "22:00" },
-      publicHolidays: { open: "06:00", close: "22:00" }
+      mondayFriday: { open: "00:00", close: "00:00" },
+      saturday: { open: "00:00", close: "00:00" },
+      sunday: { open: "00:00", close: "00:00" },
+      publicHolidays: { open: "00:00", close: "00:00" }
     },
     packages: {
       oneOnOneSessions: true,
-      personalisedMealPlans: true,
+      personalisedMealPlans: false,
       groupSessions: false,
-      onlineHourlySessions: true
+      onlineHourlySessions: false
     },
     memberCapacity: 300
   });
@@ -101,6 +101,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                   value={formData.locationName}
                   onChange={handleInputChange}
                   placeholder="Enter location name"
+                  className="dark-input"
                 />
               </div>
               
@@ -112,6 +113,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                   value={formData.address}
                   onChange={handleInputChange}
                   placeholder="Enter address"
+                  className="dark-input"
                 />
               </div>
               
@@ -123,6 +125,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                   value={formData.contactNumber}
                   onChange={handleInputChange}
                   placeholder="Enter contact number"
+                  className="dark-input"
                 />
               </div>
               
@@ -130,13 +133,14 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                 <label>Operating Hours</label>
                 
                 <div className="time-row">
-                  <span>Monaday - Friday</span>
+                  <span>Monday - Friday</span>
                   <div className="time-inputs">
                     <div className="time-input">
                       <FaClock />
                       <select
                         value={formData.operatingHours.mondayFriday.open}
                         onChange={(e) => handleTimeChange('mondayFriday', 'open', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`open-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -150,6 +154,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.mondayFriday.close}
                         onChange={(e) => handleTimeChange('mondayFriday', 'close', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`close-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -169,6 +174,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.saturday.open}
                         onChange={(e) => handleTimeChange('saturday', 'open', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`sat-open-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -182,6 +188,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.saturday.close}
                         onChange={(e) => handleTimeChange('saturday', 'close', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`sat-close-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -201,6 +208,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.sunday.open}
                         onChange={(e) => handleTimeChange('sunday', 'open', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`sun-open-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -214,6 +222,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.sunday.close}
                         onChange={(e) => handleTimeChange('sunday', 'close', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`sun-close-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -233,6 +242,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.publicHolidays.open}
                         onChange={(e) => handleTimeChange('publicHolidays', 'open', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`hol-open-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -246,6 +256,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                       <select
                         value={formData.operatingHours.publicHolidays.close}
                         onChange={(e) => handleTimeChange('publicHolidays', 'close', e.target.value)}
+                        className="dark-select"
                       >
                         {[...Array(24)].map((_, i) => (
                           <option key={`hol-close-${i}`} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -321,6 +332,7 @@ const EditBranchPopup = ({ isOpen, onClose, branchData, onSave }) => {
                   value={formData.memberCapacity}
                   onChange={handleInputChange}
                   placeholder="Enter member capacity"
+                  className="dark-input"
                 />
               </div>
             </div>
