@@ -29,7 +29,7 @@ const UserManagement = () => {
   const [showPendingUsers, setShowPendingUsers] = useState(false);
   const [showRemovedAdmins, setShowRemovedAdmins] = useState(false);
   const [showRestrictedUsers, setShowRestrictedUsers] = useState(false);
-  const [currentUserData, setCurrentUserData] = useState(null); 
+  const [currentUserData, setCurrentUserData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -377,7 +377,7 @@ const UserManagement = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-   <div className="user-management">
+    <div className="user-management">
       {/* Pass currentUserData as userData to Navbar */}
       <Navbar userData={currentUserData} currentUserRole={currentUserRole} />
       <h2>User Management</h2>
@@ -475,7 +475,8 @@ const UserManagement = () => {
                         handleAdminRequest(admin.id, "decline", admin.source);
                       }}
                     >
-                      <img src="" alt="Decline" className="decline-image" />
+                    Decline
+                      {/* <img src="" alt="Decline" className="decline-image" /> */}
                     </a>
                   </div>
                 </div>
@@ -609,7 +610,7 @@ const UserManagement = () => {
         <table>
           <thead>
             <tr>
-              <th>Admin Name</th>
+              <th>Admin Email</th>
               <th>Location Name</th>
               <th>Joined</th>
               <th>Work ID</th>

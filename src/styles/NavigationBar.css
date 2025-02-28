@@ -14,7 +14,6 @@
   box-sizing: border-box;
   gap: 2rem;
   z-index: 1000;
-color:white;
 }
 
 .nav-left {
@@ -24,12 +23,12 @@ color:white;
   flex: 1;
 }
 
-/* .logo-container {
+.logo-container {
   flex-shrink: 0;
   position: relative;
   display: flex;
   justify-content: flex-start;
-} */
+}
 
 .logo-container img {
   height: 30px;
@@ -39,7 +38,6 @@ color:white;
   width: 100%; /* Adjust width to fit within its container */
   max-width: 200px; /* Limit the width to avoid overflow */
   object-fit: contain; /* Keep the aspect ratio of the logo intact */
-margin-right: 0;
 }
 
 .search-bar {
@@ -107,7 +105,7 @@ margin-right: 0;
   top: 50px;
   right: 10px;
   background: white;
-  box-shadow: 0px 4px 10px rgba(88, 88, 88, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px;
   width: 160px;
@@ -127,7 +125,7 @@ margin-right: 0;
 }
 
 .dropdown-item:hover {
-  background: #f82020;
+  background: #f0f0f0;
 }
 
 .dropdown-close {
@@ -137,7 +135,6 @@ margin-right: 0;
   font-size: 1rem;
   margin-bottom: 5px;
 }
-<<<<<<< HEAD
 /* NavigationBar.css */
 /* ... (rest of the styles remain the same) */
 
@@ -160,12 +157,4 @@ margin-right: 0;
 .notification-icon {
   position: relative;
   color: white;
-=======
-.badge{
-  color: white;
-  background-color: white;
-}
-.dropdown-menu{
-  background-color: #1B1E2A;
->>>>>>> origin
 }

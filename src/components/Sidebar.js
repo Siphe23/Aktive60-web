@@ -18,7 +18,8 @@ import {
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isLocationDropdownVisible, setIsLocationDropdownVisible] = useState(false);
+  const [isLocationDropdownVisible, setIsLocationDropdownVisible] =
+    useState(false);
   const [isBranchDropdownVisible, setIsBranchDropdownVisible] = useState(false);
   const location = useLocation();
 
@@ -57,7 +58,8 @@ const Sidebar = () => {
         >
           <LocationOn className="icon" />
           {isExpanded && <span className="text">Location</span>}
-          {isExpanded && (isLocationDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
+          {isExpanded &&
+            (isLocationDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
         </div>
 
         {isLocationDropdownVisible && isExpanded && (
@@ -96,7 +98,8 @@ const Sidebar = () => {
         >
           <LocationOn className="icon" />
           {isExpanded && <span className="text">Branch</span>}
-          {isExpanded && (isBranchDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
+          {isExpanded &&
+            (isBranchDropdownVisible ? <ExpandLess /> : <ExpandMore />)}
         </div>
 
         {isBranchDropdownVisible && isExpanded && (
@@ -130,7 +133,10 @@ const Sidebar = () => {
           <BarChart className="icon" />
           {isExpanded && <span className="text">Generate Reports</span>}
         </Link>
-        <Link to="/user-management" className={`menu-item ${isActive("/user-management")}`}>
+        <Link
+          to="/user-management"
+          className={`menu-item ${isActive("/user-management")}`}
+        >
           <People className="icon" />
           {isExpanded && <span className="text">User Management</span>}
         </Link>
@@ -142,7 +148,10 @@ const Sidebar = () => {
           <Group className="icon" />
           {isExpanded && <span className="text">Trainees</span>}
         </Link>
-        <Link to="/collection" className={`menu-item ${isActive("/collection")}`}>
+        <Link
+          to="/collection"
+          className={`menu-item ${isActive("/collection")}`}
+        >
           <Inventory className="icon" />
           {isExpanded && <span className="text">Collection</span>}
         </Link>
