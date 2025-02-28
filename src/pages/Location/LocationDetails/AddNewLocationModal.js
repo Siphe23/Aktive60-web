@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../styles/AddNewLocationModal.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
+import QRCode from "qrcode"; // Import QRCode library
 
 const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
   const [locationName, setLocationName] = useState("");
@@ -18,6 +19,7 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
   const [equipmentQuantity, setEquipmentQuantity] = useState(0);
   const [memberCapacity, setMemberCapacity] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
+  const [qrCode, setQRCode] = useState(""); // State for QR code
 
   // New state for packages
   const [packages, setPackages] = useState([]); // List of all packages from the database
@@ -91,6 +93,38 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
     setEquipment(updatedEquipment);
   };
 
+  // Generate QR code with branch name and random number
+  const generateQRCode = async () => {
+    const randomNumber = Math.floor(Math.random() * 1000000); // Generate a random number
+    const qrData = `${locationName}-${randomNumber}`; // Combine branch name and random number
+
+    try {
+      const qrCodeData = await QRCode.toDataURL(qrData);
+      setQRCode(qrCodeData);
+    } catch (error) {
+      console.error("Error generating QR code:", error);
+    }
+  };
+
+  // Function to clear the form
+  const clearForm = () => {
+    setLocationName("");
+    setAddress("");
+    setContactNumber("");
+    setOperatingHours({
+      mondayFriday: { start: "", end: "" },
+      saturday: { start: "", end: "" },
+      sunday: { start: "", end: "" },
+      publicHolidays: { start: "", end: "" },
+    });
+    setEquipment([]);
+    setEquipmentName("");
+    setEquipmentQuantity(0);
+    setMemberCapacity("");
+    setSelectedPackages([]);
+    setQRCode("");
+  };
+
   const handleSave = () => {
     const newLocation = {
       locationName,
@@ -99,9 +133,11 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
       operatingHours,
       equipment,
       memberCapacity,
-      packages: selectedPackages, // Include selected packages in the saved data
+      packages: selectedPackages,
+      qrCode, // Include QR code in the saved data
     };
     onSave(newLocation);
+    clearForm(); // Clear the form after saving
     onClose();
   };
 
@@ -335,6 +371,18 @@ const AddNewLocationModal = ({ isOpen, onClose, onSave }) => {
             onChange={(e) => setMemberCapacity(parseInt(e.target.value || 0))}
             placeholder="Enter member capacity"
           />
+        </div>
+
+        {/* QR Code Field */}
+        <div className="form-group">
+          <label>QR Code</label>
+          <button
+            onClick={generateQRCode} // Call the updated function
+            className="generate-qr-button"
+          >
+            Generate QR Code
+          </button>
+          {qrCode && <img src={qrCode} alt="QR Code" className="qr-code-image" />}
         </div>
 
         <div className="modal-buttons">
