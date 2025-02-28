@@ -1,32 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { auth, db } from "../../src/firebase"; // Ensure you import db for Firestore
+import { auth, db } from "../../src/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import TwoFAImage from "../assets/amico-removebg-preview.png";
-import logo from "../assets/Aktiv60.png";
+import { doc, getDoc } from "firebase/firestore";
 import "../styles/styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { doc, getDoc } from "firebase/firestore"; // Firestore v9+ imports
-
-const InputField = ({ label, type, value, onChange, disabled, placeholder, icon }) => (
-  <div className="input-group">
-    <label htmlFor={label}>{label}</label>
-    <div className="input-wrapper">
-      <FontAwesomeIcon icon={icon} className="input-icon" />
-      <input
-        type={type}
-        id={label}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        required
-        disabled={disabled}
-      />
-    </div>
-  </div>
-);
+import logo from "../assets/Aktiv60.png";
+import TwoFAImage from "../assets/Login.png";
+import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";  // Lock icon for password
+import { AiOutlineMail } from "react-icons/ai";  // Email icon
 
 const SuperAdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -44,7 +26,7 @@ const SuperAdminLogin = () => {
     if (savedEmail && savedPassword) {
       setEmail(savedEmail);
       setPassword(savedPassword);
-      setRememberMe(true);  // Set remember me to true if there are saved credentials
+      setRememberMe(true);
     }
   }, []);
 
@@ -63,8 +45,8 @@ const SuperAdminLogin = () => {
       const user = userCredential.user;
 
       // Check if the user exists in Firestore and is a super_Admin
-      const userRef = doc(db, "users", user.uid); // Use UID as the document ID
-      const userDoc = await getDoc(userRef);  // Use getDoc function to retrieve the document
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
 
       if (!userDoc.exists()) {
         toast.error("No user found with this email.");
@@ -89,11 +71,11 @@ const SuperAdminLogin = () => {
         localStorage.removeItem("password");
       }
 
-      // Store the user uid (unique identifier for the user)
-      localStorage.setItem("uid", user.uid); // Store the uid in localStorage for later use
+      // Store the user uid
+      localStorage.setItem("uid", user.uid);
 
-      // Navigate to the super admin dashboard or home page
-      navigate("/super-admin-dashboard"); // Redirect to the super-admin dashboard
+      // Navigate to the super admin dashboard
+      navigate("/dashboard");
 
     } catch (error) {
       handleError(error);
@@ -124,70 +106,102 @@ const SuperAdminLogin = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="login-section">
-        <div className="logo-container">
-          <img src={logo} alt="Aktiv60 Logo" className="logo" />
-        </div>
-        <h3>Sign into your account</h3>
+    <div className="login-page">
+      <div className="login-container">
+        {/* Left side - Login Form */}
+        <div className="login-form">
+          {/* Logo */}
+          <div className="logo-container">
+            <img src={logo} alt="Aktiv60 Logo" className="login-logo" />
+            <p className="login-subtitle">Login to the platform</p>
+          </div>
 
-        <form onSubmit={handleLogin}>
-          <InputField
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
-            placeholder="Enter your email"
-            icon={faEnvelope}
-          />
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <div className="input-wrapper">
-              <FontAwesomeIcon icon={faLock} className="input-icon" />
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-                disabled={loading}
-              />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
-              />
+          <form onSubmit={handleLogin}>
+            {/* Email Field */}
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <div className="input-container">
+                <AiOutlineMail size={50} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)' }} />
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                  aria-label="Email address"
+                  style={{ paddingLeft: '50px' }} // To prevent overlap with the icon
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="auth-options">
-            <label>
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-                disabled={loading}
-              />
-              Remember Me
-            </label>
-          </div>
+            {/* Password Field */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="input-container" style={{ position: 'relative' }}>
+                <FaLock size={30} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)' }} />
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={loading}
+                  aria-label="Password"
+                  style={{ paddingLeft: '50px' }} // To prevent overlap with the icon
+                />
+                <div
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label="Toggle password visibility"
+                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
+                >
+                  {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                </div>
+              </div>
+            </div>
 
-          <button className="auth-button" type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+            {/* Forgot Password Link */}
+            <div className="forgot-password">
+              <Link to="/forgot-password">Forgot Password?</Link>
+            </div>
 
-        <div className="forgot-password">
-          <Link to="/forgot-password">Forgot Password?</Link>
+            {/* Remember Me Checkbox */}
+            <div className="remember-me">
+              <div
+                className={`custom-checkbox ${rememberMe ? 'checked' : ''}`}
+                onClick={() => setRememberMe(!rememberMe)}
+              >
+                {rememberMe && (
+                  <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 10L0 5.19231L1.4 3.84615L5 7.30769L12.6 0L14 1.34615L5 10Z" fill="white"/>
+                  </svg>
+                )}
+              </div>
+              <label onClick={() => setRememberMe(!rememberMe)}>Remember me</label>
+            </div>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              className="login-btn"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
+              <span className="arrow">→</span>
+            </button>
+          </form>
         </div>
-      </div>
 
-      <div className="image-container">
-        <img src={TwoFAImage} alt="Two Factor Authentication" />
-      </div>
+       
+        
+      </div><div className="login-illustration">
+          <div className="illustration-container">
+            <img src={TwoFAImage} alt="Login security illustration" />
+          </div>
+        </div>
     </div>
   );
 };
