@@ -76,7 +76,7 @@ const App = () => {
     <Router>
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar userData={userData} /> {/* Pass userData to Navbar */}
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/home" element={<Home />} />

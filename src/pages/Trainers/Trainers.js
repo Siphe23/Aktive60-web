@@ -16,7 +16,6 @@ const Trainers = () => {
     setIsExpanded(!isExpanded);
   };
 
-  // Fetch trainers data from Firebase
   useEffect(() => {
     const fetchTrainers = async () => {
       try {
@@ -24,7 +23,6 @@ const Trainers = () => {
         const trainersData = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          // Assuming trainers have a role field to distinguish them
           if (data.role === "client") {
             trainersData.push({
               id: doc.id,
@@ -33,6 +31,7 @@ const Trainers = () => {
               totalSessions: data.totalSessions || 0,
               location: data.location || "Not specified",
               availability: data.availability || "Not Available",
+              profileImage: data.profileImage || "https://via.placeholder.com/100", // Default avatar
             });
           }
         });
@@ -66,24 +65,29 @@ const Trainers = () => {
             <div className="header">
               <h2 className="title">Trainers Overview</h2>
             </div>
-            <div className="trainer-cards">
-              {trainers.map((trainer) => (
-                <div key={trainer.id} className="trainer-card">
-                  <div className="trainer-info">
-                    <div className="trainer-name">{trainer.name}</div>
-                    <div className="trainer-details">
-                      <div>Assigned Clients: {trainer.assignedClients}</div>
-                      <div>Total Sessions This Week: {trainer.totalSessions}</div>
-                      <div>Location: {trainer.location}</div>
+            {trainers.length === 0 ? (
+              <div className="no-trainers">No Trainers in the branch</div>
+            ) : (
+              <div className="trainer-cards">
+                {trainers.map((trainer) => (
+                  <div key={trainer.id} className="trainer-card">
+                    <img src={trainer.profileImage} alt={trainer.name} className="trainer-image" />
+                    <div className="trainer-info">
+                      <div className="trainer-name">{trainer.name}</div>
+                      <div className="trainer-details">
+                        <div>Assigned Clients: {trainer.assignedClients}</div>
+                        <div>Total Sessions This Week: {trainer.totalSessions}</div>
+                        <div>Location: {trainer.location}</div>
+                      </div>
+                      <div className="availability-status">
+                        Current Availability Status: {trainer.availability}
+                      </div>
                     </div>
-                    <div className="availability-status">
-                      Current Availability Status: {trainer.availability}
-                    </div>
+                    <button className="details-btn small">Profile</button>
                   </div>
-                  <button className="details-btn">See full details</button>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
