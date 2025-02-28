@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"; // Removed Router import
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, db } from "./firebase"; 
 import { onAuthStateChanged } from "firebase/auth";
@@ -36,6 +36,7 @@ import defaultProfilePic from "./assets/avatar-placeholder.png";
 import BranchDetails from "./pages/Branch/BranchDetails";
 import BranchPackages from "./pages/Branch/BranchPackages";
 import BranchStaff from "./pages/Branch/Branchstaff";
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
@@ -43,6 +44,21 @@ const App = () => {
     lastName: '',
     avatar: defaultProfilePic, 
   });
+
+  const location = useLocation(); // Get current route
+
+  // Define routes where Navbar and Sidebar should NOT be displayed
+  const noNavbarSidebarRoutes = [
+    "/login",
+    "/signup",
+    "/staff-login",
+    "/super-login",
+    "/forgot-password",
+    "/set-password",
+    "/two-factor-auth",
+    "/password-recovery",
+    "/password-reset-success"
+  ];
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -73,10 +89,27 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <Navbar userData={userData} /> {/* Pass userData to Navbar */}
-      {/* <Sidebar /> */}
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastStyle={{
+          backgroundColor: "#fff",
+          color: "#28a745",
+        }}
+      />
+    
+      {/* Conditionally render Navbar and Sidebar */}
+      {!noNavbarSidebarRoutes.includes(location.pathname) && <Navbar userData={userData} />}
+      {!noNavbarSidebarRoutes.includes(location.pathname) && <Sidebar />}
+    
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/home" element={<Home />} />
@@ -84,10 +117,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
-        <Route
-          path="/password-reset-success"
-          element={<PasswordResetSuccess />}
-        />
+        <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -109,10 +139,10 @@ const App = () => {
         <Route path="/trainees" element={<Trainees />} />
         <Route path="/collection" element={<Collection />} />
         <Route path="/BranchDetails" element={<BranchDetails />} />
-        <Route path = "/BranchStaff" element = {<BranchStaff />} />  
+        <Route path="/BranchStaff" element={<BranchStaff />} />  
         <Route path="/BranchPackages" element={<BranchPackages />} />
       </Routes>
-    </Router>
+    </>
   );
 };
 
