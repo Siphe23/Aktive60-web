@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Sidebar.css";
-import collapseIcon from "../assets/Page-1.jpg";
+import collapseIcon from "../assets/PIC.png";
 import {
   Dashboard,
   LocationOn,
@@ -17,9 +17,9 @@ import {
 } from "@mui/icons-material";
 
 const Sidebar = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isLocationDropdownVisible, setIsLocationDropdownVisible] =
-    useState(false);
+  // Changed initial state to true so sidebar starts expanded
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [isLocationDropdownVisible, setIsLocationDropdownVisible] = useState(false);
   const [isBranchDropdownVisible, setIsBranchDropdownVisible] = useState(false);
   const location = useLocation();
 

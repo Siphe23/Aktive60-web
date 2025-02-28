@@ -113,11 +113,11 @@
 
 /* Bottom QR Code */
 .qr-code {
-  margin-bottom: 20px;
+  margin-bottom: 600px;
   display: flex;
   justify-content: center;
   padding: 10px;
-  background-color: #2a343a;
+ 
   border-radius: 8px;
   margin: 10px;
 }
