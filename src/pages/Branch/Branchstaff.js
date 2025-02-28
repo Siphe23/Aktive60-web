@@ -1,8 +1,21 @@
+
+
 import React, { useState } from 'react';
 import "../../styles/Branchstaff.css";
 
+import  BranchEditstaff from "../Branch/Packages/BranchEditstaff"; 
+
 export default function Branchstaff() {
   const [size, setSize] = useState('medium'); // 'medium' is default, can be 'small'
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleOpenPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
     <div className={size}>
@@ -12,7 +25,7 @@ export default function Branchstaff() {
             <h1>Sloane Street Gym</h1>
             <p>Manage your branch here</p>
           </div>
-          <button className="new-schedule-btn">
+          <button className="new-schedule-btn" onClick={handleOpenPopup}>
             <span className="plus-icon">+</span> New Schedule
           </button>
         </div>
@@ -138,6 +151,9 @@ export default function Branchstaff() {
           </div>
         </div>
       </div>
+
+      {/* Popup form */}
+      {isPopupOpen && <BranchEditstaff onClose={handleClosePopup} />}
     </div>
   );
 }
