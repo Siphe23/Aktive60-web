@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { ref, set } from "firebase/database";
-import { db, realTimeDB } from "../../../firebase"; // Adjust the path to your firebase.js file
-import "../../../styles/LocationStaff.css";
+import { db, realTimeDB } from "../../firebase"; // Adjust the path to your firebase.js file
+import "../../styles/LocationStaff.css";
 import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
