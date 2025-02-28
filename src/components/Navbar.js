@@ -3,16 +3,49 @@ import { FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "../styles/NavigationBar.css";
 import logo from "../assets/Aktiv60.png";
-import { db, realTimeDB } from "../firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { ref, onValue } from "firebase/database";
+import { db, realTimeDB } from "../firebase";  // Import db and realTimeDB
+import { doc, getDoc } from "firebase/firestore"; // Firestore functions
+import { query, collection, where, onSnapshot } from "firebase/firestore"; // Firestore functions
+import { ref, onValue } from "firebase/database"; // Realtime DB functions
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Navbar = ({ userData }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState(0);
+  const [role, setRole] = useState(null);  // To store the role
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData && userData.uid) {
+      // Fetch the role from Firestore once the user logs in
+      const fetchRole = async () => {
+        try {
+          const userDoc = doc(db, "users", userData.uid);
+          const docSnapshot = await getDoc(userDoc);
+          if (docSnapshot.exists()) {
+            const userRole = docSnapshot.data().role;  // Assuming role is stored in Firestore
+            setRole(userRole);  // Store role in state
+          }
+        } catch (error) {
+          console.error("Error fetching role:", error);
+        }
+      };
+
+      fetchRole(); // Call the fetch function when the user logs in
+    }
+  }, [userData]); // Run only when userData changes
+
+  useEffect(() => {
+    // Redirect based on role once the role is fetched
+    if (role) {
+      if (role === "super_Admin") {
+        navigate("/super-profile"); // Redirect to super admin profile
+      } else {
+        navigate("/staff-profile"); // Redirect to staff profile
+      }
+    }
+  }, [role, navigate]); // Re-run when role changes
 
   useEffect(() => {
     const adminQuery = query(
@@ -49,6 +82,14 @@ const Navbar = ({ userData }) => {
     }
   };
 
+  const handleEditProfile = () => {
+    if (role === "super_Admin") {
+      navigate("/super-profile"); // Redirect to the super admin profile
+    } else {
+      navigate("/staff-profile"); // Redirect to the staff profile
+    }
+  };
+
   if (!userData) {
     return <div className="loading">Loading...</div>;
   }
@@ -56,8 +97,8 @@ const Navbar = ({ userData }) => {
   return (
     <div className="navigation-bar">
       <div className="nav-left">
-        <div className="logo-container">
-          <img src={logo} alt="Aktiv60 Logo" className="logo" />
+        <div className="navbar-logo-container">
+          <img src={logo} alt="Aktiv60 Logo" className="navbar-logo" />
         </div>
 
         <div className="search-bar">
@@ -93,7 +134,7 @@ const Navbar = ({ userData }) => {
 
         {dropdownOpen && (
           <div className="dropdown-menu">
-            <div className="dropdown-item">Edit Profile</div>
+            <div className="dropdown-item" onClick={handleEditProfile}>Edit Profile</div>
             <div className="dropdown-item" onClick={handleLogout}>Logout</div>
           </div>
         )}

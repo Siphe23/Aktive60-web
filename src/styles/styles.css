@@ -1,198 +1,238 @@
-/* General Styles */
-.auth-container {
+/* Link the Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-page {
+  background-color: #1a1a1a;
+  color: white;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 100vh;
-  background: #242526;
+  background-color: transparent;
   padding: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
+text-align: center;
 }
 
-/* Left Section (Login Form) */
-/* Left Section (Login Form) */
-.login-section {
-  width: 40%;
-  padding: 40px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  text-align: center;
+.login-form {
+  width: 100%;
+  max-width: 450px;
 }
 
-/* .logo-container {
-/* .logo-container {
-  text-align: center;
+.login-illustration {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column; /* Stack the items vertically */
+  align-items: center; /* Optionally center the items horizontally */
+  justify-content: center; /* Center the items vertically, if necessary */
+  text-align: center; /* Center the text inside the <p> */
+}
+
+.login-logo {
+  margin-bottom: 10px; /* Optional: Adjust the space between the image and the text */
+}
+
+.form-group {
   margin-bottom: 20px;
 }
 
-.logo {
-  max-width: 100px;
-  height: auto;
-} */
 
 
-h3 {
-  font-size: 20px;
-  color: #FFFFFF;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.input-group {
-  margin-bottom: 15px;
-  margin-bottom: 15px;
+.input-container {
   position: relative;
-  width: 100%; /* Ensure full width */
-  width: 100%; /* Ensure full width */
-}
-
-.input-group label {
-  display: block;
-  font-size: 14px;
-  color: #FFFFFF;
-  margin-bottom: 5px;
-  text-align: left;
-  text-align: left;
-}
-
-.input-wrapper {
-  position: relative;
-  width: 100%;
-  width: 100%;
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 10px 40px 10px 10px;
-  padding: 10px 40px 10px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  box-sizing: border-box;
-  background-color: #3a3b3c;
-  color: #ffffff;
-  color: #ffffff;
-}
-
-.input-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ffffff;
+  display: flex;
+  justify-content: center;
 }
 
 .password-toggle {
   position: absolute;
-  right: 10px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #ffffff;
+  color: #88868f;
+  z-index: 10;
 }
 
-/* Align "Remember Me" and "Forgot Password" */
-/* Align "Remember Me" and "Forgot Password" */
-.auth-options {
-  display: flex;
-  justify-content: space-between;
-  justify-content: space-between;
-  align-items: center;
+input[type="email"],
+input[type="password"],
+input[type="text"] {
   width: 100%;
-  margin-bottom: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.auth-options label {
+  padding: 16px 16px 16px 60px; /* Increased left padding to move text to the left */
+  border: none;
+  background: transparent;
+  color: white;
   font-size: 14px;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
+  height: 60px;
+ text-align: flex; /* Align text to the left */
+  position: relative;
+  border-radius: 6px;
+  border: 2px solid #333;
 }
 
-.auth-options input[type="checkbox"] {
-  margin-right: 10px;
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #ff0025;
+  outline: none;
 }
 
-/* Fix Forgot Password Alignment */
+input[type="password"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
+input[type="email"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
 .forgot-password {
   text-align: right;
-  width: 100%;
+  margin-bottom: 20px;
 }
 
 .forgot-password a {
-  color: #FFFFFF;
+  color: #ccc;
   text-decoration: none;
   font-size: 14px;
 }
 
-.forgot-password a:hover {
-  text-decoration: underline;
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-/* Fix Auth Button to Match Input Width */
-.auth-button {
-  width: 500px !important; /* Now exactly the same width as input */
-  padding: 12px;
-  background-color: #F10623 !important;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #666;
+  border-radius: 4px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-  display: block; /* Ensures it behaves like the input */
 }
 
-.auth-button:hover {
-  background-color: #D0051F !important;
+.custom-checkbox.checked {
+  background-color: #ff0025;
+  border-color: #ff0025;
 }
 
-/* Right Section (Image) */
-.image-container {
-  width: 50%;
+.login-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: #ff0025;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.login-btn:disabled {
+  background-color: #ff002580;
+  cursor: not-allowed;
+}
+
+.arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.register-link {
   text-align: center;
+  font-size: 14px;
+  color: #ccc;
 }
 
-.image-container img {
+.register-link a {
+  color: #ff0025;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.illustration-container img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
-  .auth-container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .login-section {
-    width: 80%;
-    padding: 30px;
-    margin-bottom: 20px;
-  }
-
-  .image-container {
-    width: 100%;
-    margin-top: 20px;
-  }
+/* Toast notification styles */
+.Toastify__toast {
+  border-radius: 8px;
 }
 
+.Toastify__toast--success {
+  background-color: #2e7d32;
+}
+
+.Toastify__toast--error {
+  background-color: #d32f2f;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-  .auth-container {
-    padding: 10px;
+  .login-container {
+    flex-direction: column;
   }
-
-  .login-section {
+  
+  .login-form,
+  .login-illustration {
     width: 100%;
-    padding: 20px;
+  }
+  
+  .login-illustration {
+    margin-top: 40px;
+    order: 2;
   }
 
-  .image-container {
-    display: none;
+ 
+
+  .logo {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .input-container {
+    padding: 12px;
+  }
+
+  .login-btn {
+    font-size: 14px;
   }
 }
