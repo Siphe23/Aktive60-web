@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEdit, FaClock, FaUsers } from "react-icons/fa";
 import EditBranchPopup from "../Branch/Packages/AddNewDetail"; 
 import "../../styles/BranchDetails.css";
-
+import NavBar from "../../components/Navbar";
 const BranchDetails = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [branchData, setBranchData] = useState({
@@ -37,7 +37,10 @@ const BranchDetails = () => {
   };
 
   return (
+    
     <div className="branch-details">
+        <NavBar/>
+    
       <div className="header">
         <div className="title-section">
           <h1>{branchData.locationName}</h1>

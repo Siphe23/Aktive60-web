@@ -1,8 +1,6 @@
-
-
 import React, { useState } from 'react';
 import "../../styles/Branchstaff.css";
-
+import NavBar from "../../components/Navbar";
 import  BranchEditstaff from "../Branch/Packages/BranchEditstaff"; 
 
 export default function Branchstaff() {
@@ -19,6 +17,7 @@ export default function Branchstaff() {
 
   return (
     <div className={size}>
+      <NavBar />  
       <div className="branch-staff-container">
         <div className="header">
           <div className="gym-info">

@@ -1,32 +1,30 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";  // Firebase Authentication imports
-import "../styles/resetPassword.css"; 
-import ResetImage from "../assets/pana-removebg-preview.png"; 
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import "../styles/resetPassword.css";
+import ResetImage from "../assets/pana-removebg-preview.png";
+import AktivLogo from "../assets/Aktiv60.png";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");  
-  const [loading, setLoading] = useState(false); // For loading state
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const auth = getAuth();  // Initialize Firebase Authentication
+  const auth = getAuth();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-
+    
     if (!email) {
       setError("Please enter your email.");
       return;
     }
-
+    
     setError("");
     setLoading(true);
-
-    // Send password reset email using Firebase Authentication
+    
     try {
       await sendPasswordResetEmail(auth, email);
-      // Redirect the user to a success page after sending the reset email
       navigate("/password-reset-success");
     } catch (error) {
       console.error("Error sending password reset email:", error);
@@ -38,12 +36,14 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-container">
+      {/* Left side - Form */}
       <div className="reset-form">
         <div className="reset-logo">
-          <img src={require("../assets/Aktiv60.png")} alt="Aktiv60 Logo" />
+          <img src={AktivLogo} alt="Aktiv60 Logo" />
         </div>
+        
         <p className="reset-subtitle">Reset your password</p>
-
+        
         <form onSubmit={handleResetPassword}>
           <div className="reset-input-group">
             <label>Email</label>
@@ -55,15 +55,16 @@ const ResetPassword = () => {
               required
             />
           </div>
-
+          
           {error && <p className="error-message">{error}</p>}
-
+          
           <button type="submit" className="reset-button" disabled={loading}>
-            {loading ? "Sending..." : "Send Reset Email"}
+            {loading ? "Sending..." : "Submit"}
           </button>
         </form>
       </div>
-
+      
+      {/* Right side - Illustration */}
       <div className="reset-image">
         <img src={ResetImage} alt="Reset Password" />
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../styles/BranchPackages.css";
 import { FaEdit, FaTimes } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
+import NavBar from "../../components/Navbar";
 
 const PackageEditPopup = ({ isOpen, onClose, packageData = null }) => {
   const [packageName, setPackageName] = useState(packageData?.title || "");
@@ -48,6 +49,7 @@ const PackageEditPopup = ({ isOpen, onClose, packageData = null }) => {
 
   return (
     <div className="package-popup-overlay">
+      <NavBar/>
       <div className="package-popup-container">
         <div className="package-popup-header">
           <h2>Add new package</h2>
