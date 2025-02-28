@@ -1,4 +1,3 @@
-// UserManagement.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/UserManagement.css";
 import { db, realTimeDB, auth } from "../firebase";
@@ -39,14 +38,13 @@ const UserManagement = () => {
           if (doc.exists()) {
             const data = doc.data();
             setCurrentUserRole(data.role);
-            // Set user data (e.g., name, avatar, etc.)
             setCurrentUserData({
               uid: user.uid,
               email: user.email,
-              name: data.name || "Guest", // Adjust based on your Firestore schema
+              name: data.name || "Guest",
               lastName: data.lastName || "",
-              avatar: data.avatar || "default-avatar.png", // Default avatar if none exists
-              ...data, // Include any other relevant fields
+              avatar: data.avatar || "default-avatar.png",
+              ...data,
             });
           }
         });
@@ -56,116 +54,55 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
+  // Active Admins (Supervisors) from Realtime Database only
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        onSnapshot(userRef, (doc) => {
-          if (doc.exists()) {
-            setCurrentUserRole(doc.data().role);
-          }
-        });
-      }
-      setLoading(false);
+    const staffRef = ref(realTimeDB, "staff");
+    const unsubscribe = onValue(staffRef, (snapshot) => {
+      const data = snapshot.val();
+      const realtimeAdmins = data
+        ? Object.entries(data)
+            .filter(
+              ([_, staff]) =>
+                staff.role === "Supervisor" && staff.status === "active"
+            )
+            .map(([id, staff]) => ({
+              id,
+              email: staff.email || "",
+              branch_name: staff.branch_name || staff.branch || "",
+              source: "realtime",
+              ...staff,
+            }))
+        : [];
+      setAdmins(realtimeAdmins);
     });
     return () => unsubscribe();
   }, []);
 
-  // Active Admins (Supervisors) from Firestore
+  // Pending Admins from Realtime Database only
   useEffect(() => {
-    const q = query(
-      collection(db, "staff"),
-      where("role", "==", "Supervisor"),
-      where("status", "==", "active")
-    );
-
-    let unsubscribeRealtime;
-
-    const unsubscribeFirestore = onSnapshot(q, (querySnapshot) => {
-      const firestoreAdmins = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        email: doc.data().email || "",
-        branch_name: doc.data().branch || doc.data().branch_name || "",
-        source: "firestore",
-        ...doc.data(),
-      }));
-
-      const staffRef = ref(realTimeDB, "staff");
-
-      unsubscribeRealtime = onValue(staffRef, (snapshot) => {
-        const data = snapshot.val();
-        const realtimeAdmins = data
-          ? Object.entries(data)
-              .filter(
-                ([_, staff]) =>
-                  staff.role === "Supervisor" && staff.status === "active"
-              )
-              .map(([id, staff]) => ({
-                id,
-                email: staff.email || "",
-                branch_name: staff.branch_name || staff.branch || "",
-                source: "realtime",
-                ...staff,
-              }))
-          : [];
-
-        // Merge Firestore and Realtime Database data
-        setAdmins([...firestoreAdmins, ...realtimeAdmins]);
-      });
+    const staffRef = ref(realTimeDB, "staff");
+    const unsubscribe = onValue(staffRef, (snapshot) => {
+      const data = snapshot.val();
+      const realtimeAdmins = data
+        ? Object.entries(data)
+            .filter(
+              ([_, staff]) =>
+                staff.role === "Supervisor" && staff.status === "pending"
+            )
+            .map(([id, staff]) => ({
+              id,
+              email: staff.email || "",
+              branch_name: staff.branch_name || staff.branch || "",
+              source: "realtime",
+              ...staff,
+            }))
+        : [];
+      setPendingAdmins(realtimeAdmins);
     });
-
-    return () => {
-      unsubscribeFirestore();
-      if (unsubscribeRealtime) unsubscribeRealtime();
-    };
+    return () => unsubscribe();
   }, []);
 
-  // Pending Admins from both Firestore and Realtime Database
-  useEffect(() => {
-    const q = query(
-      collection(db, "staff"),
-      where("role", "==", "Supervisor"),
-      where("status", "==", "pending")
-    );
-    let unsubscribeRealtime;
-    const unsubscribeFirestore = onSnapshot(q, (querySnapshot) => {
-      const firestoreAdmins = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        email: doc.data().email || "",
-        branch_name: doc.data().branch || doc.data().branch_name || "",
-        source: "firestore",
-        ...doc.data(),
-      }));
-
-      const staffRef = ref(realTimeDB, "staff");
-      unsubscribeRealtime = onValue(staffRef, (snapshot) => {
-        const data = snapshot.val();
-        const realtimeAdmins = data
-          ? Object.entries(data)
-              .filter(
-                ([_, staff]) =>
-                  staff.role === "Supervisor" && staff.status === "pending"
-              )
-              .map(([id, staff]) => ({
-                id,
-                email: staff.email || "",
-                branch_name: staff.branch_name || staff.branch || "",
-                source: "realtime",
-                ...staff,
-              }))
-          : [];
-
-        setPendingAdmins([...firestoreAdmins, ...realtimeAdmins]);
-      });
-    });
-
-    return () => {
-      unsubscribeFirestore();
-      if (unsubscribeRealtime) unsubscribeRealtime();
-    };
-  }, []);
-
-  // Active, Pending, and Restricted Users from Realtime Database
+  // Active, Pending, and Restricted Users from Realtime Database (unchanged)
   useEffect(() => {
     const usersRef = ref(realTimeDB, "users");
     const unsubscribe = onValue(usersRef, (snapshot) => {
@@ -215,18 +152,14 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
-  // Removed Admins from Firestore
-  // Removed Admins from both Firestore and Realtime Database
+  // Removed Admins from both Firestore and Realtime Database (unchanged)
   useEffect(() => {
     let unsubscribeRealtime;
-
-    // Firestore Query for Removed Admins
     const q = query(
       collection(db, "staff"),
       where("role", "==", "Supervisor"),
       where("status", "==", "removed")
     );
-
     const unsubscribeFirestore = onSnapshot(q, (querySnapshot) => {
       const firestoreRemovedAdmins = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -236,7 +169,6 @@ const UserManagement = () => {
         ...doc.data(),
       }));
 
-      // Realtime Database Query for Removed Admins
       const staffRef = ref(realTimeDB, "staff");
       unsubscribeRealtime = onValue(staffRef, (snapshot) => {
         const data = snapshot.val();
@@ -254,12 +186,9 @@ const UserManagement = () => {
                 ...staff,
               }))
           : [];
-
-        // Merge Firestore and Realtime Database removed admins
         setRemovedAdmins([...firestoreRemovedAdmins, ...realtimeRemovedAdmins]);
       });
     });
-
     return () => {
       unsubscribeFirestore();
       if (unsubscribeRealtime) unsubscribeRealtime();
@@ -279,23 +208,8 @@ const UserManagement = () => {
         updatedAt: new Date().toISOString(),
       };
 
-      // Update based on source
-      if (source === "firestore") {
-        const staffDocRef = doc(db, "staff", adminId);
-        const docSnap = await getDoc(staffDocRef);
-        if (docSnap.exists()) {
-          await updateDoc(staffDocRef, updates);
-          console.log(`Admin ${adminId} updated in Firestore`);
-        } else {
-          console.log(`Admin ${adminId} not found in Firestore`);
-        }
-      }
-
-      if (source === "realtime") {
-        await update(ref(realTimeDB, `staff/${adminId}`), updates);
-        console.log(`Admin ${adminId} updated in Realtime Database`);
-      }
-
+      // Since we're only showing Realtime DB admins, update only there
+      await update(ref(realTimeDB, `staff/${adminId}`), updates);
       toast.success("Admin removed successfully");
     } catch (error) {
       console.error("Error removing admin:", error);
@@ -328,7 +242,7 @@ const UserManagement = () => {
     }
   };
 
-  const handleAdminRequest = async (adminId, action, source = "firestore") => {
+  const handleAdminRequest = async (adminId, action) => {
     if (currentUserRole !== "super_Admin") {
       toast.error("Only Super Admins can manage admin requests");
       return;
@@ -341,32 +255,14 @@ const UserManagement = () => {
         updatedAt: new Date().toISOString(),
       };
 
-      const staffDocRef = doc(db, "staff", adminId);
-      const docSnap = await getDoc(staffDocRef);
+      // Update only in Realtime Database since we're displaying from there
+      await update(ref(realTimeDB, `staff/${adminId}`), updates);
 
-      const updatePromises = [];
-
-      // If document exists in Firestore or source is Firestore, update it
-      if (docSnap.exists() || source === "firestore") {
-        updatePromises.push(updateDoc(staffDocRef, updates));
-      }
-
-      // Always update Realtime Database
-      updatePromises.push(update(ref(realTimeDB, `staff/${adminId}`), updates));
-
-      await Promise.all(updatePromises);
-
-      console.log(
-        `Admin request ${adminId} ${
-          action === "accept" ? "accepted" : "declined and marked as removed"
-        } (Source: ${source})`
-      );
       toast.success(
         `Admin request ${
           action === "accept" ? "approved" : "declined"
         } successfully`
       );
-
       setShowPendingAdmins(false);
     } catch (error) {
       console.error(`Error managing admin request:`, error);
@@ -378,7 +274,6 @@ const UserManagement = () => {
 
   return (
     <div className="user-management">
-      {/* Pass currentUserData as userData to Navbar */}
       <Navbar userData={currentUserData} currentUserRole={currentUserRole} />
       <h2>User Management</h2>
       <div className="requests">
@@ -462,7 +357,7 @@ const UserManagement = () => {
                       className="accept"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleAdminRequest(admin.id, "accept", admin.source);
+                        handleAdminRequest(admin.id, "accept");
                       }}
                     >
                       Accept
@@ -472,11 +367,10 @@ const UserManagement = () => {
                       className="decline"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleAdminRequest(admin.id, "decline", admin.source);
+                        handleAdminRequest(admin.id, "decline");
                       }}
                     >
-                    Decline
-                      {/* <img src="" alt="Decline" className="decline-image" /> */}
+                      Decline
                     </a>
                   </div>
                 </div>
@@ -630,7 +524,7 @@ const UserManagement = () => {
                     className="remove"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleRemoveAdmin(admin.id, admin.source);
+                      handleRemoveAdmin(admin.id, "realtime");
                     }}
                   >
                     Remove admin
