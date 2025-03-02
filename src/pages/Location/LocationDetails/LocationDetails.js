@@ -188,12 +188,12 @@ const LocationDetails = () => {
                     <p>
                       <strong>Contact Number:</strong> {branchData.phone}
                     </p>
-                    {branchData.qrCode && (
+                    {/* {branchData.qrCode && (
                       <div className="qr-code-container">
                         <strong>QR Code:</strong>
                         <img src={branchData.qrCode} alt="QR Code" className="qr-code-image" />
                       </div>
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <p>Loading...</p>
