@@ -1,119 +1,398 @@
 /* General container styles */
 .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    background-color: #1e1e1e;
-    color: white;
-    height: 100vh;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  color: white;
+  height: 100vh;
+  width: 100%;
+  font-family: "Poppins", serif;
+}
+
+/* Main content container */
+.main-content {
+  display: flex;
+  flex: 1;
+  flex-direction: row; 
+}
+
+/* Sidebar styles */
+.content {
+  flex: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.content.expanded {
+  margin-left: 250px; /* Adjust based on Sidebar width */
+}
+
+.content.collapsed {
+  margin-left: 0; /* Collapse sidebar completely */
+}
+
+/* Container for content */
+.container {
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* Header section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* Allow the header to wrap its content on smaller screens */
+}
+
+/* Title Styling */
+.title {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 200;
+  font-style: normal;
+  flex: 1;
+  min-width: 0; /* Prevent title from overflowing on small screens */
+}
+
+/* Filter Button */
+.header button {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 9px 8px;
+  font-size: 12px;
+  width: auto; /* Let the button size depend on its content */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Table Styling */
+.location-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: auto; /* Allow table to resize more freely */
+  overflow-x: auto; /* Enable horizontal scrolling for large tables */
+}
+
+.location-table th,
+.location-table td {
+  padding: 10px;
+  border: 1px solid #444;
+  text-align: left;
+}
+
+.location-table th {
+  background: #3a3a3a;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.location-table tr:nth-child(even) {
+  background-color: #3a3a3a;
+}
+
+.location-table tr:nth-child(odd) {
+  background-color: #2a2a2a;
+}
+
+/* Modal Overlay */
+.modal-overlay {
   
-  /* Main content container */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:#2F2E41;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  
+  background: #3F3D56;
+  padding: 25px;
+  border-radius: 10px;
+  width: 600px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Header */
+.modal-header {
+  font-family: "Poppins", serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-header h3 {
+  color: white;
+  font-size: 20px;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Form Inputs */
+.modal-content input,
+.modal-content select {
+  background: #2a2a2a;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: 2px solid #f10623;
+}
+
+/* Checkbox Styling */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.checkbox-group input {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Time Selectors */
+.time-select {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.time-select div {
+  display: flex;
+  align-items: center;
+  background: #2a2a2a;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.time-select select {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+/* Buttons */
+
+/* Modal Buttons Container */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
+  margin-top: 15px;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background: gray;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100px;
+}
+
+.cancel-button:hover {
+  background: darkgray;
+}
+
+/* Save Button */
+.save-button {
+  background-color: #f10623;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100px;
+}
+
+.save-button:hover {
+  background-color: #d0051f;
+}
+
+
+
+
+.clear-button {
+  background: gray;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100px; /* Ensure this matches the save button width for alignment */
+}
+
+.clear-button:hover {
+  background: darkgray;
+}
+
+/* Buttons Container */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between the buttons */
+  margin-top: 15px;
+  padding: 10px 0; /* Adjust space around buttons */
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Adjust layout for tablets and smaller screens */
   .main-content {
-    display: flex;
-    flex: 1;
+    flex-direction: column; /* Stack content and sidebar vertically */
   }
-  
-  /* Sidebar styles */
+
   .content {
-    flex: 1;
-    padding: 20px;
-    transition: margin-left 0.3s ease;
+    margin-left: 0; /* Collapse sidebar */
   }
-  
-  .content.expanded {
-    margin-left: 250px; /* Adjust based on Sidebar width */
-  }
-  
-  .content.collapsed {
-    margin-left: 80px; /* Adjust based on Sidebar width */
-  }
-  
- 
+
+  /* Adjust container width for smaller screens */
   .container {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    
-  }
-  
-  /* Header section */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  /* Title Styling */
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Filter Button */
-  .filter-btn {
-    background-color: #ffffff;
-    color: black;
-    border: none;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: background 0.3s ease;
-  }
-  
-  .filter-btn:hover {
-    background-color: #e0e0e0;
-  }
-  
-  /* Table Styling */
-  .location-table {
     width: 100%;
-    border-collapse: collapse;
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header button {
+    width: 100%; 
     margin-top: 10px;
   }
-  
+
   .location-table th,
   .location-table td {
-    border: 1px solid white;
+    padding: 8px;
+  }
+
+  /* Add horizontal scroll for tables */
+  .location-table {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Further responsiveness for small screens like mobile */
+  .container {
+    width: 100%;
     padding: 10px;
-    text-align: left;
   }
-  
-  .location-table th {
-    background-color: #333;
-    font-weight: bold;
+
+  .main-content {
+    flex-direction: column; /* Stack content and sidebar vertically */
   }
-  
-  .location-table tr:nth-child(even) {
-    background-color: #3a3a3a;
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
   }
-  
-  .location-table tr:nth-child(odd) {
-    background-color: #2a2a2a;
+
+  .title {
+    font-size: 18px; /* Adjust title size for mobile */
+    margin-bottom: 5px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .container {
-      width: 100%;
-      padding: 15px;
-    }
-  
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .filter-btn {
-      margin-top: 10px;
-      align-self: flex-end;
-    }
-  
-    .location-table th,
-    .location-table td {
-      padding: 8px;
-    }
+
+  /* Filter Button */
+  .header button {
+    width: 100%; /* Make button full width for easier tapping */
+    margin-top: 10px;
   }
-  
+
+  /* Table styling */
+  .location-table th,
+  .location-table td {
+    padding: 8px 5px; /* Adjust padding for small screens */
+    font-size: 12px; /* Smaller text on mobile */
+  }
+
+  /* Enable horizontal scroll on tables for mobile */
+  .location-table {
+    overflow-x: auto;
+  }
+
+  /* Collapse Sidebar completely on mobile */
+  .content.collapsed {
+    display: none; /* Hide the sidebar on mobile */
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Additional responsiveness for very small screens */
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .title {
+    font-size: 16px; /* Make title even smaller on very small screens */
+  }
+
+  .location-table th,
+  .location-table td {
+    padding: 6px; /* Decrease padding to fit on small screens */
+    font-size: 10px; /* Even smaller font size on very small screens */
+  }
+
+  /* Make sure the table is scrollable horizontally */
+  .location-table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  .header button {
+    font-size: 10px; /* Smaller font size for mobile buttons */
+    padding: 7px;
+  }
+}

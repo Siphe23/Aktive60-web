@@ -27,7 +27,7 @@ import LocationSettings from "./pages/Location/LocationSettings/LocationSettings
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
-import Trainers from "./pages/Trainers";
+import Trainers from "./pages/Trainers/Trainers";
 import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
 import Navbar from './components/Navbar';

@@ -100,9 +100,7 @@ const LocationOverview = () => {
       // Update local state
       setLocations((prevLocations) =>
         prevLocations.map((location) =>
-          location.id === id
-            ? { ...location, active: newStatus }
-            : location
+          location.id === id ? { ...location, active: newStatus } : location
         )
       );
 
@@ -150,9 +148,7 @@ const LocationOverview = () => {
           <div className="container">
             <div className="header">
               <h2 className="title">Location Overview</h2>
-              <button className="filter-btn" onClick={handleFilterClick}>
-                Filter
-              </button>
+              <button onClick={handleFilterClick}>Filter</button>
             </div>
             <table className="location-table">
               <thead>
@@ -248,10 +244,7 @@ const LocationOverview = () => {
               </select>
             </div>
             <div className="modal-buttons">
-              <button
-                className="cancel-button"
-                onClick={handleResetFilters}
-              >
+              <button className="cancel-button" onClick={handleResetFilters}>
                 Reset
               </button>
               <button className="save-button" onClick={handleApplyFilters}>

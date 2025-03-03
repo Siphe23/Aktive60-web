@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../styles/AddNewLocationModal.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
+import QRCode from "qrcode"; // Import QRCode library
 
 const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [locationName, setLocationName] = useState("");
@@ -18,6 +19,7 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   const [equipmentQuantity, setEquipmentQuantity] = useState(0);
   const [memberCapacity, setMemberCapacity] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
+  const [qrCode, setQRCode] = useState(""); // State for QR code
 
   // New state for packages
   const [packages, setPackages] = useState([]); // List of all packages from the database
@@ -72,6 +74,7 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
       setEquipment(branchData.equipment || []);
       setMemberCapacity(branchData.member_capacity || "");
       setSelectedPackages(branchData.packages || []);
+      setQRCode(branchData.qrCode || ""); // Set existing QR code if available
     }
   }, [branchData]);
 
@@ -108,6 +111,19 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
     setEquipment(updatedEquipment);
   };
 
+  // Generate QR code with branch name and random number
+  const generateQRCode = async () => {
+    const randomNumber = Math.floor(Math.random() * 1000000); // Generate a random number
+    const qrData = `${locationName}-${randomNumber}`; // Combine branch name and random number
+
+    try {
+      const qrCodeData = await QRCode.toDataURL(qrData);
+      setQRCode(qrCodeData);
+    } catch (error) {
+      console.error("Error generating QR code:", error);
+    }
+  };
+
   const handleSave = () => {
     const updatedLocation = {
       locationName,
@@ -116,7 +132,8 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
       operatingHours,
       equipment,
       memberCapacity,
-      packages: selectedPackages, // Include selected packages in the saved data
+      packages: selectedPackages,
+      qrCode, // Include QR code in the saved data
     };
     onSave(updatedLocation);
     onClose();
@@ -127,7 +144,10 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+      <div className="top-content">
         <h2>Edit Location</h2>
+        <p onClick={onClose}>X</p>
+        </div>
         <div className="form-group">
           <label>Location Name</label>
           <input
@@ -352,6 +372,18 @@ const EditLocationModal = ({ isOpen, onClose, onSave, branchData }) => {
             onChange={(e) => setMemberCapacity(parseInt(e.target.value || 0))}
             placeholder="Enter member capacity"
           />
+        </div>
+
+        {/* QR Code Field */}
+        <div className="form-group">
+          <label>QR Code</label>
+          <button
+            onClick={generateQRCode} // Call the QR code generation function
+            className="generate-qr-button"
+          >
+            Generate QR Code
+          </button>
+          {qrCode && <img src={qrCode} alt="QR Code" className="qr-code-image" />}
         </div>
 
         <div className="modal-buttons">

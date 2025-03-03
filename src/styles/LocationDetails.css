@@ -1,96 +1,256 @@
-/* Header Container */
-.header-container {
+body {
+  background-color: #1e1e24;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Location Details Header */
+.location-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 20px;
-  background-color: #2a2a3a;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header-container h1 {
-  font-size: 24px;
-  color: #fff;
+.location-details h2 {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
   margin: 0;
 }
 
-/* Add Button */
-.add-button {
-  background-color: #007bff;
+.subtext {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-top: 5px;
+}
+
+/* Add Location Button */
+.add-location-btn {
+  background-color: #ff3a4e;
   color: white;
   border: none;
-  padding: 10px 15px;
   border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.add-button:hover {
-  background-color: #0056b3;
-}
-
-/* Sub Title */
-.sub-title {
-  font-size: 20px;
-  color: #fff;
+/* Location Selector */
+.location-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  padding-left: 20px;
+  background-color: #ff3a4e;
+  width: 190px;
 }
 
-/* Package Grid */
-.package-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+.select-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.select-dropdown select {
+  background-color: #ff3a4e;
+  color: rgb(168, 90, 90);
+  padding: 10px 30px 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+  width: 180px;
+}
+
+.select-dropdown:after {
+  content: "▼";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+  font-size: 10px;
+}
+.header-buttons
+.action-button {
+  background-color: #ff3a4e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 180px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Info Cards */
+.card-grid{
+  display: flex;
+  gap: 0.8em;
+ 
+  
+}
+
+.card {
+  background-color: #2F2E41;
+  border-radius: 10px;
   padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  min-width: 300px;
+}
+.card h3{
+  text-align:left ;
 }
 
-/* Package Card */
-.package-card {
-  background-color: #3a3a4a;
+
+.card-header {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: white;
+}
+.card-package{
+  background-color: #2F2E41;
+  border-radius: 10px;
+  padding: 20px;
+  width: "70%";
+  margin-bottom: 20px;
+}
+.card-package h3{
+  text-align:left ;
+}
+.packages{
+  display: flex;
+  gap: 3.3em;
+  
+}
+.packages strong{
+  background-color: #3F3D56;
+  padding: 6px;
+  border-radius: 10px;
+}
+.card-capacity{
+  background-color: #2F2E41;
+  border-radius: 10px;
+  padding: 20px;
+  width: "70%";
+}
+.card-capacity h3{
+  text-align:left ;
+}
+
+.capacities{
+  display: flex;
+  gap: 3.3em;
+}
+.capacities strong{
+  background-color: #3F3D56;
   padding: 20px;
   border-radius: 10px;
-  color: #fff;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.package-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
 
-/* Edit Icon */
 .edit-icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  background-color: #3a3a48;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: #ccc;
-  transition: color 0.3s ease;
 }
 
-.edit-icon:hover {
-  color: #fff;
-}
-
-/* Package Details */
-.package-card h3 {
-  font-size: 20px;
+/* Basic Information */
+.info-item {
   margin-bottom: 15px;
-  color: #fff;
 }
 
-.package-card p {
+.info-label {
   font-size: 14px;
-  margin: 8px 0;
-  color: #ddd;
+  color: white;
 }
 
-.package-card strong {
-  color: #fff;
+.info-value {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-top: 4px;
+}
+
+/* Operating Hours */
+.hours-table {
+  width: 100%;
+}
+
+.hours-table tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.hours-table td {
+  font-size: 14px;
+}
+
+.hours-table td:first-child {
+  color: white;
+}
+
+.hours-table td:last-child {
+  color: #a0a0a0;
+}
+
+/* Packages */
+.packages-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.package-badge {
+  background-color: #3a3a48;
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Capacity Section */
+.capacity-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.capacity-item {
+  background-color: #3a3a48;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+
+.capacity-value {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.capacity-label {
+  font-size: 14px;
+  color: #a0a0a0;
 }
