@@ -115,7 +115,12 @@ const LocationStaff = () => {
         <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="staff-scheduling">
+            <div className="header">
             <h2>Staff Scheduling</h2>
+            <button onClick={openModal}>
+                <FaPlus /> New Schedule
+              </button>
+              </div>
             <div className="location-selector">
               <label>Select location to view:</label>
               <select
@@ -131,9 +136,7 @@ const LocationStaff = () => {
                   </option>
                 ))}
               </select>
-              <button className="new-schedule-button" onClick={openModal}>
-                <FaPlus /> New Schedule
-              </button>
+              
             </div>
 
             {/* Staff Schedule Cards */}
