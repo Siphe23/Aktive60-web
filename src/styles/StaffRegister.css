@@ -1,8 +1,4 @@
-/* StaffRegister.css */
-
-/* General Styles */
-
-
+/* Basic Styles */
 .min-h-screen {
   min-height: 100vh;
   display: flex;
@@ -16,7 +12,7 @@
 }
 
 .bg-gray-800 {
-  background-color: #2d2d2d;
+  background-color: transparent;
 }
 
 .text-white {
@@ -37,44 +33,53 @@
 
 /* Form Container */
 .bg-gray-800 {
-  background-color: #2d2d2d;
+  background-color: transparent;
   padding: 2rem;
+
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 32rem;
+  max-width: 60rem;
 }
 
 /* Form Elements */
-input, select {
-  width: 100%;
+input,
+select {
+  width: 443px;
   padding: 0.75rem;
-  margin-top: 0.5rem;
-  border-radius: 0.375rem;
-  border: 1px solid #4a5568;
-  background-color: #2d2d2d;
+  margin-top: 1rem;
+  border-radius: 12px;
+  border: 1px solid #3F3D56;
+  background-color: #2F2E41;
   color: #ffffff;
+  height: 45px;
 }
 
-input::placeholder, select::placeholder {
+input::placeholder,
+select::placeholder {
   color: #a0aec0;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: none;
   border-color: #ef4444;
 }
 
 button {
-  width: 100%;
+  width: 430px;
   padding: 0.75rem;
   margin-top: 1rem;
-  border-radius: 0.375rem;
+  margin-left: 0; /* Ensures no left margin */
+  margin-left: auto; /* Pushes the button to the left */
+  border-radius: 12px;
   background-color: #ef4444;
   color: #ffffff;
   font-weight: bold;
   border: none;
   cursor: pointer;
+  height: 60px;
+  display: block; /* Makes the button a block-level element */
 }
 
 button:hover {
@@ -89,14 +94,38 @@ button:disabled {
 /* Grid Layout */
 .grid {
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
+  width: 100%;
 }
 
 .grid-cols-2 {
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+  margin-top: 100px;
 }
 
-/* Text and Links */
+.grid-cols-2 input,
+.grid-cols-2 select {
+  width: 443px;
+}
+
+/* For specific form sections like password requirements */
+.password-requirements {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.password-requirements li {
+  list-style-type: none;
+  padding-left: 0.5rem;
+}
+
+/* Error Message */
+.text-red-500 {
+  color: #ef4444;
+}
+
+/* Form Headers */
 .text-center {
   text-align: center;
 }
@@ -114,9 +143,6 @@ button:disabled {
   line-height: 2rem;
 }
 
-.font-bold {
-  font-weight: bold;
-}
 
 a {
   color: #ef4444;
@@ -127,7 +153,88 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Error Message */
-.text-red-500 {
-  color: #ef4444;
+.Register-input {
+  height: 45px;
+  border-radius: 12px;
+  
+}
+
+/* Additional Styling for Password Validation */
+.password-validation ul {
+  margin-top: 1rem;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.password-validation li {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.password-validation li.valid {
+  color: green;
+}
+
+.password-validation li.invalid {
+  color: red;
+}
+input[name="email"],
+input[name="phone"],
+input[name="confirmPassword"],
+input[name="password"],
+input[name="text"] {
+
+  padding: 16px 16px 16px 60px; /* Increased left padding to move text to the left */
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  height: 60px;
+ text-align: flex; /* Align text to the left */
+  position: relative;
+  border-radius: 6px;
+  border: 2px solid #333;
+  width: 443px;
+  border-radius: 12px;
+  border: 1px solid #3F3D56;
+  background-color: #2F2E41;
+  height: 45px;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #ff0025;
+  outline: none;
+}
+
+input[type="password"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
+input[type="email"] {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
+  background-position: 15px center; /* Adjust position to not overlap the text */
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.login-link{
+  text-align: right;
+  margin-top: 5px;
+}
+.Register-logo{
+
+  margin-top: 150px;
+  align-self: center;
+  margin-left: 50 auto;
+  justify-content: center ;
+  
+}
+.Register-logo-text{
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
 }
