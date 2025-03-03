@@ -159,7 +159,6 @@ a:hover {
   
 }
 
-/* Additional Styling for Password Validation */
 .password-validation ul {
   margin-top: 1rem;
   list-style-type: none;
@@ -212,27 +211,32 @@ input[type="password"] {
   background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
   background-position: 15px center; /* Adjust position to not overlap the text */
   background-repeat: no-repeat;
-  background-size: 20px;
+  background-size: 27px;
+
 }
 
 input[type="email"] {
   background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
   background-position: 15px center; /* Adjust position to not overlap the text */
   background-repeat: no-repeat;
-  background-size: 20px;
+  background-size: 27px;
+
 }
+
+
 .login-link{
   text-align: right;
   margin-top: 5px;
 }
-.Register-logo{
 
-  margin-top: 150px;
-  align-self: center;
-  margin-left: 50 auto;
-  justify-content: center ;
-  
+
+.Register-logo {
+  margin: 0 auto;
+  display: block;
+  margin-top: 100px;
 }
+
+
 .Register-logo-text{
   text-align: center;
   font-size: 13px;
