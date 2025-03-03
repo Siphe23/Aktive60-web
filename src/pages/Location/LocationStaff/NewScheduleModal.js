@@ -8,18 +8,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewScheduleModal = ({ isOpen, onClose, selectedBranch }) => {
-  const [location, setLocation] = useState(""); // Stores branch ID
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [managerId, setManagerId] = useState(""); // Manager ID from users table
   const [inTime, setInTime] = useState(""); // Working Hours In Time (separate state, not tied to schedules)
   const [outTime, setOutTime] = useState(""); // Working Hours Out Time (separate state, not tied to schedules)
   const [employees, setEmployees] = useState([]);
-  const [branches, setBranches] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch employees and branches from Firebase
+  // Fetch employees from Firebase
   useEffect(() => {
     if (isOpen) {
       const fetchData = async () => {
@@ -33,15 +31,6 @@ const NewScheduleModal = ({ isOpen, onClose, selectedBranch }) => {
           })).filter((emp) => emp.role !== "client");
 
           setEmployees(employeesData);
-
-          // Fetch branches
-          const branchesSnapshot = await getDocs(collection(db, "branches"));
-          const branchesData = branchesSnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-
-          setBranches(branchesData);
         } catch (error) {
           console.error("Error fetching data:", error);
           toast.error("Failed to fetch data. Please try again.");
@@ -111,16 +100,6 @@ const NewScheduleModal = ({ isOpen, onClose, selectedBranch }) => {
         }
       }
 
-      // Validate location (branch) exists
-      if (location) {
-        const branchDocRef = doc(db, "branches", location);
-        const branchDoc = await getDoc(branchDocRef);
-        if (!branchDoc.exists()) {
-          toast.error("Selected location does not exist. Please select a valid location.");
-          return;
-        }
-      }
-
       // Validate each employee in schedules exists
       for (const schedule of schedules) {
         if (schedule.employeeId) {
@@ -136,7 +115,6 @@ const NewScheduleModal = ({ isOpen, onClose, selectedBranch }) => {
       // Prepare the schedule data
       const scheduleData = {
         branch: selectedBranch,
-        location, // Store the branch ID
         startDate,
         endDate,
         managerId, // Store manager ID from users table
@@ -175,20 +153,9 @@ const NewScheduleModal = ({ isOpen, onClose, selectedBranch }) => {
           <h2 className="modal-title">New Schedule</h2>
           <FaTimes className="close-icon" onClick={onClose} />
         </div>
+
         <div className="form-group">
-          <label>Location:</label>
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="location-select"
-          >
-            <option value="">Select Location</option>
-            {branches.map((branch) => (
-              <option key={branch.id} value={branch.id}>
-                {branch.branch_name}
-              </option>
-            ))}
-          </select>
+          <label>Location</label>
         </div>
 
         <div className="form-group">
