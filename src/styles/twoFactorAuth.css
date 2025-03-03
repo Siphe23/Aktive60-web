@@ -1,82 +1,123 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #242526;
-}
-
+/* Container */
 .two-fa-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  padding: 0 50px;
-}
-.two-fa-text {
-  margin-right: 500px !important;
-  display: flex;
- 
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #181818;
   color: white;
-}
-.two-fa-text h2 { 
-  font-size: 2.5rem; 
-  margin-bottom: 20px; 
-  white-space: nowrap; 
-  font-size: 2.5rem;
-  color: white;
-  margin-left: 40%;
+  position: relative;
+  padding-top: 20px; /* Adjusts space for the logo */
 }
 
-/* .logo { 
+/* Back Button */
+.back-button {
   position: absolute;
-  top: 1px;
-  left: 300px;
-  width: 300px;
-  transform: translateY(20px);
-} */
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
 
+.back-button img {
+  width: 30px;
+  height: 30px;
+}
 
+/* Logo */
+.logo {
+  width: 150px; 
+  height: auto;
+  margin-bottom: 20px; /* Adjusts spacing from the content below */
+  margin-top: 200px; /* Adds a small margin to the top */
+  display: block; /* Ensures the logo behaves like a block element */
+  max-width: 100%; /* Ensures responsiveness */
+}
+
+/* Content Layout */
 .two-fa-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 900px;
+  margin-top: 20px; /* Ensures space between the logo and the form */
+}
+
+/* Form Styling */
+.two-fa-form {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.two-fa-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.two-fa-form p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Input */
+.input-container {
   width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  background: #25233A;
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
 }
 
-.two-fa-text {
-  flex: 1;
-  padding-right: 50px;
-}
-
-
-
-.sms-verification-btn {
-  background-color: red;
-  color: white;
+.input-container input {
+  width: 100%;
+  background: transparent;
   border: none;
-  padding: 15px 30px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Button */
+.sms-verification-btn {
+  width: 100%;
+  background: #e60012;
+  color: white;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  width: 500px;
-  margin-left: 40%;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  margin-top: 1rem;
 }
 
-.sms-verification-btn:disabled {
-  background-color:red;
-  cursor: not-allowed;
+.sms-verification-btn:hover {
+  background: #cc000f;
 }
 
-.sms-verification-btn:hover:not(:disabled) {
-  background-color: red;
-}
-
+/* Illustration */
 .two-fa-image {
- margin-right: 10%;
-  Width :500px;
-  Height:600px;
-  Top:321.46px;
-  Left: 894px
+  width: 45%;
+  max-width: 350px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .two-fa-content {
+    flex-direction: column;
+  }
+
+  .two-fa-form {
+    width: 100%;
+  }
+
+  .two-fa-image {
+    width: 80%;
+    margin-top: 1rem;
+  }
 }
