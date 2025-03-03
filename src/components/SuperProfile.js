@@ -157,7 +157,7 @@ const SuperProfile = () => {
           <img src={formData.avatar} alt="Avatar" />
         </div>
         <div className="button-group">
-          <button className="edit-btn" onClick={() => setShowModal(true)}>
+          <button className="profile-edit-btn" onClick={() => setShowModal(true)}>
             Edit Picture
           </button>
         </div>
@@ -173,7 +173,7 @@ const SuperProfile = () => {
               <p className="select-text">Pick an avatar or upload a picture</p>
               <input type="file" onChange={handleFileChange} />
             </div>
-            <button className="apply-btn" onClick={handleApplyAvatar}>
+            <button className="profile-apply-btn" onClick={handleApplyAvatar}>
               Apply
             </button>
           </div>
@@ -272,13 +272,13 @@ const SuperProfile = () => {
 
         <div className="form-buttons">
           <button
-            className="save-btn"
+            className="profile-save-btn"
             onClick={handleSave}
             disabled={isLoading}
           >
             {isLoading ? 'Saving...' : 'Save Changes'}
           </button>
-          <button className="clear-btn" onClick={handleClear}>
+          <button className="profile-clear-btn" onClick={handleClear}>
             Clear
           </button>
         </div>

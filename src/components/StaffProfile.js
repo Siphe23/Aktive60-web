@@ -155,7 +155,7 @@ const StaffProfile = () => {
           <img src={formData.avatar} alt="Avatar" />
         </div>
         <div className="button-group">
-          <button className="edit-btn" onClick={() => setShowModal(true)}>
+          <button className="profile-edit-btn" onClick={() => setShowModal(true)}>
             Edit Picture
           </button>
         </div>
@@ -277,13 +277,13 @@ const StaffProfile = () => {
 
         <div className="form-buttons">
           <button
-            className="save-btn"
+            className="profile-save-btn"
             onClick={handleSave}
             disabled={isLoading}
           >
             {isLoading ? 'Saving...' : 'Save Changes'}
           </button>
-          <button className="clear-btn" onClick={handleClear}>
+          <button className="profile-clear-btn" onClick={handleClear}>
             Clear
           </button>
         </div>
