@@ -2,7 +2,7 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--text-color);
   height: 100vh;
   width: 100%;
   font-family: "Poppins", serif;
@@ -47,13 +47,9 @@
 }
 
 /* Title Styling */
-.title {
-  margin-bottom: 10px;
-  font-size: 20px;
-  font-weight: 200;
-  font-style: normal;
-  flex: 1;
-  min-width: 0; /* Prevent title from overflowing on small screens */
+.container h2 {
+  font-size: var(--size-Large);
+  font-weight: var(--font-weight);
 }
 
 /* Filter Button */
@@ -65,11 +61,11 @@
   font-size: 12px;
   width: auto; /* Let the button size depend on its content */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--animation-speed);
 }
 
 .header button:hover {
-  background-color: #e0e0e0;
+  background-color: var(--button-hover-bg);
 }
 
 /* Table Styling */
@@ -84,33 +80,32 @@
 .location-table th,
 .location-table td {
   padding: 10px;
-  border: 1px solid #444;
+  border: 1px solid var(--border-color);
   text-align: left;
 }
 
 .location-table th {
-  background: #3a3a3a;
+  background: var(--header-bg);
   font-weight: 700;
   font-style: normal;
 }
 
 .location-table tr:nth-child(even) {
-  background-color: #3a3a3a;
+  background-color: var(--table-bg-even);
 }
 
 .location-table tr:nth-child(odd) {
-  background-color: #2a2a2a;
+  background-color: var(--table-bg-odd);
 }
 
 /* Modal Overlay */
 .modal-overlay {
-  
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background:#2F2E41;
+  background: var(--Secondary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,8 +114,7 @@
 
 /* Modal Content */
 .modal-content {
-  
-  background: #3F3D56;
+  background: var(--modal-bg);
   padding: 25px;
   border-radius: 10px;
   width: 600px;
@@ -137,7 +131,7 @@
 }
 
 .modal-header h3 {
-  color: white;
+  color: var(--text-color);
   font-size: 20px;
 }
 
@@ -145,15 +139,15 @@
   background: none;
   border: none;
   font-size: 22px;
-  color: white;
+  color: var(--text-color);
   cursor: pointer;
 }
 
 /* Form Inputs */
 .modal-content input,
 .modal-content select {
-  background: #2a2a2a;
-  color: white;
+  background: var(--input-bg);
+  color: var(--text-color);
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -163,7 +157,7 @@
 
 .modal-content input:focus,
 .modal-content select:focus {
-  outline: 2px solid #f10623;
+  outline: 2px solid var(--primary-color);
 }
 
 /* Checkbox Styling */
@@ -175,7 +169,7 @@
 }
 
 .checkbox-group label {
-  color: white;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -197,7 +191,7 @@
 .time-select div {
   display: flex;
   align-items: center;
-  background: #2a2a2a;
+  background: var(--checkbox-bg);
   padding: 8px;
   border-radius: 5px;
 }
@@ -205,11 +199,9 @@
 .time-select select {
   border: none;
   background: transparent;
-  color: white;
+  color: var(--text-color);
   font-size: 14px;
 }
-
-/* Buttons */
 
 /* Modal Buttons Container */
 .modal-buttons {
@@ -222,7 +214,7 @@
 /* Cancel Button */
 .cancel-button {
   background: gray;
-  color: white;
+  color: var(--text-color);
   padding: 12px 20px;
   border: none;
   border-radius: 5px;
@@ -237,8 +229,8 @@
 
 /* Save Button */
 .save-button {
-  background-color: #f10623;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   padding: 12px 20px;
   border: none;
   border-radius: 5px;
@@ -251,12 +243,9 @@
   background-color: #d0051f;
 }
 
-
-
-
 .clear-button {
   background: gray;
-  color: white;
+  color: var(--text-color);
   padding: 12px 20px;
   border: none;
   border-radius: 5px;
@@ -278,8 +267,6 @@
   padding: 10px 0; /* Adjust space around buttons */
 }
 
-
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   /* Adjust layout for tablets and smaller screens */
@@ -291,7 +278,6 @@
     margin-left: 0; /* Collapse sidebar */
   }
 
-  /* Adjust container width for smaller screens */
   .container {
     width: 100%;
     padding: 15px;
@@ -385,14 +371,13 @@
     font-size: 10px; /* Even smaller font size on very small screens */
   }
 
-  /* Make sure the table is scrollable horizontally */
   .location-table {
     overflow-x: auto;
     display: block;
   }
 
   .header button {
-    font-size: 10px; /* Smaller font size for mobile buttons */
+    font-size: 10px; 
     padding: 7px;
   }
 }

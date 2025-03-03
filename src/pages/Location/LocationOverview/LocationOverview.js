@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import NavigationBar from "../../../components/Navbar";
 import "../../../styles/LocationOverview.css";
+import "../../../App.css";
 import { realTimeDB, db } from "../../../firebase";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { ref, update } from "firebase/database";
@@ -147,7 +148,7 @@ const LocationOverview = () => {
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="container">
             <div className="header">
-              <h2 className="title">Location Overview</h2>
+              <h2>Location Overview</h2>
               <button onClick={handleFilterClick}>Filter</button>
             </div>
             <table className="location-table">
