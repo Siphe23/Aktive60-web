@@ -1,10 +1,21 @@
-
-.branch-staff-container {
+.branch-staff {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 20px;
   color: white;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.branch-staff-container {
+  
   padding: 20px;
   font-family: sans-serif;
   width: 100%;
   box-sizing: border-box;
+
  
 }
 

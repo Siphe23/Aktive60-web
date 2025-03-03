@@ -125,7 +125,7 @@ const App = () => {
         <Route path="/super-profile" element={<SuperProfile />} />
         <Route path="/staff-register" element={<StaffRegister />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
-        <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/staff-login" element={<Login />} />
         <Route path="/super-login" element={<SuperLogin />} />
         <Route path="/location-overview" element={<LocationOverview />} />
         <Route path="/location-details" element={<LocationDetails />} />
