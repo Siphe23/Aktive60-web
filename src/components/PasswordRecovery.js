@@ -1,88 +1,83 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; 
-import RecoveryImage from "../assets/uate.png";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import ResetImage from "../assets/Forgot-password.png";
+import BackIcon from "../assets/Group (1).png";
+import logo from "../assets/Aktiv60.png";
+import KeyIcon from "../assets/key-01-stroke-rounded 1 (4).png"; // Make sure this path is correct
 import "../styles/PasswordRecovery.css";
 
 const PasswordRecovery = () => {
-  const [recoveryCode, setRecoveryCode] = useState("");  
-  const [error, setError] = useState("");  
-
+  const [recoveryCode, setRecoveryCode] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const auth = getAuth();
 
-  // Firestore setup
-  const db = getFirestore();
-
-  // Handle the form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!recoveryCode) {
-      setError("Please enter the recovery code.");
+      setError("Please enter your recovery code");
       return;
     }
 
     try {
-      
-      const codeRef = doc(db, "passwordRecoveryCodes", recoveryCode); 
-      const codeDoc = await getDoc(codeRef);
-
-      if (codeDoc.exists()) {
-        const codeData = codeDoc.data();
-        const currentTime = Date.now();
-
-        if (currentTime > codeData.expiration) {
-          setError("The recovery code has expired. Please request a new one.");
-        } else {
-          
-          navigate("/reset-password");  
-        }
-      } else {
-        setError("Invalid recovery code. Please try again.");
-      }
+      setLoading(true);
+      setError("");
+      // Handle recovery code logic here
+      console.log("Recovery code submitted:", recoveryCode);
     } catch (error) {
-      console.error("Error during recovery code validation:", error);
-      setError("There was an error verifying the recovery code.");
+      setError("Failed to process recovery code. Please try again.");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className="reset-container">
-      <div className="reset-form">
-        {/* Logo Image */}
-        <h2 className="logo">
-          <img src={require("../assets/Aktiv60.png")} alt="Aktiv60 Logo" />
-        </h2>
-
-        <p className="reset-subtitle">
-          Enter the recovery code we sent to your email
-        </p>
-
-        <form onSubmit={handleSubmit}>
-          {/* Recovery Code Input */}
-          <div className="reset-input-group">
-            <label>Recovery Code</label>
-            <input
-              type="text"
-              placeholder="Enter code"
-              value={recoveryCode}
-              onChange={(e) => setRecoveryCode(e.target.value)}  // Update state with input
-              required
-            />
+    <div className="recovery-container">
+      <div className="back-button" onClick={handleBack}>
+        <img src={BackIcon} alt="Back" />
+      </div>
+      
+      <div className="recovery-content">
+        <div className="recovery-left">
+          <div className="recovery-logo">
+            <img src={logo} alt="Aktiv60 Logo" />
           </div>
 
-          {/* Error Message */}
-          {error && <p className="error-message">{error}</p>}
-
-          {/* Submit Button */}
-          <button type="submit" className="reset-button">
-            Submit
-          </button>
-        </form>
-      </div>
-
-      <div className="reset-image">
-        <img src={RecoveryImage} alt="Password Recovery Illustration" />
+          <div className="recovery-form-container">
+            <h2>Recovery Code</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="input-container">
+                <div className="input-group">
+                  <img src={KeyIcon} alt="Key" className="input-icon" />
+                  <input
+                    type="text"
+                    placeholder="Enter your recovery code"
+                    value={recoveryCode}
+                    onChange={(e) => setRecoveryCode(e.target.value)}
+                  />
+                </div>
+              </div>
+              
+              <button type="submit" className="submit-button" disabled={loading}>
+                Submit
+              </button>
+            </form>
+            {error && <div className="error-message">{error}</div>}
+          </div>
+        </div>
+        
+        <div className="recovery-right">
+          <div className="illustration-container">
+            <img src={ResetImage} alt="Password Recovery" />
+          </div>
+        </div>
       </div>
     </div>
   );

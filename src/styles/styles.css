@@ -26,12 +26,15 @@
   align-items: center;
   background-color: transparent;
   padding: 20px;
-text-align: center;
+  text-align: center;
 }
 
 .login-form {
   width: 100%;
   max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-illustration {
@@ -42,21 +45,24 @@ text-align: center;
 
 .logo-container {
   display: flex;
-  flex-direction: column; /* Stack the items vertically */
-  align-items: center; /* Optionally center the items horizontally */
-  justify-content: center; /* Center the items vertically, if necessary */
-  text-align: center; /* Center the text inside the <p> */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
-.login-logo {
-  margin-bottom: 10px; /* Optional: Adjust the space between the image and the text */
+.login-subtitle {
+  color: #ccc;
+  font-size: 16px;
+  margin-top: 5px;
 }
 
 .form-group {
   margin-bottom: 20px;
+  width: 100%;
 }
-
-
 
 .input-container {
   position: relative;
@@ -78,13 +84,13 @@ input[type="email"],
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  padding: 16px 16px 16px 60px; /* Increased left padding to move text to the left */
+  padding: 16px 16px 16px 60px;
   border: none;
   background: transparent;
   color: white;
   font-size: 14px;
   height: 60px;
- text-align: flex; /* Align text to the left */
+  text-align: flex;
   position: relative;
   border-radius: 6px;
   border: 2px solid #333;
@@ -97,23 +103,16 @@ input[type="text"]:focus {
   outline: none;
 }
 
-input[type="password"] {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
-  background-position: 15px center; /* Adjust position to not overlap the text */
-  background-repeat: no-repeat;
-  background-size: 20px;
-}
-
-input[type="email"] {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
-  background-position: 15px center; /* Adjust position to not overlap the text */
-  background-repeat: no-repeat;
-  background-size: 20px;
+label {
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .forgot-password {
   text-align: right;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .forgot-password a {
@@ -126,6 +125,7 @@ input[type="email"] {
   display: flex;
   align-items: center;
   margin-bottom: 30px;
+  width: 100%;
 }
 
 .custom-checkbox {
@@ -156,7 +156,6 @@ input[type="email"] {
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 16px;
-  position: relative;
 }
 
 .login-btn:disabled {
@@ -164,17 +163,11 @@ input[type="email"] {
   cursor: not-allowed;
 }
 
-.arrow {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .register-link {
   text-align: center;
   font-size: 14px;
   color: #ccc;
+  width: 100%;
 }
 
 .register-link a {
@@ -218,18 +211,16 @@ input[type="email"] {
     order: 2;
   }
 
- 
-
   .logo {
     font-size: 28px;
   }
 
-  .subtitle {
+  .login-subtitle {
     font-size: 14px;
   }
 
   .input-container {
-    padding: 12px;
+    padding: 0;
   }
 
   .login-btn {

@@ -7,8 +7,8 @@ import { doc, getDoc } from "firebase/firestore";
 import "../styles/styles.css";
 import logo from "../assets/Aktiv60.png";
 import TwoFAImage from "../assets/Login.png";
-import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";  // Lock icon for password
-import { AiOutlineMail } from "react-icons/ai";  // Email icon
+import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import { AiOutlineMail } from "react-icons/ai";
 
 const SuperAdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -112,16 +112,20 @@ const SuperAdminLogin = () => {
         <div className="login-form">
           {/* Logo */}
           <div className="logo-container">
+            {/* Use the imported logo image instead of text */}
             <img src={logo} alt="Aktiv60 Logo" className="login-logo" />
             <p className="login-subtitle">Login to the platform</p>
           </div>
 
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} style={{ width: '100%' }}>
             {/* Email Field */}
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <div className="input-container">
-                <AiOutlineMail size={50} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)' }} />
+                <AiOutlineMail 
+                  size={20} 
+                  style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#777' }} 
+                />
                 <input
                   id="email"
                   type="email"
@@ -131,7 +135,6 @@ const SuperAdminLogin = () => {
                   required
                   disabled={loading}
                   aria-label="Email address"
-                  style={{ paddingLeft: '50px' }} // To prevent overlap with the icon
                 />
               </div>
             </div>
@@ -139,8 +142,11 @@ const SuperAdminLogin = () => {
             {/* Password Field */}
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <div className="input-container" style={{ position: 'relative' }}>
-                <FaLock size={30} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)' }} />
+              <div className="input-container">
+                <FaLock 
+                  size={18} 
+                  style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#777' }} 
+                />
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -150,15 +156,13 @@ const SuperAdminLogin = () => {
                   required
                   disabled={loading}
                   aria-label="Password"
-                  style={{ paddingLeft: '50px' }} // To prevent overlap with the icon
                 />
                 <div
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label="Toggle password visibility"
-                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
                 >
-                  {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                  {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                 </div>
               </div>
             </div>
@@ -183,25 +187,29 @@ const SuperAdminLogin = () => {
               <label onClick={() => setRememberMe(!rememberMe)}>Remember me</label>
             </div>
 
-            {/* Login Button */}
+            {/* Login Button - Arrow removed */}
             <button
               type="submit"
               className="login-btn"
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
-              <span className="arrow">→</span>
             </button>
+
+            {/* Register Link */}
+            <div className="register-link">
+              Don't have access? <Link to="/register">Register</Link>
+            </div>
           </form>
         </div>
-
-       
-        
-      </div><div className="login-illustration">
-          <div className="illustration-container">
-            <img src={TwoFAImage} alt="Login security illustration" />
-          </div>
+      </div>
+      
+      {/* Right side - Illustration */}
+      <div className="login-illustration">
+        <div className="illustration-container">
+          <img src={TwoFAImage} alt="Login security illustration" />
         </div>
+      </div>
     </div>
   );
 };

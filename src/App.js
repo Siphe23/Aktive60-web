@@ -12,7 +12,7 @@ import PasswordSet from "./components/PasswordSet";
 import PasswordResetSuccess from "./components/PasswordResetSuccess";
 import TwoFactorAuth from "./components/TwoFactorAuth";
 import PasswordRecovery from "./components/PasswordRecovery";
-import ResetPassword from "./components/ResetPassword";
+import ForgotPassword from "./components/ForgotPassword";
 import NotFound from "./components/NotFound";
 import SuperProfile from './components/SuperProfile';
 import Dashboard from './pages/Dashboard';
@@ -116,7 +116,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/set-password" element={<PasswordSet />} />
-        <Route path="/forgot-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
