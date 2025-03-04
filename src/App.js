@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth, db } from "./firebase"; // Ensure this is correctly imported
+import { auth, db } from "./firebase"; 
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import Home from "./pages/Home";
@@ -32,16 +32,16 @@ import Trainees from "./pages/Trainees";
 import Collection from "./pages/Collection";
 import Navbar from './components/Navbar';
 import Sidebar from "./components/Sidebar";
-import defaultProfilePic from "./assets/avatar-placeholder.png"; // Import default profile picture
+import defaultProfilePic from "./assets/avatar-placeholder.png"; 
 import BranchDetails from "./pages/Branch/BranchDetails";
 import BranchPackages from "./pages/Branch/BranchPackages";
-  import BranchStaff from "./pages/Branch/Branchstaff";
+import BranchStaff from "./pages/Branch/Branchstaff";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
     name: '',
     lastName: '',
-    avatar: defaultProfilePic, // Use the default profile picture initially
+    avatar: defaultProfilePic, 
   });
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const App = () => {
     <Router>
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar userData={userData} /> {/* Pass userData to Navbar */}
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/home" element={<Home />} />

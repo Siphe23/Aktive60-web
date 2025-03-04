@@ -1,0 +1,222 @@
+/* Package Edit Popup Styles */
+.package-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .package-popup-container {
+    background-color: #2c2f44;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    color: white;
+  }
+  
+  .package-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #3a3d52;
+  }
+  
+  .package-popup-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .package-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .package-popup-content {
+    padding: 20px;
+  }
+  
+  .package-form-columns {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .package-form-column {
+    flex: 1;
+  }
+  
+  .package-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .package-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: white;
+  }
+  
+  .package-form-group input[type="text"],
+  .package-form-group textarea,
+  .package-form-group select {
+    width: 100%;
+    padding: 8px 10px;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .package-form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .package-select-wrapper {
+    position: relative;
+  }
+  
+  .package-select-wrapper select {
+    appearance: none;
+    width: 100%;
+    padding-right: 30px;
+  }
+  
+  .package-select-wrapper::after {
+    content: "▼";
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  .package-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .package-checkbox-item,
+  .package-radio-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .package-checkbox-item input,
+  .package-radio-item input {
+    margin-right: 8px;
+  }
+  
+  .package-other-input {
+    margin-top: 10px;
+  }
+  
+  .package-radio-group {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .toggle-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Toggle Switch Styling */
+  .package-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  
+  .package-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .package-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+  }
+  
+  .package-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .package-toggle-slider {
+    background-color: #2196F3;
+  }
+  
+  input:checked + .package-toggle-slider:before {
+    transform: translateX(20px);
+  }
+  
+  .package-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 20px;
+    border-top: 1px solid #3a3d52;
+    gap: 10px;
+  }
+  
+  .package-btn-cancel,
+  .package-btn-save {
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .package-btn-cancel {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    color: white;
+  }
+  
+  .package-btn-save {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .package-form-columns {
+      flex-direction: column;
+    }
+    
+    .package-checkbox-grid,
+    .package-radio-group {
+      grid-template-columns: 1fr;
+    }
+  }
