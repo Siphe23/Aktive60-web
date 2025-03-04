@@ -4,15 +4,9 @@ import Sidebar from "../../../components/Sidebar";
 import NavigationBar from "../../../components/Navbar";
 import AddNewLocationModal from "./AddNewLocationModal";
 import EditLocationModal from "./EditLocationModal";
-import { db, realTimeDB } from "../../../firebase"; // Import Firestore and Realtime Database
+import { db, realTimeDB } from "../../../firebase";
 import { ref, set, onValue } from "firebase/database";
-import {
-  collection,
-  onSnapshot,
-  addDoc,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
+import { collection, onSnapshot, addDoc, updateDoc, doc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -41,12 +35,10 @@ const LocationDetails = () => {
         }));
         setBranches(branchesList);
 
-        // Automatically select the first branch if available
-        if (branchesList.length > 0 && !selectedLocation) {
-          setSelectedLocation(branchesList[0].id);
-        }
+      if (branchesList.length > 0 && !selectedLocation) {
+        setSelectedLocation(branchesList[0].id);
       }
-    );
+  });
 
     return () => unsubscribeFirestore();
   }, [selectedLocation]);
@@ -71,7 +63,6 @@ const LocationDetails = () => {
 
   const handleAddLocation = async (newLocation) => {
     try {
-      // Save to Firestore
       const docRef = await addDoc(collection(db, "branches"), {
         branch_name: newLocation.locationName,
         location_address: newLocation.address,
@@ -80,11 +71,10 @@ const LocationDetails = () => {
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
         packages: newLocation.packages,
-        qrCode: newLocation.qrCode, // Save QR code
+        qrCode: newLocation.qrCode,
         active: "yes",
       });
 
-      // Save to Realtime Database
       const branchRef = ref(realTimeDB, `branches/${docRef.id}`);
       await set(branchRef, {
         branch_name: newLocation.locationName,
@@ -94,7 +84,7 @@ const LocationDetails = () => {
         operating_hours: newLocation.operatingHours,
         equipment: newLocation.equipment,
         packages: newLocation.packages,
-        qrCode: newLocation.qrCode, // Save QR code
+        qrCode: newLocation.qrCode,
         active: "yes",
       });
 
@@ -107,7 +97,6 @@ const LocationDetails = () => {
 
   const handleUpdateLocation = async (updatedLocation) => {
     try {
-      // Update Firestore
       const branchRef = doc(db, "branches", selectedLocation);
       await updateDoc(branchRef, {
         branch_name: updatedLocation.locationName,
@@ -117,10 +106,9 @@ const LocationDetails = () => {
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
         packages: updatedLocation.packages,
-        qrCode: updatedLocation.qrCode, // Update QR code
+        qrCode: updatedLocation.qrCode,
       });
 
-      // Update Realtime Database
       const realTimeBranchRef = ref(realTimeDB, `branches/${selectedLocation}`);
       await set(realTimeBranchRef, {
         branch_name: updatedLocation.locationName,
@@ -130,7 +118,7 @@ const LocationDetails = () => {
         operating_hours: updatedLocation.operatingHours,
         equipment: updatedLocation.equipment,
         packages: updatedLocation.packages,
-        qrCode: updatedLocation.qrCode, // Update QR code
+        qrCode: updatedLocation.qrCode,
       });
 
       toast.success("Location updated successfully!");
@@ -147,11 +135,18 @@ const LocationDetails = () => {
         <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="container">
-            <div class="location-header">
-            <div class="location-buttons">
-              <h2>Location Details</h2>
-              <p>Manage your locations here.</p>
-              </div>
+            <div className="header">
+              <select
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                className="location-select"
+              >
+                {branches.map((branch) => (
+                  <option key={branch.id} value={branch.id}>
+                    {branch.branch_name}
+                  </option>
+                ))}
+              </select>
               <div className="header-buttons">
                 <button
                   className="action-button"
@@ -182,7 +177,6 @@ const LocationDetails = () => {
               
             </div>
 
-            {/* Card Grid */}
             <div className="card-grid">
               <div className="card">
                 <h3>Basic Information</h3>
@@ -200,16 +194,6 @@ const LocationDetails = () => {
                       <strong>Contact Number:</strong> 
                       <p>{branchData.phone}</p>
                     </p>
-                    {branchData.qrCode && (
-                      <div className="qr-code-container">
-                        <strong>QR Code:</strong>
-                        <img
-                          src={branchData.qrCode}
-                          alt="QR Code"
-                          className="qr-code-image"
-                        />
-                      </div>
-                    )}
                   </>
                 ) : (
                   <p>Loading...</p>
@@ -220,20 +204,16 @@ const LocationDetails = () => {
                 {branchData ? (
                   <>
                     <p>
-                      <strong>Monaday - Friday</strong>
-                      <p>{branchData.branch_name}</p> 
+                      <strong>Monday - Friday:</strong> 08:00 - 22:00
                     </p>
                     <p>
-                      <strong>Saturday:</strong> 
-                      <p>{branchData.location_address}</p>
+                      <strong>Saturday:</strong> 08:00 - 22:00
                     </p>
                     <p>
-                      <strong>Sunday:</strong> 
-                      <p>{branchData.phone}</p>
+                      <strong>Sunday:</strong> 08:00 - 22:00
                     </p>
                     <p>
-                      <strong>Public Holidays:</strong> 
-                      <p>{branchData.phone}</p>
+                      <strong>Public Holidays:</strong> 08:00 - 22:00
                     </p>
                   </>
                 ) : (
@@ -241,61 +221,54 @@ const LocationDetails = () => {
                 )}
               </div>
             </div>
+
             <div className="card-package">
               <h3>Selected Packages</h3>
               {branchData ? (
-                <>
-                  <div className="packages">
-                    <p>
-                      <strong>ONE-ON-ONE SESSIONS</strong>
-                    </p>
-                    <p>
-                      <strong>PERSONALISED MEAL PLANS & PROGRAMS</strong>
-                    </p>
-                    <p>
-                      <strong>ONLINE HOURLY SESSIONS</strong>
-                    </p>
-                  </div>
-                </>
+                <div className="packages">
+                  <p>
+                    <strong>ONE-ON-ONE SESSIONS</strong>
+                  </p>
+                  <p>
+                    <strong>PERSONALISED MEAL PLANS & PROGRAMS</strong>
+                  </p>
+                  <p>
+                    <strong>ONLINE HOURLY SESSIONS</strong>
+                  </p>
+                </div>
               ) : (
                 <p>Loading...</p>
               )}
             </div>
+
             <div className="card-capacity">
               <h3>Member Capacity</h3>
               {branchData ? (
-                <>
-                  <div className="capacities">
-                    <p>
-                      <strong>Total Capacity: {branchData.branch_name}</strong>
-                    </p>
-                    <p>
-                      <strong>Current members: {branchData.branch_name}</strong>
-                    </p>
-                    <p>
-                      <strong>Available Slots: {branchData.branch_name}</strong>
-                    </p>
-                  </div>
-                </>
+                <div className="capacities">
+                  <p>
+                    <strong>Total Capacity:</strong> 300
+                  </p>
+                  <p>
+                    <strong>Current Members:</strong> 250
+                  </p>
+                  <p>
+                    <strong>Available Slots:</strong> 50
+                  </p>
+                </div>
               ) : (
                 <p>Loading...</p>
               )}
-
-              {/* Rest of the cards */}
-              {/* ... (Operating Hours, Staff Assignments, Member Capacity, etc.) ... */}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Add New Location Modal */}
       <AddNewLocationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleAddLocation}
       />
 
-      {/* Edit Location Modal */}
       <EditLocationModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
@@ -303,7 +276,6 @@ const LocationDetails = () => {
         branchData={branchData}
       />
 
-      {/* Toast Container */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
