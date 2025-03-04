@@ -1,19 +1,10 @@
+// UserManagement.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/UserManagement.css";
-import { db, realTimeDB, auth } from "../firebase";
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  doc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import { realTimeDB, auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, onValue, update } from "firebase/database";
 import { toast } from "react-toastify";
-import Navbar from "../components/Navbar";
 
 const UserManagement = () => {
   const [admins, setAdmins] = useState([]);
@@ -28,24 +19,15 @@ const UserManagement = () => {
   const [showPendingUsers, setShowPendingUsers] = useState(false);
   const [showRemovedAdmins, setShowRemovedAdmins] = useState(false);
   const [showRestrictedUsers, setShowRestrictedUsers] = useState(false);
-  const [currentUserData, setCurrentUserData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const userRef = doc(db, "users", user.uid);
-        onSnapshot(userRef, (doc) => {
-          if (doc.exists()) {
-            const data = doc.data();
+        const userRef = ref(realTimeDB, `users/${user.uid}`);
+        onValue(userRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
             setCurrentUserRole(data.role);
-            setCurrentUserData({
-              uid: user.uid,
-              email: user.email,
-              name: data.name || "Guest",
-              lastName: data.lastName || "",
-              avatar: data.avatar || "default-avatar.png",
-              ...data,
-            });
           }
         });
       }
@@ -54,60 +36,54 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
-  // Active Admins (Supervisors) from Realtime Database only
   useEffect(() => {
-    const staffRef = ref(realTimeDB, "staff");
+    const staffRef = ref(realTimeDB, "users");
     const unsubscribe = onValue(staffRef, (snapshot) => {
-      const data = snapshot.val();
-      const realtimeAdmins = data
-        ? Object.entries(data)
-            .filter(
-              ([_, staff]) =>
-                staff.role === "Supervisor" && staff.status === "active"
-            )
-            .map(([id, staff]) => ({
-              id,
-              email: staff.email || "",
-              branch_name: staff.branch_name || staff.branch || "",
-              source: "realtime",
-              ...staff,
-            }))
-        : [];
-      setAdmins(realtimeAdmins);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // Pending Admins from Realtime Database only
-  useEffect(() => {
-    const staffRef = ref(realTimeDB, "staff");
-    const unsubscribe = onValue(staffRef, (snapshot) => {
-      const data = snapshot.val();
-      const realtimeAdmins = data
-        ? Object.entries(data)
-            .filter(
-              ([_, staff]) =>
-                staff.role === "Supervisor" && staff.status === "pending"
-            )
-            .map(([id, staff]) => ({
-              id,
-              email: staff.email || "",
-              branch_name: staff.branch_name || staff.branch || "",
-              source: "realtime",
-              ...staff,
-            }))
-        : [];
-      setPendingAdmins(realtimeAdmins);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // Active, Pending, and Restricted Users from Realtime Database
-  useEffect(() => {
-    const usersRef = ref(realTimeDB, "users");
-    const unsubscribe = onValue(usersRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
+        // Active Admins (Supervisors)
+        const adminList = Object.entries(data)
+          .filter(
+            ([_, user]) =>
+              user.role === "Supervisor" && user.status === "active"
+          )
+          .map(([id, user]) => ({
+            id,
+            email: user.email || "",
+            branch_name: user.branch_name || "",
+            ...user,
+          }));
+        setAdmins(adminList);
+
+        // Pending Admins
+        const pendingAdminList = Object.entries(data)
+          .filter(
+            ([_, user]) =>
+              user.role === "Supervisor" && user.status === "pending"
+          )
+          .map(([id, user]) => ({
+            id,
+            email: user.email || "",
+            branch_name: user.branch_name || "",
+            ...user,
+          }));
+        setPendingAdmins(pendingAdminList);
+
+        // Removed Admins
+        const removedAdminList = Object.entries(data)
+          .filter(
+            ([_, user]) =>
+              user.role === "Supervisor" && user.status === "restricted"
+          )
+          .map(([id, user]) => ({
+            id,
+            email: user.email || "",
+            branch_name: user.branch_name || "",
+            ...user,
+          }));
+        setRemovedAdmins(removedAdminList);
+
+        // Active Users (Clients)
         const activeList = Object.entries(data)
           .filter(
             ([_, user]) => user.role === "client" && user.status === "active"
@@ -115,12 +91,13 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
-            branch_name: user.branch_name || user.branch || "",
+            branch_name: user.branch_name || "",
             packageCategory: user.packageCategory || "",
             ...user,
           }));
         setActiveUsers(activeList);
 
+        // Pending Users
         const pendingList = Object.entries(data)
           .filter(
             ([_, user]) => user.role === "client" && user.status === "pending"
@@ -128,12 +105,13 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
-            branch_name: user.branch_name || user.branch || "",
+            branch_name: user.branch_name || "",
             packageCategory: user.packageCategory || "",
             ...user,
           }));
         setPendingUsers(pendingList);
 
+        // Restricted Users
         const restrictedList = Object.entries(data)
           .filter(
             ([_, user]) =>
@@ -142,7 +120,7 @@ const UserManagement = () => {
           .map(([id, user]) => ({
             id,
             email: user.email || "",
-            branch_name: user.branch_name || user.branch || "",
+            branch_name: user.branch_name || "",
             packageCategory: user.packageCategory || "",
             ...user,
           }));
@@ -152,66 +130,28 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
-  // Removed Admins from both Firestore and Realtime Database
-  useEffect(() => {
-    let unsubscribeRealtime;
-    const q = query(
-      collection(db, "staff"),
-      where("role", "==", "Supervisor"),
-      where("status", "==", "removed")
-    );
-    const unsubscribeFirestore = onSnapshot(q, (querySnapshot) => {
-      const firestoreRemovedAdmins = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        email: doc.data().email || "",
-        branch_name: doc.data().branch || doc.data().branch_name || "",
-        source: "firestore",
-        ...doc.data(),
-      }));
-
-      const staffRef = ref(realTimeDB, "staff");
-      unsubscribeRealtime = onValue(staffRef, (snapshot) => {
-        const data = snapshot.val();
-        const realtimeRemovedAdmins = data
-          ? Object.entries(data)
-              .filter(
-                ([_, staff]) =>
-                  staff.role === "Supervisor" && staff.status === "removed"
-              )
-              .map(([id, staff]) => ({
-                id,
-                email: staff.email || "",
-                branch_name: staff.branch_name || staff.branch || "",
-                source: "realtime",
-                ...staff,
-              }))
-          : [];
-        setRemovedAdmins([...firestoreRemovedAdmins, ...realtimeRemovedAdmins]);
-      });
-    });
-    return () => {
-      unsubscribeFirestore();
-      if (unsubscribeRealtime) unsubscribeRealtime();
-    };
-  }, []);
-
-  const handleRemoveAdmin = async (adminId, source) => {
+  const handleRemoveAdmin = async (adminId) => {
+    if (currentUserRole !== "super_Admin") {
+      toast.error("Only Super Admins can remove admins");
+      return;
+    }
     try {
-      const updates = {
-        role: "Supervisor",
-        status: "removed",
+      await update(ref(realTimeDB, `users/${adminId}`), {
+        status: "restricted",
         updatedAt: new Date().toISOString(),
-      };
-
-      await update(ref(realTimeDB, `staff/${adminId}`), updates);
+      });
       toast.success("Admin removed successfully");
     } catch (error) {
-      console.error("Error removing admin:", error);
       toast.error("Error removing admin: " + error.message);
     }
   };
 
   const handleAccess = async (userId, action) => {
+    if (currentUserRole !== "Supervisor" && currentUserRole !== "super_Admin") {
+      toast.error("Only Supervisors and Super Admins can manage user access");
+      return;
+    }
+
     try {
       const updates = {
         updatedAt: new Date().toISOString(),
@@ -232,23 +172,26 @@ const UserManagement = () => {
   };
 
   const handleAdminRequest = async (adminId, action) => {
+    if (currentUserRole !== "super_Admin") {
+      toast.error("Only Super Admins can manage admin requests");
+      return;
+    }
+
     try {
       const updates = {
-        role: "Supervisor",
-        status: action === "accept" ? "active" : "removed",
         updatedAt: new Date().toISOString(),
       };
 
-      await update(ref(realTimeDB, `staff/${adminId}`), updates);
+      if (action === "accept") {
+        updates.status = "active";
+        toast.success("Admin request approved successfully");
+      } else if (action === "decline") {
+        updates.status = "restricted";
+        toast.success("Admin request declined successfully");
+      }
 
-      toast.success(
-        `Admin request ${
-          action === "accept" ? "approved" : "declined"
-        } successfully`
-      );
-      setShowPendingAdmins(false);
+      await update(ref(realTimeDB, `users/${adminId}`), updates);
     } catch (error) {
-      console.error(`Error managing admin request:`, error);
       toast.error(`Error managing admin request: ${error.message}`);
     }
   };
@@ -257,7 +200,6 @@ const UserManagement = () => {
 
   return (
     <div className="user-management">
-      <Navbar userData={currentUserData} currentUserRole={currentUserRole} />
       <h2>User Management</h2>
       <div className="requests">
         <div className="request-box">
@@ -333,7 +275,7 @@ const UserManagement = () => {
                     {admin.email} - {admin.branch_name}
                   </p>
                   <p>Joined: {new Date(admin.joined).toLocaleDateString()}</p>
-                  <p>Work ID: {admin.workId || "N/A"}</p>
+                  <p>Work ID: {admin.workId}</p>
                   <div>
                     <a
                       href="#"
@@ -367,15 +309,15 @@ const UserManagement = () => {
         <div className="modal" onClick={() => setShowPendingUsers(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="top-content">
-              <h4>Pending Requests</h4>
+              <h4>Pending User Requests</h4>
               <p onClick={() => setShowPendingUsers(false)}>X</p>
             </div>
             <div className="list">
               {pendingUsers.map((user) => (
                 <div key={user.id} className="list-item">
                   <p>{user.email}</p>
-                  <p>Role: {user.role || "Trainer"}</p>
-                  <p>Work ID: {user.workId || "N/A"}</p>
+                  <p>Branch: {user.branch_name}</p>
+                  <p>Package: {user.packageCategory || "N/A"}</p>
                   <p>
                     Requested:{" "}
                     {new Date(
@@ -391,7 +333,7 @@ const UserManagement = () => {
                         handleAccess(user.id, "accept");
                       }}
                     >
-                      <span className="checkmark">✔</span>
+                      Accept
                     </a>
                     <a
                       href="#"
@@ -400,7 +342,9 @@ const UserManagement = () => {
                         e.preventDefault();
                         handleAccess(user.id, "decline");
                       }}
-                    ></a>
+                    >
+                      Decline
+                    </a>
                   </div>
                 </div>
               ))}
@@ -419,11 +363,12 @@ const UserManagement = () => {
             <div className="list">
               {removedAdmins.map((admin) => (
                 <div key={admin.id} className="list-item">
-                  <p>
-                    {admin.email} - {admin.branch_name}
-                  </p>
-                  <p>Joined: {new Date(admin.joined).toLocaleDateString()}</p>
+                  <p>{admin.email}</p>
+                  <p>Branch: {admin.branch_name}</p>
                   <p>Work ID: {admin.workId || "N/A"}</p>
+                  <p>
+                    Updated: {new Date(admin.updatedAt).toLocaleDateString()}
+                  </p>
                   <div>
                     <a
                       href="#"
@@ -433,7 +378,7 @@ const UserManagement = () => {
                         handleAdminRequest(admin.id, "accept");
                       }}
                     >
-                      <span className="checkmark">✔</span>
+                      Restore
                     </a>
                   </div>
                 </div>
@@ -454,13 +399,10 @@ const UserManagement = () => {
               {restrictedUsers.map((user) => (
                 <div key={user.id} className="list-item">
                   <p>{user.email}</p>
-                  <p>Role: {user.role || "Trainer"}</p>
-                  <p>Work ID: {user.workId || "N/A"}</p>
+                  <p>Branch: {user.branch_name}</p>
+                  <p>Package: {user.packageCategory || "N/A"}</p>
                   <p>
-                    Requested:{" "}
-                    {new Date(
-                      user.requested || user.joined
-                    ).toLocaleDateString()}
+                    Updated: {new Date(user.updatedAt).toLocaleDateString()}
                   </p>
                   <div>
                     <a
@@ -471,7 +413,7 @@ const UserManagement = () => {
                         handleAccess(user.id, "accept");
                       }}
                     >
-                      <span className="checkmark">✔</span>
+                      Restore
                     </a>
                   </div>
                 </div>
@@ -481,13 +423,12 @@ const UserManagement = () => {
         </div>
       )}
 
-      {/* Admins and Active Users Tables */}
       <section className="table-section">
         <h4>Admins</h4>
         <table>
           <thead>
             <tr>
-              <th>Admin Email</th>
+              <th>Admin Name</th>
               <th>Location Name</th>
               <th>Joined</th>
               <th>Work ID</th>
@@ -507,7 +448,7 @@ const UserManagement = () => {
                     className="remove"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleRemoveAdmin(admin.id, "realtime");
+                      handleRemoveAdmin(admin.id);
                     }}
                   >
                     Remove admin
