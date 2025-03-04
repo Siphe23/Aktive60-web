@@ -102,7 +102,7 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
-  // Active, Pending, and Restricted Users from Realtime Database (unchanged)
+  // Active, Pending, and Restricted Users from Realtime Database
   useEffect(() => {
     const usersRef = ref(realTimeDB, "users");
     const unsubscribe = onValue(usersRef, (snapshot) => {
@@ -152,7 +152,7 @@ const UserManagement = () => {
     return () => unsubscribe();
   }, []);
 
-  // Removed Admins from both Firestore and Realtime Database (unchanged)
+  // Removed Admins from both Firestore and Realtime Database
   useEffect(() => {
     let unsubscribeRealtime;
     const q = query(
@@ -196,11 +196,6 @@ const UserManagement = () => {
   }, []);
 
   const handleRemoveAdmin = async (adminId, source) => {
-    if (currentUserRole !== "super_Admin") {
-      toast.error("Only Super Admins can remove admins");
-      return;
-    }
-
     try {
       const updates = {
         role: "Supervisor",
@@ -208,7 +203,6 @@ const UserManagement = () => {
         updatedAt: new Date().toISOString(),
       };
 
-      // Since we're only showing Realtime DB admins, update only there
       await update(ref(realTimeDB, `staff/${adminId}`), updates);
       toast.success("Admin removed successfully");
     } catch (error) {
@@ -218,11 +212,6 @@ const UserManagement = () => {
   };
 
   const handleAccess = async (userId, action) => {
-    if (currentUserRole !== "Supervisor" && currentUserRole !== "super_Admin") {
-      toast.error("Only Supervisors and Super Admins can manage user access");
-      return;
-    }
-
     try {
       const updates = {
         updatedAt: new Date().toISOString(),
@@ -243,11 +232,6 @@ const UserManagement = () => {
   };
 
   const handleAdminRequest = async (adminId, action) => {
-    if (currentUserRole !== "super_Admin") {
-      toast.error("Only Super Admins can manage admin requests");
-      return;
-    }
-
     try {
       const updates = {
         role: "Supervisor",
@@ -255,7 +239,6 @@ const UserManagement = () => {
         updatedAt: new Date().toISOString(),
       };
 
-      // Update only in Realtime Database since we're displaying from there
       await update(ref(realTimeDB, `staff/${adminId}`), updates);
 
       toast.success(
@@ -273,7 +256,6 @@ const UserManagement = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    
     <div className="user-management">
       <Navbar userData={currentUserData} currentUserRole={currentUserRole} />
       <h2>User Management</h2>
