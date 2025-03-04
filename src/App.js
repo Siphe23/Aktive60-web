@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom"; // Removed Router import
-import { ToastContainer, toast } from "react-toastify";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify"; // Removed 'toast'
 import "react-toastify/dist/ReactToastify.css";
 import { auth, db } from "./firebase"; 
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,7 +18,7 @@ import SuperProfile from './components/SuperProfile';
 import Dashboard from './pages/Dashboard';
 import StaffRegister from './components/StaffRegister';
 import StaffProfile from './components/StaffProfile';
-import StaffLogin from './components/StaffLogin';
+// import StaffLogin from './components/StaffLogin'; // Removed as it's unused
 import SuperLogin from './components/superLogin';
 import LocationOverview from "./pages/Location/LocationOverview/LocationOverview";
 import LocationDetails from "./pages/Location/LocationDetails/LocationDetails";
@@ -45,9 +45,8 @@ const App = () => {
     avatar: defaultProfilePic, 
   });
 
-  const location = useLocation(); // Get current route
+  const location = useLocation();
 
-  // Define routes where Navbar and Sidebar should NOT be displayed
   const noNavbarSidebarRoutes = [
     "/login",
     "/signup",
@@ -106,12 +105,11 @@ const App = () => {
         }}
       />
     
-      {/* Conditionally render Navbar and Sidebar */}
       {!noNavbarSidebarRoutes.includes(location.pathname) && <Navbar userData={userData} />}
       {!noNavbarSidebarRoutes.includes(location.pathname) && <Sidebar />}
     
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
