@@ -12,7 +12,7 @@
 }
 
 .bg-gray-800 {
-  background-color: transparent;
+  background-color: white;
 }
 
 .text-white {
@@ -33,7 +33,7 @@
 
 /* Form Container */
 .bg-gray-800 {
-  background-color: transparent;
+  background-color: white;
   padding: 2rem;
 
   border-radius: 0.5rem;
@@ -43,17 +43,7 @@
 }
 
 /* Form Elements */
-input,
-select {
-  width: 443px;
-  padding: 0.75rem;
-  margin-top: 1rem;
-  border-radius: 12px;
-  border: 1px solid #3F3D56;
-  background-color: #2F2E41;
-  color: #ffffff;
-  height: 45px;
-}
+
 
 input::placeholder,
 select::placeholder {
@@ -73,7 +63,7 @@ button {
   margin-left: 0; /* Ensures no left margin */
   margin-left: auto; /* Pushes the button to the left */
   border-radius: 12px;
-  background-color: #ef4444;
+  background-color: #F10623;
   color: #ffffff;
   font-weight: bold;
   border: none;
@@ -175,7 +165,7 @@ a:hover {
 }
 
 .password-validation li.invalid {
-  color: red;
+  color: rgb(255, 255, 255);
 }
 input[name="email"],
 input[name="phone"],
@@ -192,23 +182,23 @@ input[name="text"] {
  text-align: flex; /* Align text to the left */
   position: relative;
   border-radius: 6px;
-  border: 2px solid #333;
+  border: 1px ;
   width: 443px;
   border-radius: 12px;
   border: 1px solid #3F3D56;
   background-color: #2F2E41;
-  height: 45px;
+  height: 50px;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="text"]:focus {
-  border-color: #ff0025;
+input[name="name"]:focus {
+  border-color: #ffffff;
   outline: none;
 }
 
 input[type="password"] {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png'); /* Lock icon */
+  background-image: url( '../assets/Icons/lock-image.png');
   background-position: 15px center; /* Adjust position to not overlap the text */
   background-repeat: no-repeat;
   background-size: 27px;
@@ -216,12 +206,19 @@ input[type="password"] {
 }
 
 input[type="email"] {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png'); /* Email icon */
+  background-image: url('../assets/Icons/email-image.png'); 
   background-position: 15px center; /* Adjust position to not overlap the text */
   background-repeat: no-repeat;
   background-size: 27px;
 
 }
+input[name="phone"] {
+  background-image: url('../assets/Icons/phone-image.png'); 
+  background-position: 15px center;
+  background-repeat: no-repeat;
+  background-size: 27px;
+}
+
 
 
 .login-link{
@@ -241,4 +238,14 @@ input[type="email"] {
   text-align: center;
   font-size: 13px;
   font-weight: 400;
+}
+.Register-phone{
+  margin-bottom: -200px;
+}
+.email-div{
+  height: 15px;
+  
+}
+.contain-text{
+  margin-top: 20px;
 }

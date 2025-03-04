@@ -271,25 +271,25 @@ const StaffRegister = () => {
         className="Register-input"
         required
       />
-      <div className="password-validation">
-        <ul>
-          <li className={passwordValidation.minLength ? "valid" : "invalid"}>
-            Eight Characters
-          </li>
-          <li className={passwordValidation.hasNumber ? "valid" : "invalid"}>
-            One number
-          </li>
-          <li
-            className={passwordValidation.hasSpecialChar ? "valid" : "invalid"}
-          >
-            One special character
-          </li>
-        </ul>
-      </div>
+
+<div className="password-validation">
+ 
+    <p className="contain-text">Your password must contain:</p>
+    <li className={passwordValidation.minLength ? "valid" : "invalid"}>
+      Eight Characters
+    </li>
+    <li className={passwordValidation.hasNumber ? "valid" : "invalid"}>
+      One number
+    </li>
+    <li className={passwordValidation.hasSpecialChar ? "valid" : "invalid"}>
+      One special character
+    </li>
+ 
+</div>
     </div>
    
 
-    <div>
+    <div >
       <p>Phone</p>
       <input
         type="text"
@@ -328,6 +328,7 @@ const StaffRegister = () => {
         <option value="Staff">Staff</option>
         <option value="Supervisor">Supervisor</option>
       </select>
+      
     </div>
 
    
