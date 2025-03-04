@@ -26,17 +26,26 @@ const LocationDetails = () => {
   };
 
   useEffect(() => {
-    const unsubscribeFirestore = onSnapshot(collection(db, "branches"), (querySnapshot) => {
-      const branchesList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setBranches(branchesList);
+    const unsubscribeFirestore = onSnapshot(
+      collection(db, "branches"),
+      (querySnapshot) => {
+        const branchesList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBranches(branchesList);
 
+<<<<<<< HEAD
       if (branchesList.length > 0 && !selectedLocation) {
         setSelectedLocation(branchesList[0].id);
+=======
+        // Automatically select the first branch if available
+        if (branchesList.length > 0 && !selectedLocation) {
+          setSelectedLocation(branchesList[0].id);
+        }
+>>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
       }
-    });
+    );
 
     return () => unsubscribeFirestore();
   }, [selectedLocation]);
@@ -133,6 +142,7 @@ const LocationDetails = () => {
         <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="container">
+<<<<<<< HEAD
             <div className="header">
               <select
                 value={selectedLocation}
@@ -145,6 +155,13 @@ const LocationDetails = () => {
                   </option>
                 ))}
               </select>
+=======
+            <div class="location-header">
+            <div class="location-buttons">
+              <h2>Location Details</h2>
+              <p>Manage your locations here.</p>
+              </div>
+>>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
               <div className="header-buttons">
                 <button
                   className="action-button"
@@ -160,6 +177,20 @@ const LocationDetails = () => {
                 </button>
               </div>
             </div>
+            <div className="header">
+              <select
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                className="location-select"
+              >
+                {branches.map((branch) => (
+                  <option key={branch.id} value={branch.id}>
+                    {branch.branch_name}
+                  </option>
+                ))}
+              </select>
+              
+            </div>
 
             <div className="card-grid">
               <div className="card">
@@ -167,14 +198,30 @@ const LocationDetails = () => {
                 {branchData ? (
                   <>
                     <p>
-                      <strong>Location Name:</strong> {branchData.branch_name}
+                      <strong>Location Name:</strong> 
+                      <p>{branchData.branch_name}</p>
                     </p>
                     <p>
-                      <strong>Address:</strong> {branchData.location_address}
+                      <strong>Address:</strong> 
+                      <p>{branchData.location_address}</p>
                     </p>
                     <p>
-                      <strong>Contact Number:</strong> {branchData.phone}
+                      <strong>Contact Number:</strong> 
+                      <p>{branchData.phone}</p>
                     </p>
+<<<<<<< HEAD
+=======
+                    {branchData.qrCode && (
+                      <div className="qr-code-container">
+                        <strong>QR Code:</strong>
+                        <img
+                          src={branchData.qrCode}
+                          alt="QR Code"
+                          className="qr-code-image"
+                        />
+                      </div>
+                    )}
+>>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
                   </>
                 ) : (
                   <p>Loading...</p>
@@ -185,6 +232,7 @@ const LocationDetails = () => {
                 {branchData ? (
                   <>
                     <p>
+<<<<<<< HEAD
                       <strong>Monday - Friday:</strong> 08:00 - 22:00
                     </p>
                     <p>
@@ -195,6 +243,22 @@ const LocationDetails = () => {
                     </p>
                     <p>
                       <strong>Public Holidays:</strong> 08:00 - 22:00
+=======
+                      <strong>Monaday - Friday</strong>
+                      <p>{branchData.branch_name}</p> 
+                    </p>
+                    <p>
+                      <strong>Saturday:</strong> 
+                      <p>{branchData.location_address}</p>
+                    </p>
+                    <p>
+                      <strong>Sunday:</strong> 
+                      <p>{branchData.phone}</p>
+                    </p>
+                    <p>
+                      <strong>Public Holidays:</strong> 
+                      <p>{branchData.phone}</p>
+>>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
                     </p>
                   </>
                 ) : (
@@ -202,6 +266,48 @@ const LocationDetails = () => {
                 )}
               </div>
             </div>
+<<<<<<< HEAD
+=======
+            <div className="card-package">
+              <h3>Selected Packages</h3>
+              {branchData ? (
+                <>
+                  <div className="packages">
+                    <p>
+                      <strong>ONE-ON-ONE SESSIONS</strong>
+                    </p>
+                    <p>
+                      <strong>PERSONALISED MEAL PLANS & PROGRAMS</strong>
+                    </p>
+                    <p>
+                      <strong>ONLINE HOURLY SESSIONS</strong>
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+            <div className="card-capacity">
+              <h3>Member Capacity</h3>
+              {branchData ? (
+                <>
+                  <div className="capacities">
+                    <p>
+                      <strong>Total Capacity: {branchData.branch_name}</strong>
+                    </p>
+                    <p>
+                      <strong>Current members: {branchData.branch_name}</strong>
+                    </p>
+                    <p>
+                      <strong>Available Slots: {branchData.branch_name}</strong>
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <p>Loading...</p>
+              )}
+>>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
 
             <div className="card-package">
               <h3>Selected Packages</h3>
