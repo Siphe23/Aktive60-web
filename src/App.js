@@ -118,8 +118,9 @@ const App = () => {
         <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+       
         <Route path="/super-profile" element={<SuperProfile />} />
         <Route path="/staff-register" element={<StaffRegister />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
