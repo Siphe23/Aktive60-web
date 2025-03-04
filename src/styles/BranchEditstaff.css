@@ -1,0 +1,172 @@
+/* Popup overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Popup form */
+  .popup-form {
+    background-color: #1f1f2e;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Header */
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #333;
+  }
+  
+  .popup-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Date range section */
+  .date-range {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #333;
+  }
+  
+  .date-range label {
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  
+  .date-input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .date-input {
+    background-color: #282a38;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+  
+  .date-input-group span {
+    margin: 0 10px;
+    color: #ccc;
+  }
+  
+  /* Staff table */
+  .staff-table-container {
+    padding: 0 20px;
+  }
+  
+  .staff-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .staff-table th {
+    text-align: left;
+    padding: 15px 10px;
+    color: #aaa;
+    font-weight: normal;
+    font-size: 14px;
+    border-bottom: 1px solid #333;
+  }
+  
+  .staff-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #333;
+  }
+  
+  /* Action buttons */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-action, .delete-action, .add-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+  
+  /* New entry form fields */
+  .new-entry-row input, 
+  .new-entry-row select {
+    background-color: #282a38;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+  }
+  
+  .time-range-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .time-range-input input {
+    flex: 1;
+  }
+  
+  .time-range-input span {
+    margin: 0 10px;
+    color: #ccc;
+  }
+  
+  /* Bottom action buttons */
+  .popup-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin-top: 10px;
+  }
+  
+  .save-btn {
+    background-color: #ff2d2d;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .clear-btn {
+    background-color: white;
+    color: #333;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Focus styles */
+  input:focus, select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 45, 45, 0.4);
+  }

@@ -1,11 +1,268 @@
 
-.branch-container {
-    background-color: #0f0f10;
-    color: white;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 1100px;
-    margin: auto;
-    font-family: 'Arial', sans-serif;
-  }
-  
+.branch-staff-container {
+  color: white;
+  padding: 20px;
+  font-family: sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+ 
+}
+
+
+.medium .branch-staff-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.medium .shifts-container {
+  display: flex;
+  gap: 20px;
+}
+
+.medium .shift-card {
+  flex: 1;
+  height: 200px; 
+}
+
+.medium .day-number {
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+/* Small size styles */
+.small .branch-staff-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.small .shifts-container {
+  flex-direction: column;
+}
+
+.small .header {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.small .new-schedule-btn {
+  margin-top: 10px;
+  align-self: flex-end;
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+.small .day-number {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.small .day-label {
+  font-size: 12px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  margin-top: 200px;
+}
+
+.gym-info h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.gym-info p {
+  margin: 5px 0 0;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.new-schedule-btn {
+  background-color: #ff2d2d;
+  width: auto;
+  margin-left: auto;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  float: right;
+  margin-bottom: 20px;
+}
+
+.plus-icon {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.manager-card, .shift-card {
+  background-color: #282a38;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 200px; 
+  box-sizing: border-box;
+}
+
+.manager-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 50%;
+}
+
+.time-info {
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.status-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ff0025;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+}
+
+.staff-info h3, .shift-header h3 {
+  margin: 0;
+  font-weight: normal;
+}
+
+.role {
+  color: #ccc;
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.shifts-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.shift-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.shift-header {
+  margin-bottom: 20px;
+  padding-right: 40px;
+}
+
+.shift-time {
+  color: #ccc;
+  margin: 5px 0 0;
+}
+
+.staff-list {
+  flex-grow: 1; 
+}
+
+.staff-member {
+  margin-bottom: 15px;
+}
+
+.staff-member h4 {
+  margin: 0;
+  font-weight: normal;
+}
+
+.calendar-section {
+  background-color: #282a38;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-icon {
+  margin-right: 10px;
+  color: #ff0025;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-weight: normal;
+}
+
+.days-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.day-column {
+  text-align: center;
+  flex: 1;
+}
+
+.day-label {
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.day-number {
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-weight: bold;
+}
+
+.view-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-button {
+  background-color: #ff2d2d;
+  width: auto;
+  margin-left: auto;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  float: right;
+  margin-bottom: 20px;
+}
