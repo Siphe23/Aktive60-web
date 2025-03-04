@@ -145,7 +145,7 @@
   
 }
 .packages strong{
-  background-color: #3F3D56;
+  background-color: var(--Secondary-color);
   padding: 6px;
   border-radius: 10px;
   
