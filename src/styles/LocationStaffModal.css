@@ -1,0 +1,200 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* For positioning the close icon */
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: left;
+    margin: 0;
+    border-bottom: none; /* Remove the horizontal line (border) underneath the title */
+    border-right: none; /* Remove any vertical line (border) on the right */
+    border-left: none; /* Remove any vertical line (border) on the left */
+  }
+  
+  .close-icon {
+    cursor: pointer;
+    color: #fff; /* White X icon */
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Position in the top-right corner */
+  }
+  
+  .close-icon:hover {
+    color: #e0e0e0; /* Lighter white on hover for visibility */
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+    justify-content: flex-start; /* Keep labels on the left, but allow inputs/buttons to move right */
+  }
+  
+  .form-group label {
+    color: #ccc;
+    min-width: 120px;
+    text-align: left;
+    margin-right: 10px;
+  }
+  
+  .date-range {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto; /* Push Date Range inputs to the right end */
+  }
+  
+  .date-input, .location-select, .manager-select, .employee-select, .shift-select, .role-select, .time-input-field {
+    padding: 8px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push all inputs/buttons to the right end */
+  }
+  
+  /* Adjust Location select and Manager select to average size (not too big, not too small) */
+  .location-select, .manager-select {
+    width: 200px; /* Average size, larger than default but not as wide as 300px */
+    max-width: 200px; /* Ensure consistent width */
+  }
+  
+  /* Keep Employee Name select wider in the table */
+  .employee-select {
+    width: 100%; /* Make Employee Name select wider to fit the tbody */
+    max-width: none; /* Override max-width to allow wider select */
+    text-align: left; /* Ensure text aligns left within the select */
+  }
+  
+  .date-separator {
+    padding: 8px;
+    color: #ccc;
+  }
+  
+  .working-hours {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto; /* Push Working Hours inputs to the right end */
+  }
+  
+  .time-input-field {
+    padding-left: 30px; /* Space for the clock icon */
+    position: relative;
+    width: 120px; /* Ensure time inputs have a reasonable width */
+  }
+  
+  .time-input-field::before {
+    content: "\f017"; /* Font Awesome clock icon, but using CSS pseudo-element */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 8px;
+    color: #ccc;
+    font-size: 16px;
+  }
+  
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .schedule-table th,
+  .schedule-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    color: #fff;
+  }
+  
+  .schedule-table th {
+    background-color: #2a2a2a;
+    font-weight: bold;
+  }
+  
+  .edit-icon {
+    cursor: pointer;
+    color: #fff; /* White Edit icon */
+  }
+  
+  .edit-icon:hover {
+    color: #e0e0e0; /* Lighter white on hover for visibility */
+  }
+  
+  .delete-icon {
+    cursor: pointer;
+    color: #fff; /* White Cancel icon */
+  }
+  
+  .delete-icon:hover {
+    color: #e0e0e0; /* Lighter white on hover for visibility */
+  }
+  
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between; /* Distribute buttons: Save on left, Clear on right */
+  }
+  
+  .save-button {
+    background-color: #ff4444; /* Red color for Save button */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .save-button:hover {
+    background-color: #cc3333;
+  }
+  
+  .clear-button {
+    background-color: transparent; /* Transparent background for white text */
+    color: #fff; /* White color for Clear button text */
+    padding: 10px 20px;
+    border: 1px solid #fff; /* White border for visibility */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .clear-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover for visibility */
+    border-color: #e0e0e0; /* Lighter white border on hover */
+  }

@@ -3,19 +3,20 @@ import Sidebar from "../../../components/Sidebar";
 import NavigationBar from "../../../components/Navbar";
 import "../../../styles/LocationStaff.css";
 import { FaPlus, FaEdit, FaCalendarAlt } from "react-icons/fa";
-import NewScheduleModal from "./NewScheduleModal"; // Import the new modal component
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase"; // Adjust the path to your firebase.js file
+import NewScheduleModal from "./NewScheduleModal";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LocationStaff = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [branches, setBranches] = useState([]); // State to store branches
-  const [loading, setLoading] = useState(false); // State to track loading status
-  const [selectedBranch, setSelectedBranch] = useState(""); // State to track selected branch
-  const [schedules, setSchedules] = useState([]); // State to store schedules
+  const [branches, setBranches] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const [schedules, setSchedules] = useState([]);
+  const [managerInfo, setManagerInfo] = useState({ fullName: "No Manager", time: "N/A" }); // State for manager name and time
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -23,11 +24,9 @@ const LocationStaff = () => {
 
   const openModal = () => {
     if (!selectedBranch && branches.length > 0) {
-      // If no branch is selected, default to the first branch
       setSelectedBranch(branches[0].name);
       toast.info(`Default branch selected: ${branches[0].name}`);
     } else if (!selectedBranch) {
-      // If no branches are available, show a toast alert
       toast.error("Please add a branch before creating a schedule.");
       return;
     }
@@ -54,7 +53,6 @@ const LocationStaff = () => {
         });
         setBranches(branchesData);
 
-        // Default to the first branch if available
         if (branchesData.length > 0) {
           setSelectedBranch(branchesData[0].name);
         }
@@ -68,32 +66,61 @@ const LocationStaff = () => {
     fetchBranches();
   }, []);
 
-  // Fetch schedules from Firebase when the selected branch changes
+  // Fetch schedules and manager info when the selected branch changes
   useEffect(() => {
     if (selectedBranch) {
-      const fetchSchedules = async () => {
+      const fetchSchedulesAndManager = async () => {
         setLoading(true);
         try {
-          const querySnapshot = await getDocs(collection(db, "schedules"));
+          // Fetch schedules
+          const schedulesSnapshot = await getDocs(collection(db, "schedules"));
           const schedulesData = [];
-          querySnapshot.forEach((doc) => {
+          let managerId = null;
+          let inTime = null;
+          let outTime = null;
+
+          schedulesSnapshot.forEach((doc) => {
             const data = doc.data();
             if (data.branch === selectedBranch) {
               schedulesData.push({
                 id: doc.id,
                 ...data,
               });
+              // Use the first schedule's managerId, inTime, and outTime
+              if (!managerId) {
+                managerId = data.managerId;
+                inTime = data.inTime;
+                outTime = data.outTime;
+              }
             }
           });
           setSchedules(schedulesData);
+
+          // Fetch manager's full name if managerId exists
+          if (managerId) {
+            const managerDocRef = doc(db, "users", managerId);
+            const managerDoc = await getDoc(managerDocRef);
+            if (managerDoc.exists()) {
+              const managerFullName = managerDoc.data().fullName;
+              setManagerInfo({
+                fullName: managerFullName,
+                time: `${inTime} - ${outTime}`,
+              });
+            } else {
+              setManagerInfo({ fullName: "Manager Not Found", time: "N/A" });
+            }
+          } else {
+            setManagerInfo({ fullName: "No Manager", time: "N/A" });
+          }
         } catch (error) {
-          console.error("Error fetching schedules:", error);
+          console.error("Error fetching schedules or manager:", error);
+          setManagerInfo({ fullName: "Error", time: "N/A" });
         } finally {
           setLoading(false);
         }
       };
 
-      fetchSchedules();
+      fetchSchedulesAndManager();
     }
   }, [selectedBranch]);
 
@@ -104,7 +131,7 @@ const LocationStaff = () => {
   // Filter schedules by shift time
   const filterSchedulesByShift = (shiftTime) => {
     return schedules.filter((schedule) =>
-      schedule.schedules.some((s) => s.shiftTime === shiftTime)
+      schedule.schedules?.some((s) => s.shiftTime === shiftTime)
     );
   };
 
@@ -116,11 +143,11 @@ const LocationStaff = () => {
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="staff-scheduling">
             <div className="header">
-            <h2>Staff Scheduling</h2>
-            <button onClick={openModal}>
+              <h2>Staff Scheduling</h2>
+              <button onClick={openModal}>
                 <FaPlus /> New Schedule
               </button>
-              </div>
+            </div>
             <div className="location-selector">
               <label>Select location to view:</label>
               <select
@@ -136,15 +163,14 @@ const LocationStaff = () => {
                   </option>
                 ))}
               </select>
-              
             </div>
 
             {/* Staff Schedule Cards */}
             <div className="schedule-container">
               <div className="schedule-card">
-                <h4>John Smith</h4>
+                <h4>{managerInfo.fullName}</h4>
                 <p>Manager</p>
-                <span>06:00 - 16:00</span>
+                <span>{managerInfo.time}</span>
                 <FaEdit className="edit-icon" />
               </div>
 
@@ -237,7 +263,6 @@ const LocationStaff = () => {
         </div>
       </div>
 
-      {/* New Schedule Modal */}
       <NewScheduleModal
         isOpen={isModalOpen}
         onClose={closeModal}
