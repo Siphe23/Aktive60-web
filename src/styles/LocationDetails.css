@@ -90,6 +90,7 @@ body {
 .action-button {
   background-color: var(--primary-color);
   color: white;
+  font-weight: normal;
   border: none;
   border-radius: 6px;
   width: 180px;
@@ -114,7 +115,7 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   position: relative;
-  min-width: 300px;
+  min-width: 400px;
 }
 .card h3{
   text-align:left ;
