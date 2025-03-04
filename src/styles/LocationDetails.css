@@ -1,10 +1,3 @@
-body {
-  background-color: #1e1e24;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 20px;
-}
 
 /* Location Details Header */
 .location-details {
@@ -115,7 +108,9 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   position: relative;
-  min-width: 400px;
+  width: 100%; 
+  max-width: 900px; 
+  border: 2px solid var(--border-color);
 }
 .card h3{
   text-align:left ;
@@ -135,30 +130,36 @@ body {
   background-color: #2F2E41;
   border-radius: 10px;
   padding: 20px;
-  width: "70%";
+  width: "100%";
   margin-bottom: 20px;
+  border: 2px solid var(--border-color);
 }
 .card-package h3{
   text-align:left ;
+  margin-bottom: 20px;
 }
 .packages{
   display: flex;
   gap: 3.3em;
+  
   
 }
 .packages strong{
   background-color: #3F3D56;
   padding: 6px;
   border-radius: 10px;
+  
 }
 .card-capacity{
   background-color: #2F2E41;
   border-radius: 10px;
   padding: 20px;
   width: "70%";
+  
 }
 .card-capacity h3{
   text-align:left ;
+  margin-bottom: 20px;
 }
 
 .capacities{
