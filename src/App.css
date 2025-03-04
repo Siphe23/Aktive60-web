@@ -1,3 +1,29 @@
+:root {
+  --background-color: #242526;
+  --primary-color: #F10623;
+  --Secondary-color: #2F2E41;
+  --Secondary-color2: #3F3D56;
+  --text-color: #FFFFFF;
+  --text-grey: #a7a4a4;
+  --size-logo: 40px;
+  --size-Large: 30px;
+  --size-Medium: 16px;
+  --size-small: 14px;
+  --line-height: 18px;
+  --font-weight: 400;
+  --button-width:188px;
+  --animation-speed: 1s;
+  --border-color: #444;
+  --header-bg: #3a3a3a;
+  --table-bg-odd: #2a2a2a;
+  --table-bg-even: #3a3a3a;
+  --button-hover-bg: #e0e0e0;
+  --modal-bg: #3F3D56;
+  --input-bg: #2a2a2a;
+  --checkbox-bg: #2a2a2a;
+}
+
+
 .App {
   text-align: center;
   
