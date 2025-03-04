@@ -35,17 +35,10 @@ const LocationDetails = () => {
         }));
         setBranches(branchesList);
 
-<<<<<<< HEAD
       if (branchesList.length > 0 && !selectedLocation) {
         setSelectedLocation(branchesList[0].id);
-=======
-        // Automatically select the first branch if available
-        if (branchesList.length > 0 && !selectedLocation) {
-          setSelectedLocation(branchesList[0].id);
-        }
->>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
       }
-    );
+  });
 
     return () => unsubscribeFirestore();
   }, [selectedLocation]);
@@ -142,7 +135,6 @@ const LocationDetails = () => {
         <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="container">
-<<<<<<< HEAD
             <div className="header">
               <select
                 value={selectedLocation}
@@ -155,13 +147,6 @@ const LocationDetails = () => {
                   </option>
                 ))}
               </select>
-=======
-            <div class="location-header">
-            <div class="location-buttons">
-              <h2>Location Details</h2>
-              <p>Manage your locations here.</p>
-              </div>
->>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
               <div className="header-buttons">
                 <button
                   className="action-button"
@@ -209,19 +194,6 @@ const LocationDetails = () => {
                       <strong>Contact Number:</strong> 
                       <p>{branchData.phone}</p>
                     </p>
-<<<<<<< HEAD
-=======
-                    {branchData.qrCode && (
-                      <div className="qr-code-container">
-                        <strong>QR Code:</strong>
-                        <img
-                          src={branchData.qrCode}
-                          alt="QR Code"
-                          className="qr-code-image"
-                        />
-                      </div>
-                    )}
->>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
                   </>
                 ) : (
                   <p>Loading...</p>
@@ -232,7 +204,6 @@ const LocationDetails = () => {
                 {branchData ? (
                   <>
                     <p>
-<<<<<<< HEAD
                       <strong>Monday - Friday:</strong> 08:00 - 22:00
                     </p>
                     <p>
@@ -243,22 +214,6 @@ const LocationDetails = () => {
                     </p>
                     <p>
                       <strong>Public Holidays:</strong> 08:00 - 22:00
-=======
-                      <strong>Monaday - Friday</strong>
-                      <p>{branchData.branch_name}</p> 
-                    </p>
-                    <p>
-                      <strong>Saturday:</strong> 
-                      <p>{branchData.location_address}</p>
-                    </p>
-                    <p>
-                      <strong>Sunday:</strong> 
-                      <p>{branchData.phone}</p>
-                    </p>
-                    <p>
-                      <strong>Public Holidays:</strong> 
-                      <p>{branchData.phone}</p>
->>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
                     </p>
                   </>
                 ) : (
@@ -266,48 +221,6 @@ const LocationDetails = () => {
                 )}
               </div>
             </div>
-<<<<<<< HEAD
-=======
-            <div className="card-package">
-              <h3>Selected Packages</h3>
-              {branchData ? (
-                <>
-                  <div className="packages">
-                    <p>
-                      <strong>ONE-ON-ONE SESSIONS</strong>
-                    </p>
-                    <p>
-                      <strong>PERSONALISED MEAL PLANS & PROGRAMS</strong>
-                    </p>
-                    <p>
-                      <strong>ONLINE HOURLY SESSIONS</strong>
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <p>Loading...</p>
-              )}
-            </div>
-            <div className="card-capacity">
-              <h3>Member Capacity</h3>
-              {branchData ? (
-                <>
-                  <div className="capacities">
-                    <p>
-                      <strong>Total Capacity: {branchData.branch_name}</strong>
-                    </p>
-                    <p>
-                      <strong>Current members: {branchData.branch_name}</strong>
-                    </p>
-                    <p>
-                      <strong>Available Slots: {branchData.branch_name}</strong>
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <p>Loading...</p>
-              )}
->>>>>>> 5f14357cdf0f4c00f4297b313bce24933f8a0764
 
             <div className="card-package">
               <h3>Selected Packages</h3>
