@@ -84,7 +84,7 @@ const LocationSettings = () => {
         <div className={`content ${isExpanded ? "expanded" : "collapsed"}`}>
           <div className="location-settings">
             <div className="header-container">
-              <h1>Location Settings</h1>
+              <h1>Packages</h1>
               <button className="add-button" onClick={() => setIsModalOpen(true)}>+ Add Package</button>
             </div>
             
@@ -112,6 +112,7 @@ const LocationSettings = () => {
       </div>
       <AddNewPackageModal
         isOpen={isModalOpen}
+        
         onClose={() => {
           setIsModalOpen(false);
           setSelectedPackage(null); // Reset selected package when modal closes

@@ -1,179 +1,40 @@
+/* BranchDetails.css */
+
 .branch-details {
-  max-width: 100%;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  color: white;
- 
-  min-height: 100vh;
-  font-size: 12px; /* Reduced font size */
-}
-
-.title-section h1 {
-  
-  font-size: 40px; 
-  margin-left:300px;
-
-}
-
-.title-section p {
-  margin-left:400px;
-  color: #bbb;
-  font-size: 12px; /* Reduced font size */
-}
-
-.edit-details-btn {
-  display: flex;
-  align-items: center;
-  width: 150px; /* Reduced width */
-  gap: 5px;
-  background-color: #e60023;
-  color: white;
-  border: none;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  margin-top: 20px; /* Reduced margin */
-  margin-left: 20px; /* Reduced margin */
-  font-weight: bold;
-  font-size: 12px; /* Reduced font size */
-  cursor: pointer;
-  padding: 8px; /* Added padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.cards-row {
-  display: flex;
-  width: 100%;
-  gap: 10px; /* Reduced gap */
-  margin-bottom: 20px; /* Reduced margin */
-  justify-content: center;
-  flex-wrap: wrap;
+.branch-details h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.info-card {
-  flex: 1;
-  background-color: #222639;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  padding: 15px; /* Reduced padding */
-  min-width: 200px; /* Reduced min-width */
-  max-width: 300px; /* Reduced max-width */
-}
-
-.icon-btn {
-  width: 30px; /* Reduced size */
-  height: 30px; /* Reduced size */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  top: 10px; /* Adjusted position */
-  right: 10px; /* Adjusted position */
-  font-size: 12px; /* Reduced font size */
-}
-
-.info-card h2 {
-  margin: 0 0 15px 0; /* Reduced margin */
-  font-size: 14px; /* Reduced font size */
-  font-weight: 600;
-}
-
-.info-item {
-  margin-bottom: 10px; /* Reduced margin */
-}
-
-.info-item .label {
-  font-weight: bold;
-  font-size: 12px; /* Reduced font size */
-}
-
-.info-item .value {
-  color: #bbb;
-  font-size: 12px; /* Reduced font size */
-}
-
-.hours-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0; /* Reduced padding */
-}
-
-.packages-section {
-  background-color: #222639;
-  width: 50%;
-  border-radius: 10px;
-  padding: 10px 15px; /* Reduced padding */
-  margin: 0 auto;
-}
-
-.packages-section h2 {
-  margin-top: 0;
-  margin-bottom: 10px; /* Reduced margin */
-  font-size: 14px; /* Reduced font size */
-}
-
-.package-buttons {
-  display: flex;
-  gap: 5px; /* Reduced gap */
-}
-
-.package-btn {
-  background-color: #333952;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px; /* Reduced padding */
-  font-size: 10px; /* Reduced font size */
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.package-btn .toggle-icon {
-  margin-left: 5px; /* Reduced margin */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.branch-details p {
+  font-size: 16px;
   color: #666;
+  line-height: 1.5;
 }
 
-.capacity-section {
-  background-color: #222639;
-  border-radius: 10px;
-  padding: 15px; /* Reduced padding */
-  width: 90%;
-  margin: 20px auto; /* Reduced margin */
+.branch-details .address {
+  margin-top: 20px;
+  font-style: italic;
+  color: #999;
 }
 
-.capacity-boxes {
+.branch-details .contact-info {
+  margin-top: 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px; /* Reduced gap */
-  justify-content: center;
+  flex-direction: column;
 }
 
-.capacity-box {
-  flex: 1;
-  background-color: #333952;
-  border-radius: 10px;
-  padding: 10px; /* Reduced padding */
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .cards-row {
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-  }
-  .capacity-boxes {
-    flex-direction: column;
-    gap: 10px; /* Reduced gap */
-  }
-  .packages-section,
-  .capacity-section {
-    width: 90%;
-  }
+.branch-details .contact-info span {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
 }
